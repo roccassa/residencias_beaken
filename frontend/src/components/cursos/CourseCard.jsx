@@ -6,31 +6,31 @@ export default function CourseCard({ curso }) {
   const agotado = curso.inscritosConfirmados >= curso.capacidadMaxima
 
   return (
-    <article className="flex flex-col gap-4 border border-neutral-200 p-6 sm:flex-row sm:items-center sm:justify-between">
-      <div className="flex gap-6 sm:items-center">
-        <div className="w-16 shrink-0 border-r border-neutral-200 pr-6 text-center sm:w-20">
-          <p className="text-xs font-medium uppercase text-neutral-500">
+    <article className="tw:flex tw:flex-col tw:gap-4 tw:border tw:border-neutral-200 tw:p-6 tw:sm:flex-row tw:sm:items-center tw:sm:justify-between">
+      <div className="tw:flex tw:gap-6 tw:sm:items-center">
+        <div className="tw:w-16 tw:shrink-0 tw:border-r tw:border-neutral-200 tw:pr-6 tw:text-center tw:sm:w-20">
+          <p className="tw:text-xs tw:font-medium tw:uppercase tw:text-neutral-500">
             {dayName.format(fecha)}
           </p>
-          <p className="text-2xl font-semibold text-neutral-900">
+          <p className="tw:text-2xl tw:font-semibold tw:text-neutral-900">
             {fecha.getDate().toString().padStart(2, '0')}
           </p>
-          <p className="text-xs text-neutral-500">{monthYear.format(fecha)}</p>
+          <p className="tw:text-xs tw:text-neutral-500">{monthYear.format(fecha)}</p>
         </div>
 
         <div>
-          <div className="flex flex-wrap items-center gap-2">
-            <h3 className="font-semibold text-neutral-900">{curso.titulo}</h3>
+          <div className="tw:flex tw:flex-wrap tw:items-center tw:gap-2">
+            <h3 className="tw:font-semibold tw:text-neutral-900">{curso.titulo}</h3>
             {agotado && (
-              <span className="rounded-full bg-neutral-900 px-2 py-0.5 text-xs font-medium text-white">
+              <span className="tw:rounded-full tw:bg-neutral-900 tw:px-2 tw:py-0.5 tw:text-xs tw:font-medium tw:text-white">
                 Sold out
               </span>
             )}
           </div>
-          <p className="text-sm text-neutral-500">
+          <p className="tw:text-sm tw:text-neutral-500">
             {curso.modalidad === 'presencial' ? curso.ubicacion : 'Virtual'}
           </p>
-          <p className="mt-2 max-w-xl text-sm text-neutral-600">
+          <p className="tw:mt-2 tw:max-w-xl tw:text-sm tw:text-neutral-600">
             {curso.descripcion}
           </p>
         </div>
@@ -39,7 +39,7 @@ export default function CourseCard({ curso }) {
       <button
         type="button"
         disabled={agotado}
-        className="shrink-0 rounded-md border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-900 hover:bg-neutral-50 disabled:cursor-not-allowed disabled:border-neutral-200 disabled:text-neutral-400 disabled:hover:bg-transparent"
+        className="tw:shrink-0 tw:rounded-md tw:border tw:border-neutral-300 tw:px-4 tw:py-2 tw:text-sm tw:font-medium tw:text-neutral-900 tw:hover:bg-neutral-50 tw:disabled:cursor-not-allowed tw:disabled:border-neutral-200 tw:disabled:text-neutral-400 tw:disabled:hover:bg-transparent"
       >
         {agotado ? 'Agotado' : 'Save my spot'}
       </button>

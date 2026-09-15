@@ -1,3 +1,5 @@
+import logotipo from '../../assets/images/logotipo.png'
+
 const links = [
   { label: 'Agency', href: '#' },
   { label: 'Lab', href: '#' },
@@ -6,16 +8,16 @@ const links = [
 
 export default function Navbar() {
   return (
-    <header className="border-b border-neutral-200">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <a href="/" className="font-serif text-xl italic">
-          Logo
+    <header className="tw:border-b tw:border-neutral-200">
+      <nav className="tw:mx-auto tw:flex tw:max-w-6xl tw:items-center tw:justify-between tw:px-6 tw:py-6">
+        <a href="/">
+          <img src={logotipo} alt="Beaken" className="tw:h-8 tw:w-auto" />
         </a>
 
-        <ul className="hidden items-center gap-8 text-sm font-medium text-neutral-800 md:flex">
+        <ul className="tw:hidden tw:items-center tw:gap-8 tw:text-sm tw:font-medium tw:text-neutral-800 tw:md:flex">
           {links.map((link) => (
             <li key={link.label}>
-              <a href={link.href} className="hover:text-neutral-500">
+              <a href={link.href} className="tw:hover:text-neutral-500">
                 {link.label}
               </a>
             </li>
@@ -23,11 +25,11 @@ export default function Navbar() {
           <li>
             <button
               type="button"
-              className="flex items-center gap-1 hover:text-neutral-500"
+              className="tw:flex tw:items-center tw:gap-1 tw:hover:text-neutral-500"
             >
               Eventos
               <svg
-                className="size-4"
+                className="tw:size-4"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -39,16 +41,16 @@ export default function Navbar() {
           </li>
         </ul>
 
-        <div className="flex items-center gap-3">
+        <div className="tw:flex tw:items-center tw:gap-3">
           <a
             href="/registro"
-            className="rounded-md border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-900 hover:bg-neutral-50"
+            className="tw:rounded-md tw:border tw:border-neutral-300 tw:px-4 tw:py-2 tw:text-sm tw:font-medium tw:text-neutral-900 tw:hover:bg-neutral-50"
           >
             Registro
           </a>
           <a
             href="/contacto"
-            className="rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-700"
+            className="tw:rounded-md tw:bg-neutral-900 tw:px-4 tw:py-2 tw:text-sm tw:font-medium tw:text-white tw:hover:bg-neutral-700"
           >
             Contacto
           </a>

@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { categorias, cursos } from '../../data/cursos'
+import SectionHeading from '../SectionHeading'
 import CourseCard from './CourseCard'
 
 export default function AgendaCursos() {
@@ -11,24 +12,21 @@ export default function AgendaCursos() {
   }, [categoriaActiva])
 
   return (
-    <section className="mx-auto max-w-6xl px-6 py-20">
-      <p className="text-sm font-semibold text-neutral-500">Tagline</p>
-      <h2 className="mt-2 text-3xl font-medium tracking-tight text-neutral-900 md:text-4xl">
-        Cursos disponibles
-      </h2>
-      <p className="mt-3 max-w-2xl text-neutral-600">
-        Explora el catálogo completo y filtra por categoría para encontrar el
-        curso que se ajusta a lo que buscas.
-      </p>
+    <section className="tw:mx-auto tw:max-w-6xl tw:px-6 tw:py-20">
+      <SectionHeading
+        label="Tagline"
+        title="Cursos disponibles"
+        description="Explora el catálogo completo y filtra por categoría para encontrar el curso que se ajusta a lo que buscas."
+      />
 
-      <div className="mt-8 flex flex-wrap items-center gap-3">
+      <div className="tw:mt-8 tw:flex tw:flex-wrap tw:items-center tw:gap-3">
         <button
           type="button"
           onClick={() => setCategoriaActiva(null)}
-          className={`rounded-md border px-4 py-2 text-sm font-medium ${
+          className={`tw:rounded-md tw:border tw:px-4 tw:py-2 tw:text-sm tw:font-medium ${
             categoriaActiva === null
-              ? 'border-neutral-900 bg-neutral-900 text-white'
-              : 'border-neutral-300 text-neutral-900 hover:bg-neutral-50'
+              ? 'tw:border-neutral-900 tw:bg-neutral-900 tw:text-white'
+              : 'tw:border-neutral-300 tw:text-neutral-900 tw:hover:bg-neutral-50'
           }`}
         >
           View all
@@ -38,10 +36,10 @@ export default function AgendaCursos() {
             key={categoria.id}
             type="button"
             onClick={() => setCategoriaActiva(categoria.id)}
-            className={`px-2 py-2 text-sm font-medium ${
+            className={`tw:px-2 tw:py-2 tw:text-sm tw:font-medium ${
               categoriaActiva === categoria.id
-                ? 'text-neutral-900 underline underline-offset-4'
-                : 'text-neutral-500 hover:text-neutral-900'
+                ? 'tw:text-neutral-900 tw:underline tw:underline-offset-4'
+                : 'tw:text-neutral-500 tw:hover:text-neutral-900'
             }`}
           >
             {categoria.nombre}
@@ -49,13 +47,13 @@ export default function AgendaCursos() {
         ))}
       </div>
 
-      <div className="mt-8 space-y-4">
+      <div className="tw:mt-8 tw:space-y-4">
         {cursosFiltrados.map((curso) => (
           <CourseCard key={curso.id} curso={curso} />
         ))}
 
         {cursosFiltrados.length === 0 && (
-          <p className="border border-dashed border-neutral-300 p-8 text-center text-neutral-500">
+          <p className="tw:border tw:border-dashed tw:border-neutral-300 tw:p-8 tw:text-center tw:text-neutral-500">
             No hay cursos disponibles en esta categoría por ahora.
           </p>
         )}

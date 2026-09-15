@@ -9,9 +9,9 @@ import Contacto from '../components/Contacto'
 
 export default function CursosPage() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="tw:flex tw:min-h-screen tw:flex-col">
       <Navbar />
-      <main className="flex-1">
+      <main className="tw:flex-1">
         <Hero />
         <AgendaCursos />
         <Ventajas />

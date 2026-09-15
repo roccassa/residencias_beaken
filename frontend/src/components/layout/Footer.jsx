@@ -1,60 +1,98 @@
-const columns = [
-  {
-    title: 'Explora',
-    links: ['Cursos', 'Talleres', 'Eventos', 'Registro', 'Inicio'],
-  },
-  {
-    title: 'Conecta',
-    links: ['WhatsApp', 'Instagram', 'Facebook', 'Contacto', 'Preguntas'],
-  },
-  {
-    title: 'Síguenos',
-    links: ['Facebook', 'Instagram', 'X', 'LinkedIn', 'Youtube'],
-  },
+import logotipo from '../../assets/images/logotipo-transparente.png'
+
+const unidades = [
+  { label: 'Agency', href: '#' },
+  { label: 'Lab', href: '#' },
+  { label: 'Academy', href: '#' },
+  { label: 'Networking', href: '#' },
 ]
+
+const ecosistema = [
+  { label: 'Origo Beaken', href: '#' },
+  { label: 'Aliados', href: '#' },
+  { label: 'Mentores', href: '#' },
+  { label: 'Contacto', href: '#contacto' },
+]
+
+function FooterColumn({ title, links }) {
+  return (
+    <div>
+      <h3 className="tw:font-mono tw:text-xs tw:uppercase tw:tracking-widest tw:text-slate-400">
+        {title}
+      </h3>
+      <ul className="tw:mt-4 tw:space-y-3">
+        {links.map((link) => (
+          <li key={link.label}>
+            <a href={link.href} className="tw:text-white tw:hover:text-slate-300">
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
 
 export default function Footer() {
   return (
-    <footer className="border-t border-neutral-200">
-      <div className="mx-auto max-w-6xl px-6 py-16">
-        <div className="flex flex-col justify-between gap-12 md:flex-row">
-          <a href="/" className="font-serif text-xl italic">
-            Logo
-          </a>
+    <footer className="tw:relative tw:overflow-hidden tw:border-t-4 tw:border-rose-500 tw:bg-[#0f1b2e] tw:text-white">
+      <span
+        aria-hidden="true"
+        className="tw:pointer-events-none tw:absolute tw:left-4 tw:top-1/3 tw:select-none tw:whitespace-nowrap tw:text-[9rem] tw:font-black tw:leading-none tw:tracking-tight tw:text-white/[0.04] tw:sm:text-[13rem]"
+      >
+        BEAKEN
+      </span>
 
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-16">
-            {columns.map((col) => (
-              <div key={col.title}>
-                <h3 className="mb-3 text-sm font-semibold text-neutral-900">
-                  {col.title}
-                </h3>
-                <ul className="space-y-2 text-sm text-neutral-600">
-                  {col.links.map((link) => (
-                    <li key={link}>
-                      <a href="#" className="hover:text-neutral-900">
-                        {link}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+      <div className="tw:relative tw:mx-auto tw:max-w-6xl tw:px-6 tw:py-16">
+        <div className="tw:grid tw:gap-12 tw:md:grid-cols-[1.3fr_1fr_1fr_1fr]">
+          <div>
+            <a href="/" className="tw:inline-block">
+              <img
+                src={logotipo}
+                alt="Beaken"
+                className="tw:h-8 tw:w-auto tw:brightness-0 tw:invert"
+              />
+            </a>
+            <p className="tw:mt-4 tw:max-w-xs tw:font-mono tw:text-xs tw:uppercase tw:tracking-widest tw:text-slate-400">
+              Inteligencia de negocios aplicada · Diagnóstico · Ejecución ·
+              Adopción
+            </p>
+            <div className="tw:mt-6 tw:inline-flex tw:items-center tw:gap-2 tw:rounded-full tw:border tw:border-slate-600 tw:px-3 tw:py-1.5 tw:font-mono tw:text-xs tw:uppercase tw:tracking-widest tw:text-slate-300">
+              <span className="tw:size-1.5 tw:rounded-full tw:bg-rose-500" />
+              Agendando Q2 2026
+            </div>
+          </div>
+
+          <FooterColumn title="Unidades" links={unidades} />
+          <FooterColumn title="Ecosistema" links={ecosistema} />
+
+          <div>
+            <h3 className="tw:font-mono tw:text-xs tw:uppercase tw:tracking-widest tw:text-slate-400">
+              Base
+            </h3>
+            <ul className="tw:mt-4 tw:space-y-3">
+              <li>
+                <a
+                  href="mailto:hola@beaken.mx"
+                  className="tw:text-white tw:hover:text-slate-300"
+                >
+                  hola@beaken.mx
+                </a>
+              </li>
+              <li className="tw:font-semibold tw:text-white">León, Guanajuato</li>
+              <li className="tw:text-slate-400">Operación remota LATAM</li>
+              <li>
+                <a href="#" className="tw:text-white tw:hover:text-slate-300">
+                  Aviso de Privacidad
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col-reverse items-center justify-between gap-4 border-t border-neutral-200 pt-6 text-sm text-neutral-500 sm:flex-row">
-          <p>© 2026 Catálogo de Cursos y Eventos. Todos los derechos reservados.</p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-neutral-900">
-              Privacidad
-            </a>
-            <a href="#" className="hover:text-neutral-900">
-              Términos de servicio
-            </a>
-            <a href="#" className="hover:text-neutral-900">
-              Cookies
-            </a>
-          </div>
+        <div className="tw:mt-27 tw:flex tw:flex-col-reverse tw:items-center tw:justify-between tw:gap-3 tw:border-t tw:border-white/10 tw:pt-6 tw:font-mono tw:text-xs tw:uppercase tw:tracking-widest tw:text-slate-500 tw:sm:flex-row">
+          <p>© 2026 Beaken · Inteligencia de negocios aplicada</p>
+          <p>v.26.04 · beaken.agency</p>
         </div>
       </div>
     </footer>
