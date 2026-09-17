@@ -1,19 +1,19 @@
 import Navbar from '../components/layout/Navbar'
 import Footer from '../components/layout/Footer'
-import Hero from '../components/cursos/Hero'
-import AgendaCursos from '../components/cursos/AgendaCursos'
-import Ventajas from '../components/cursos/Ventajas'
+import Hero from '../components/talleres/Hero'
+import AgendaTalleres from '../components/talleres/AgendaTalleres'
+import Ventajas from '../components/talleres/Ventajas'
 import Proceso from '../components/Proceso'
 import CtaBanner from '../components/CtaBanner'
 import Contacto from '../components/Contacto'
 
-export default function CursosPage() {
+export default function TalleresPage() {
   return (
     <div className="tw:flex tw:min-h-screen tw:flex-col">
       <Navbar />
       <main className="tw:flex-1">
         <Hero />
-        <AgendaCursos />
+        <AgendaTalleres />
         <div className="tw:bg-indigo-50">
           <Ventajas />
         </div>

@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import logotipo from '../../assets/images/logotipo.png'
 
 const links = [
@@ -6,13 +8,21 @@ const links = [
   { label: 'Academy', href: '#' },
 ]
 
+const networkingLinks = [
+  { label: 'Cursos', to: '/cursos' },
+  { label: 'Talleres', to: '/talleres' },
+  { label: 'Eventos', to: '#' },
+]
+
 export default function Navbar() {
+  const [open, setOpen] = useState(false)
+
   return (
     <header className="tw:border-b tw:border-neutral-200">
       <nav className="tw:mx-auto tw:flex tw:max-w-6xl tw:items-center tw:justify-between tw:px-6 tw:py-6">
-        <a href="/">
+        <Link to="/">
           <img src={logotipo} alt="Beaken" className="tw:h-8 tw:w-auto" />
-        </a>
+        </Link>
 
         <ul className="tw:hidden tw:items-center tw:gap-8 tw:text-sm tw:font-medium tw:text-neutral-800 tw:md:flex">
           {links.map((link) => (
@@ -22,9 +32,10 @@ export default function Navbar() {
               </a>
             </li>
           ))}
-          <li>
+          <li className="tw:relative">
             <button
               type="button"
+              onClick={() => setOpen((v) => !v)}
               className="tw:flex tw:items-center tw:gap-1 tw:hover:text-neutral-500"
             >
               Eventos
@@ -38,6 +49,22 @@ export default function Navbar() {
                 <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
+
+            {open && (
+              <ul className="tw:absolute tw:left-0 tw:top-full tw:z-10 tw:mt-2 tw:w-40 tw:rounded-md tw:border tw:border-neutral-200 tw:bg-white tw:py-1 tw:shadow-md">
+                {networkingLinks.map((item) => (
+                  <li key={item.label}>
+                    <Link
+                      to={item.to}
+                      onClick={() => setOpen(false)}
+                      className="tw:block tw:px-4 tw:py-2 tw:text-neutral-800 tw:hover:bg-neutral-50"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
         </ul>
 

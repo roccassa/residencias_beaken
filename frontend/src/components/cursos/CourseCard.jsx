@@ -41,7 +41,7 @@ export default function CourseCard({ curso }) {
         disabled={agotado}
         className="tw:shrink-0 tw:rounded-md tw:border tw:border-neutral-300 tw:px-4 tw:py-2 tw:text-sm tw:font-medium tw:text-neutral-900 tw:hover:bg-neutral-50 tw:disabled:cursor-not-allowed tw:disabled:border-neutral-200 tw:disabled:text-neutral-400 tw:disabled:hover:bg-transparent"
       >
-        {agotado ? 'Agotado' : 'Save my spot'}
+        {agotado ? 'Agotado' : 'Inscribirme'}
       </button>
     </article>
   )

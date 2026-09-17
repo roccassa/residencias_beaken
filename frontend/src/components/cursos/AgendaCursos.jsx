@@ -29,7 +29,7 @@ export default function AgendaCursos() {
               : 'tw:border-neutral-300 tw:text-neutral-900 tw:hover:bg-neutral-50'
           }`}
         >
-          View all
+          Ver Todo
         </button>
         {categorias.map((categoria) => (
           <button
