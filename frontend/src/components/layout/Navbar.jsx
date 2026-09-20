@@ -11,7 +11,7 @@ const links = [
 const networkingLinks = [
   { label: 'Cursos', to: '/cursos' },
   { label: 'Talleres', to: '/talleres' },
-  { label: 'Eventos', to: '#' },
+  { label: 'Eventos', to: '/eventos' },
 ]
 
 export default function Navbar() {

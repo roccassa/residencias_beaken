@@ -67,7 +67,7 @@ export default function Ventajas() {
         />
       </div>
 
-      <div className="tw:mt-12 tw:grid tw:gap-px tw:overflow-hidden tw:border tw:border-neutral-200 tw:bg-neutral-200 sm:tw:grid-cols-2 lg:tw:grid-cols-4">
+      <div className="tw:mt-12 tw:grid tw:gap-px tw:overflow-hidden tw:border tw:border-neutral-200 tw:bg-neutral-200 tw:sm:grid-cols-2 tw:lg:grid-cols-4">
         {ventajas.map(({ icon: Icon, titulo, descripcion }) => (
           <div key={titulo} className="tw:flex tw:flex-col tw:justify-between tw:bg-white tw:p-8">
             <div>

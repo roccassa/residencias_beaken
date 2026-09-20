@@ -26,7 +26,7 @@ export default function AgendaTalleres() {
 
   return (
     <section className="tw:mx-auto tw:max-w-6xl tw:px-6 tw:py-20">
-      <div className="tw:flex tw:flex-col tw:justify-between tw:gap-4 sm:tw:flex-row sm:tw:items-end">
+      <div className="tw:flex tw:flex-col tw:justify-between tw:gap-4 tw:sm:flex-row tw:sm:items-end">
         <SectionHeading
           label="Talleres"
           title="Formación para todos"

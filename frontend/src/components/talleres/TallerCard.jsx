@@ -5,7 +5,7 @@ export default function TallerCard({ taller }) {
   const fecha = new Date(taller.fechaInicio)
 
   return (
-    <article className="tw:w-72 tw:shrink-0 tw:snap-start sm:tw:w-80">
+    <article className="tw:w-72 tw:shrink-0 tw:snap-start tw:sm:w-80">
       <div className="tw:relative tw:flex tw:aspect-video tw:items-center tw:justify-center tw:bg-neutral-200">
         <svg
           className="tw:size-10 tw:text-neutral-400"

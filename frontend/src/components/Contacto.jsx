@@ -3,7 +3,7 @@ import SectionHeading from './SectionHeading'
 const canales = [
   {
     titulo: 'Email',
-    descripcion: 'Escríbenos por WhatsApp y resolvemos',
+    descripcion: 'Escríbenos sin compromiso',
     valor: 'hola@catalogo.com',
     href: 'mailto:hola@catalogo.com',
     icon: (
@@ -15,8 +15,7 @@ const canales = [
   },
   {
     titulo: 'Teléfono',
-    descripcion:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.',
+    descripcion: 'Llámanos o envía WhatsApp',
     valor: '+34 555 000 000',
     href: 'tel:+34555000000',
     icon: (
@@ -27,8 +26,7 @@ const canales = [
   },
   {
     titulo: 'Oficina',
-    descripcion:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.',
+    descripcion: 'Visítanos en nuestras instalaciones',
     valor: 'Calle Mayor 123, Madrid, España',
     href: '#',
     icon: (
