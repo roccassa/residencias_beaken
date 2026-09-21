@@ -1,3 +1,5 @@
+import agenda from '../../assets/images/agenda.jpg'
+
 const iconProps = {
   className: 'tw:size-6',
   viewBox: '0 0 24 24',
@@ -105,17 +107,11 @@ export default function Ventajas() {
     <section className="tw:mx-auto tw:max-w-6xl tw:px-6 tw:py-20">
       <div className="tw:grid tw:items-center tw:gap-12 tw:md:grid-cols-2">
         <div className="tw:flex tw:aspect-square tw:items-center tw:justify-center tw:bg-neutral-200">
-          <svg
-            className="tw:size-14 tw:text-neutral-400"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-          >
-            <rect x="3" y="3" width="18" height="18" rx="2" />
-            <circle cx="8.5" cy="8.5" r="1.5" />
-            <path d="m21 15-5-5L5 21" />
-          </svg>
+          <img
+              src={agenda}  
+              alt=""
+              className="tw:size-full tw:min-h-48 tw:object-cover"
+            />
         </div>
 
         <div>

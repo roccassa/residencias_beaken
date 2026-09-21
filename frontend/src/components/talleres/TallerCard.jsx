@@ -7,18 +7,13 @@ export default function TallerCard({ taller }) {
   return (
     <article className="tw:w-72 tw:shrink-0 tw:snap-start tw:sm:w-80">
       <div className="tw:relative tw:flex tw:aspect-video tw:items-center tw:justify-center tw:bg-neutral-200">
-        <svg
-          className="tw:size-10 tw:text-neutral-400"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <rect x="3" y="3" width="18" height="18" rx="2" />
-          <circle cx="8.5" cy="8.5" r="1.5" />
-          <path d="m21 15-5-5L5 21" />
-        </svg>
-
+       {taller.imagen && (
+          <img
+            src={taller.imagen}
+            alt={taller.titulo}
+            className="tw:absolute tw:inset-0 tw:size-full tw:object-cover"
+          />
+        )}
         <div className="tw:absolute tw:right-3 tw:top-3 tw:rounded-md tw:bg-white tw:px-3 tw:py-1.5 tw:text-center tw:shadow-sm">
           <p className="tw:text-[10px] tw:font-medium tw:uppercase tw:text-neutral-500">
             {taller.duracion}

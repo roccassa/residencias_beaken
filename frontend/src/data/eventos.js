@@ -65,4 +65,18 @@ export const eventos = [
     capacidadMaxima: 80,
     inscritosConfirmados: 30,
   },
+  {
+    id: 'evento-5',
+    titulo: 'Charla sobre business skills',
+    categoriaId: 'cat-ev-3',
+    descripcion:
+      'Charlas cortas sobre las habilidades mas importantes para tu negocio.',
+    modalidad: 'virtual',
+    ubicacion: null,
+    fechaInicio: '2024-02-15T18:30:00',
+    costo: 50,
+    moneda: 'MXN',
+    capacidadMaxima: 80,
+    inscritosConfirmados: 30,
+  },
 ]
