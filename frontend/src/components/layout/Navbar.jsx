@@ -69,12 +69,12 @@ export default function Navbar() {
         </ul>
 
         <div className="tw:flex tw:items-center tw:gap-3">
-          <a
-            href="/registro"
+          <Link
+            to="/registro"
             className="tw:rounded-md tw:border tw:border-neutral-300 tw:px-4 tw:py-2 tw:text-sm tw:font-medium tw:text-neutral-900 tw:hover:bg-neutral-50"
           >
             Registro
-          </a>
+          </Link>
           <a
             href="/contacto"
             className="tw:rounded-md tw:bg-neutral-900 tw:px-4 tw:py-2 tw:text-sm tw:font-medium tw:text-white tw:hover:bg-neutral-700"

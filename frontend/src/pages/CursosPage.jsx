@@ -14,11 +14,11 @@ export default function CursosPage() {
       <main className="tw:flex-1">
         <Hero />
         <AgendaCursos />
-        <div className="tw:bg-indigo-50">
+        <div className="tw:bg-fondo-claro-secciones">
           <Ventajas />
         </div>
         <Proceso />
-        <div className="tw:bg-indigo-50">
+        <div className="tw:bg-fondo-claro-secciones">
           <CtaBanner />
         </div>
         <Contacto />

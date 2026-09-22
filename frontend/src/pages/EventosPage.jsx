@@ -13,14 +13,14 @@ export default function EventosPage() {
       <main className="tw:flex-1">
         <Hero />
         <AgendaEventos />
-        <div className="tw:bg-blue-50">
+        <div className="tw:bg-fondo-claro-secciones">
           <Ventajas />
         </div>
         <CtaBanner
           description="Los cupos son limitados y las fechas se confirman rápido. No dejes pasar la oportunidad de aprender algo nuevo."
           primaryLabel="Registrarse"
         />
-        <div className="tw:bg-blue-50">
+        <div>
           <Contacto />
         </div>
       </main>
