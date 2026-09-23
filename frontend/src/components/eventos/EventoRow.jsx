@@ -1,5 +1,10 @@
+import { Link } from 'react-router-dom'
+
 const dayName = new Intl.DateTimeFormat('es', { weekday: 'short' })
 const monthYear = new Intl.DateTimeFormat('es', { month: 'short', year: 'numeric' })
+
+const botonClass =
+  'tw:shrink-0 tw:rounded-md tw:border tw:border-neutral-300 tw:px-4 tw:py-2 tw:text-sm tw:font-medium tw:text-neutral-900 tw:hover:bg-neutral-50'
 
 export default function EventoRow({ evento }) {
   const fecha = new Date(evento.fechaInicio)
@@ -36,13 +41,19 @@ export default function EventoRow({ evento }) {
         </div>
       </div>
 
-      <button
-        type="button"
-        disabled={agotado}
-        className="tw:shrink-0 tw:rounded-md tw:border tw:border-neutral-300 tw:px-4 tw:py-2 tw:text-sm tw:font-medium tw:text-neutral-900 tw:hover:bg-neutral-50 tw:disabled:cursor-not-allowed tw:disabled:border-neutral-200 tw:disabled:text-neutral-400 tw:disabled:hover:bg-transparent"
-      >
-        {agotado ? 'Agotado' : 'Inscribirme'}
-      </button>
+      {agotado ? (
+        <button
+          type="button"
+          disabled
+          className={`${botonClass} tw:cursor-not-allowed tw:border-neutral-200 tw:text-neutral-400 tw:hover:bg-transparent`}
+        >
+          Agotado
+        </button>
+      ) : (
+        <Link to={`/registro?actividad=${evento.id}`} className={botonClass}>
+          Inscribirme
+        </Link>
+      )}
     </article>
   )
 }

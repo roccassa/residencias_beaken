@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { cursos } from '../../data/cursos'
 import { talleres } from '../../data/talleres'
 import { eventos } from '../../data/eventos'
@@ -29,6 +30,8 @@ const estaAgotada = (item) => item.inscritosConfirmados >= item.capacidadMaxima
 
 export default function FormularioInscripcion() {
   const [enviado, setEnviado] = useState(false)
+  const [searchParams] = useSearchParams()
+  const actividadPreseleccionada = searchParams.get('actividad') || ''
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -80,7 +83,13 @@ export default function FormularioInscripcion() {
           </div>
 
           <Field label="Elige un curso, taller o evento" htmlFor="actividad" required>
-            <select id="actividad" name="actividad" required defaultValue="" className={inputClass}>
+            <select
+              id="actividad"
+              name="actividad"
+              required
+              defaultValue={actividadPreseleccionada}
+              className={inputClass}
+            >
               <option value="" disabled>
                 Selecciona una opción
               </option>

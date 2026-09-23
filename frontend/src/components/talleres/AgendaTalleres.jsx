@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { talleres } from '../../data/talleres'
 import SectionHeading from '../SectionHeading'
 import TallerCard from './TallerCard'
@@ -33,12 +34,12 @@ export default function AgendaTalleres() {
           title="Formación para todos"
           description="Elige entre presencial u online. Aparta tu lugar hoy."
         />
-        <a
-          href="#"
+        <Link
+          to="/registro"
           className="tw:inline-flex tw:w-fit tw:h-fit tw:shrink-0 tw:items-center tw:rounded-md tw:bg-neutral-900 tw:px-4 tw:py-2 tw:text-sm tw:font-medium tw:text-white tw:hover:bg-neutral-700"
         >
           Inscribirme
-        </a>
+        </Link>
       </div>
 
       <div

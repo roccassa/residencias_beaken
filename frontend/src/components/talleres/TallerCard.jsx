@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const dayNumber = new Intl.DateTimeFormat('es', { day: '2-digit' })
 const month = new Intl.DateTimeFormat('es', { month: 'short' })
 
@@ -38,13 +40,13 @@ export default function TallerCard({ taller }) {
         {taller.descripcion}
       </p>
 
-      <a
-        href="#"
-        className="tw:mt-1 tw:inline-flex  tw:gap-1 tw:text-sm tw:font-medium tw:text-neutral-900 tw:hover:text-neutral-500"
+      <Link
+        to={`/registro?actividad=${taller.id}`}
+        className="tw:mt-1 tw:inline-flex tw:gap-1 tw:text-sm tw:font-medium tw:text-neutral-900 tw:hover:text-neutral-500"
       >
         Inscribirme
         <span aria-hidden="true">›</span>
-      </a>
+      </Link>
     </article>
   )
 }

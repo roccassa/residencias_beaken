@@ -50,10 +50,7 @@ export default function Proceso({ variant }) {
         >
           Registrarse
         </a>
-        <a href="#" className="tw:flex tw:items-center tw:gap-1 tw:text-sm tw:font-medium tw:text-neutral-900 tw:hover:text-neutral-500">
-          Más
-          <span aria-hidden="true">›</span>
-        </a>
+
       </div>
     </section>
   )
