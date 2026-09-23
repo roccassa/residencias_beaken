@@ -8,9 +8,17 @@ export default function CtaBanner({
     <section className="tw:mx-auto tw:max-w-6xl tw:px-6 tw:py-10">
       <div className="tw:grid tw:overflow-hidden tw:border tw:border-neutral-200 tw:sm:grid-cols-2">
         <div className="tw:flex tw:flex-col tw:justify-center tw:gap-6 tw:p-10">
-          <h2 className="tw:text-2xl tw:font-medium tw:tracking-tight tw:text-neutral-900 tw:md:text-3xl">
-            Tu lugar te espera
-          </h2>
+          <div>
+            <div className="tw:inline-flex tw:items-center tw:gap-2">
+              <span className="tw:size-1.5 tw:shrink-0 tw:rounded-full tw:bg-rose-500" />
+              <p className="tw:text-xs tw:font-semibold tw:uppercase tw:tracking-widest tw:text-slate-500">
+                Únete
+              </p>
+            </div>
+            <h2 className="tw:mt-3 tw:font-display tw:text-3xl tw:font-semibold tw:leading-tight tw:tracking-tight tw:text-fondo-oscuro-secciones tw:md:text-[52px]">
+              Tu lugar te espera
+            </h2>
+          </div>
           <p className="tw:text-neutral-600">{description}</p>
           <div className="tw:flex tw:flex-wrap tw:gap-3">
             <a

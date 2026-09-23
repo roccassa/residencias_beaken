@@ -38,10 +38,11 @@ const canales = [
   },
 ]
 
-export default function Contacto() {
+export default function Contacto({ variant }) {
   return (
     <section id="contacto" className="tw:mx-auto tw:max-w-6xl tw:px-6 tw:py-20 tw:text-center">
       <SectionHeading
+        variant={variant}
         align="center"
         label="Contacto"
         title="Hablemos"

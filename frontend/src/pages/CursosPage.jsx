@@ -14,7 +14,7 @@ export default function CursosPage() {
       <main className="tw:flex-1">
         <Hero />
         <AgendaCursos />
-        <div className="tw:bg-fondo-claro-secciones">
+        <div className="tw:bg-fondo-claro-secciones"> 
           <Ventajas />
         </div>
         <Proceso />

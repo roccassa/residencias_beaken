@@ -15,7 +15,7 @@ const preguntas = [
   {
     pregunta: '¿Cómo pago?',
     respuesta:
-      'Aceptamos transferencia y pago con tarjeta. Recibirás las instrucciones al confirmar tu inscripción.',
+      'Los pagos se manejan mediante pago con tarjeta. Recibirás las instrucciones al confirmar tu inscripción.',
   },
   {
     pregunta: '¿Puedo cancelar?',

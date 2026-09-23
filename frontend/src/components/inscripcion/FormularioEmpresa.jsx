@@ -1,3 +1,5 @@
+import imagenSumarEmpresa from '../../assets/images/imagen2.jpg';
+
 import { useState } from 'react'
 import SectionHeading from '../SectionHeading'
 
@@ -49,17 +51,11 @@ export default function FormularioEmpresa() {
         </div>
 
         <div className="tw:flex tw:aspect-4/3 tw:items-center tw:justify-center tw:bg-neutral-200">
-          <svg
-            className="tw:size-14 tw:text-neutral-400"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-          >
-            <rect x="3" y="3" width="18" height="18" rx="2" />
-            <circle cx="8.5" cy="8.5" r="1.5" />
-            <path d="m21 15-5-5L5 21" />
-          </svg>
+          <img
+            src={imagenSumarEmpresa}  
+            alt=""
+            className="tw:size-full tw:min-h-48 tw:object-cover"
+          />
         </div>
       </div>
     </section>

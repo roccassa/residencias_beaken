@@ -1,13 +1,5 @@
 import SectionHeading from '../SectionHeading'
 
-function IconCheckBadge() {
-  return (
-    <svg className="tw:size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <path d="m9 12 2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="12" cy="12" r="9" />
-    </svg>
-  )
-}
 
 function IconInfinity() {
   return (
@@ -37,7 +29,6 @@ function IconHeadset() {
 }
 
 const ventajas = [
-
   {
     icon: IconInfinity,
     titulo: 'Materiales incluidos en el precio',
@@ -60,6 +51,7 @@ export default function Ventajas() {
     <section className="tw:mx-auto tw:max-w-6xl tw:px-6 tw:py-20">
       <div className="tw:border-t tw:border-neutral-200 tw:pt-10">
         <SectionHeading
+          variant="dot"
           align="center"
           label="Ventajas"
           title="Aprende sin fricción"
@@ -67,7 +59,7 @@ export default function Ventajas() {
         />
       </div>
 
-      <div className="tw:mt-12 tw:grid tw:gap-px tw:overflow-hidden tw:border tw:border-neutral-200 tw:bg-neutral-200 tw:sm:grid-cols-2 tw:lg:grid-cols-4">
+      <div className="tw:mt-12 tw:grid tw:gap-px tw:overflow-hidden tw:border tw:border-neutral-200 tw:bg-neutral-200 tw:sm:grid-cols-2 tw:lg:grid-cols-3">
         {ventajas.map(({ icon: Icon, titulo, descripcion }) => (
           <div key={titulo} className="tw:flex tw:flex-col tw:justify-between tw:bg-white tw:p-8">
             <div>
@@ -77,10 +69,7 @@ export default function Ventajas() {
               </h3>
               <p className="tw:mt-3 tw:text-sm tw:text-neutral-600">{descripcion}</p>
             </div>
-            <a href="#" className="tw:mt-6 tw:flex tw:items-center tw:gap-1 tw:text-sm tw:font-medium tw:text-neutral-900 tw:hover:text-neutral-500">
-              Más
-              <span aria-hidden="true">›</span>
-            </a>
+
           </div>
         ))}
       </div>

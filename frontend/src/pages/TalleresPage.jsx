@@ -17,11 +17,11 @@ export default function TalleresPage() {
         <div className="tw:bg-fondo-claro-secciones">
           <Ventajas />
         </div>
-        <Proceso />
+        <Proceso variant="dot" />
         <div className="tw:bg-fondo-claro-secciones">
           <CtaBanner />
         </div>
-        <Contacto />
+        <Contacto variant="dot" />
       </main>
       <Footer />
     </div>

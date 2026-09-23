@@ -2,6 +2,7 @@
 
 @theme {
   --font-sans: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Onest", "Inter", system-ui, sans-serif;
   --color-fondo-claro-secciones: rgb(245, 246, 248);  
   --color-fondo-oscuro-secciones: rgb(16, 41, 64); 
 }

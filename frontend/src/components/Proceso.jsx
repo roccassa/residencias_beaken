@@ -18,10 +18,11 @@ const pasos = [
   },
 ]
 
-export default function Proceso() {
+export default function Proceso({ variant }) {
   return (
     <section className="tw:mx-auto tw:max-w-6xl tw:px-6 tw:py-20 tw:text-center">
       <SectionHeading
+        variant={variant}
         align="center"
         label="Proceso"
         title="Así de simple es empezar"
