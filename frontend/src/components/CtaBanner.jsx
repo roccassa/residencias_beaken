@@ -27,12 +27,7 @@ export default function CtaBanner({
             >
               {primaryLabel}
             </a>
-            <a
-              href="#cursos"
-              className="tw:rounded-md tw:border tw:border-neutral-300 tw:px-5 tw:py-2.5 tw:text-sm tw:font-medium tw:text-neutral-900 tw:hover:bg-neutral-50"
-            >
-              Explorar
-            </a>
+
           </div>
           </div>
             <img
