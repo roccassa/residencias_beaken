@@ -1,46 +1,19 @@
 import SectionHeading from '../SectionHeading'
-
-
-function IconInfinity() {
-  return (
-    <svg className="tw:size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <path d="M6 15a3 3 0 1 1 0-6c2.5 0 4.5 3 6 3s3.5-3 6-3a3 3 0 1 1 0 6c-2.5 0-4.5-3-6-3s-3.5 3-6 3Z" />
-    </svg>
-  )
-}
-
-function IconRefresh() {
-  return (
-    <svg className="tw:size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <path d="M3 12a9 9 0 0 1 15.3-6.4L21 8M21 3v5h-5M21 12a9 9 0 0 1-15.3 6.4L3 16m0 5v-5h5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-function IconHeadset() {
-  return (
-    <svg className="tw:size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <path d="M4 13v-1a8 8 0 1 1 16 0v1" strokeLinecap="round" />
-      <rect x="3" y="13" width="4" height="6" rx="1.5" />
-      <rect x="17" y="13" width="4" height="6" rx="1.5" />
-      <path d="M19 19v1a3 3 0 0 1-3 3h-3" strokeLinecap="round" />
-    </svg>
-  )
-}
+import { Infinity as InfinityIcon, RefreshCw, Headset } from 'lucide-react'
 
 const ventajas = [
   {
-    icon: IconInfinity,
+    icon: InfinityIcon,
     titulo: 'Materiales incluidos en el precio',
     descripcion: 'No pagues extra. Todo lo necesario está cubierto.',
   },
   {
-    icon: IconRefresh,
+    icon: RefreshCw,
     titulo: 'Acceso a grabaciones de sesiones',
     descripcion: 'Repasa cuando quieras. Las clases quedan guardadas.',
   },
   {
-    icon: IconHeadset,
+    icon: Headset,
     titulo: 'Soporte directo con instructores',
     descripcion: 'Resuelve dudas rápido. Habla directo con quien enseña.',
   },
