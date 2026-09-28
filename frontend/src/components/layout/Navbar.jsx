@@ -38,7 +38,7 @@ export default function Navbar() {
               onClick={() => setOpen((v) => !v)}
               className="tw:flex tw:items-center tw:gap-1 tw:hover:text-neutral-500"
             >
-              Eventos
+              Comunidad
               <svg
                 className="tw:size-4"
                 viewBox="0 0 24 24"

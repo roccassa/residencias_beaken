@@ -1,12 +1,15 @@
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { talleres } from '../../data/talleres'
+import { useFetch } from '../../hooks/useFetch'
+import EstadoCarga from '../EstadoCarga'
 import SectionHeading from '../SectionHeading'
 import TallerCard from './TallerCard'
 
 export default function AgendaTalleres() {
   const trackRef = useRef(null)
   const [active, setActive] = useState(0)
+  const { data, cargando, error } = useFetch('/actividades?tipo=taller')
+  const talleres = data ?? []
 
   function scrollByCard(direction) {
     const track = trackRef.current
@@ -41,6 +44,12 @@ export default function AgendaTalleres() {
           Inscribirme
         </Link>
       </div>
+
+      {(cargando || error) && (
+        <div className="tw:mt-8">
+          <EstadoCarga cargando={cargando} error={error} />
+        </div>
+      )}
 
       <div
         ref={trackRef}

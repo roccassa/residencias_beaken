@@ -1,14 +1,27 @@
 import imagenSumarEmpresa from '../../assets/images/imagen2.jpg';
 
 import { useState } from 'react'
+import { apiPost } from '../../api/client'
 import SectionHeading from '../SectionHeading'
 
 export default function FormularioEmpresa() {
-  const [enviado, setEnviado] = useState(false)
+  const [resultado, setResultado] = useState(null)
+  const [enviando, setEnviando] = useState(false)
+  const [error, setError] = useState(null)
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    setEnviado(true)
+    const correo = new FormData(e.currentTarget).get('correo-empresa')
+    setEnviando(true)
+    setError(null)
+
+    try {
+      setResultado(await apiPost('/empresas/interes', { correo }))
+    } catch (err) {
+      setError(err)
+    } finally {
+      setEnviando(false)
+    }
   }
 
   return (
@@ -21,9 +34,9 @@ export default function FormularioEmpresa() {
             description="Déjanos tu correo y te contactamos para platicar cómo sumar a tu equipo."
           />
 
-          {enviado ? (
+          {resultado ? (
             <p role="status" className="tw:mt-8 tw:text-sm tw:font-medium tw:text-emerald-800">
-              ¡Gracias! Te contactaremos pronto.
+              {resultado.mensaje}
             </p>
           ) : (
             <form onSubmit={handleSubmit} className="tw:mt-8">
@@ -38,11 +51,17 @@ export default function FormularioEmpresa() {
                 />
                 <button
                   type="submit"
-                  className="tw:shrink-0 tw:rounded-md tw:bg-neutral-900 tw:px-5 tw:py-2.5 tw:text-sm tw:font-medium tw:text-white tw:hover:bg-neutral-700"
+                  disabled={enviando}
+                  className="tw:shrink-0 tw:rounded-md tw:bg-neutral-900 tw:px-5 tw:py-2.5 tw:text-sm tw:font-medium tw:text-white tw:hover:bg-neutral-700 tw:disabled:cursor-not-allowed tw:disabled:opacity-60"
                 >
-                  Enviar
+                  {enviando ? 'Enviando…' : 'Enviar'}
                 </button>
               </div>
+              {error && (
+                <p role="alert" className="tw:mt-3 tw:text-sm tw:text-rose-700">
+                  {error.campos?.correo ?? error.message}
+                </p>
+              )}
               <p className="tw:mt-3 tw:text-xs tw:text-neutral-500">
                 Al enviar aceptas nuestros términos y condiciones.
               </p>

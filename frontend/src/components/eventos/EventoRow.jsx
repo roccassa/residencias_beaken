@@ -8,7 +8,7 @@ const botonClass =
 
 export default function EventoRow({ evento }) {
   const fecha = new Date(evento.fechaInicio)
-  const agotado = evento.inscritosConfirmados >= evento.capacidadMaxima
+  const agotado = evento.agotada
 
   return (
     <article className="tw:flex tw:flex-col tw:gap-4 tw:border-b tw:border-neutral-300 tw:py-6 tw:sm:flex-row tw:sm:items-center tw:sm:justify-between">

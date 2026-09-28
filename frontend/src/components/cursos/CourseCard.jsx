@@ -8,7 +8,7 @@ const botonClass =
 
 export default function CourseCard({ curso }) {
   const fecha = new Date(curso.fechaInicio)
-  const agotado = curso.inscritosConfirmados >= curso.capacidadMaxima
+  const agotado = curso.agotada
 
   return (
     <article className="tw:flex tw:flex-col tw:gap-4 tw:border tw:border-neutral-200 tw:p-6 tw:sm:flex-row tw:sm:items-center tw:sm:justify-between">

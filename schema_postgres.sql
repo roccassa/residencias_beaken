@@ -9,11 +9,18 @@
 --   1. Cursos / talleres / eventos viven en UNA sola tabla (actividades) con
 --      columna "tipo", en vez de tres tablas separadas.
 --   2. El formulario "¿Tu empresa se quiere sumar?" del boceto de Inscripción
---      queda FUERA de este modelo (no se creó tabla de empresas).
+--      guarda solo el correo de contacto en la tabla "solicitudes_empresa"
+--      (cambio de la fase de backend; antes quedaba fuera del modelo).
 --   3. Cada actividad tiene una única fecha de inicio/fin (no hay tabla de
 --      sesiones/clases individuales).
 --   4. No hay roles de administrador/instructor con login: el catálogo se
 --      carga por otro medio. La tabla "usuarios" es solo para quien se inscribe.
+--   5. (Fase de backend) Un usuario puede existir SIN contraseña ni Google:
+--      la inscripción del sitio es pública y solo pide nombre y correo. La
+--      cuenta con login se completará cuando exista esa pantalla.
+--   6. (Fase de backend) "inscripciones" guarda el mensaje opcional del
+--      formulario, y "pagos" guarda el identificador de la preferencia de
+--      Mercado Pago (Checkout Pro) para la fase de pagos.
 --
 -- Agregados justificados (ver el documento adjunto para el detalle):
 --   - ubicaciones   (normaliza direcciones repetidas de actividades presenciales)
@@ -34,7 +41,7 @@ create type tipo_actividad_enum      as enum ('curso', 'taller', 'evento');
 create type modalidad_enum           as enum ('presencial', 'virtual');
 create type estado_actividad_enum    as enum ('borrador', 'publicada', 'cancelada', 'finalizada');
 create type estado_inscripcion_enum  as enum ('pendiente_pago', 'confirmada', 'cancelada', 'reembolsada', 'lista_espera');
-create type metodo_pago_enum         as enum ('tarjeta', 'transferencia');
+create type metodo_pago_enum         as enum ('tarjeta', 'transferencia', 'efectivo');
 create type estado_pago_enum         as enum ('pendiente', 'aprobado', 'rechazado', 'reembolsado');
 
 -- ----------------------------------------------------------------------------
@@ -49,8 +56,9 @@ end;
 $$ language plpgsql;
 
 -- ----------------------------------------------------------------------------
--- usuarios: cuentas que se inscriben a actividades (login por correo/contraseña
--- o "Continuar con Google", según el boceto de login)
+-- usuarios: personas que se inscriben a actividades. password_hash y google_id
+-- son opcionales: quien se inscribe desde el sitio aún no tiene cuenta con login
+-- (login por correo/contraseña o "Continuar con Google", según el boceto).
 -- ----------------------------------------------------------------------------
 create table usuarios (
     id              uuid primary key default gen_random_uuid(),
@@ -63,9 +71,7 @@ create table usuarios (
     fecha_registro  timestamptz not null default now(),
     activo          boolean not null default true,
     created_at      timestamptz not null default now(),
-    updated_at      timestamptz not null default now(),
-    constraint chk_usuarios_tiene_metodo_login
-        check (password_hash is not null or google_id is not null)
+    updated_at      timestamptz not null default now()
 );
 
 create trigger trg_usuarios_updated_at
@@ -158,6 +164,7 @@ create table inscripciones (
     actividad_id        uuid not null references actividades(id) on delete cascade,
     estado              estado_inscripcion_enum not null default 'pendiente_pago',
     fecha_inscripcion   timestamptz not null default now(),
+    mensaje             text,
     created_at          timestamptz not null default now(),
     updated_at          timestamptz not null default now(),
 
@@ -183,7 +190,8 @@ create table pagos (
     moneda                  char(3) not null default 'MXN',
     metodo_pago             metodo_pago_enum,
     pasarela                varchar(50),
-    referencia_pasarela     varchar(255),
+    preferencia_id          varchar(255), -- id de la preferencia de Checkout Pro
+    referencia_pasarela     varchar(255), -- id del pago que devuelve la pasarela
     estado                  estado_pago_enum not null default 'pendiente',
     fecha_pago              timestamptz,
     created_at              timestamptz not null default now(),
@@ -197,6 +205,16 @@ create index idx_pagos_estado on pagos (estado);
 create trigger trg_pagos_updated_at
     before update on pagos
     for each row execute function set_updated_at();
+
+-- ----------------------------------------------------------------------------
+-- solicitudes_empresa: correos que dejan las empresas en el formulario
+-- "¿Tu empresa se quiere sumar?" para que el equipo los contacte.
+-- ----------------------------------------------------------------------------
+create table solicitudes_empresa (
+    id          uuid primary key default gen_random_uuid(),
+    correo      varchar(255) not null,
+    created_at  timestamptz not null default now()
+);
 
 -- ----------------------------------------------------------------------------
 -- Vista: disponibilidad de cupos por actividad.

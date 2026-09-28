@@ -1,15 +1,19 @@
 import { useMemo, useState } from 'react'
-import { categoriasEventos, eventos } from '../../data/eventos'
+import { useFetch } from '../../hooks/useFetch'
+import EstadoCarga from '../EstadoCarga'
 import SectionHeading from '../SectionHeading'
 import EventoRow from './EventoRow'
 
 export default function AgendaEventos() {
   const [categoriaActiva, setCategoriaActiva] = useState(null)
+  const { data: eventos, cargando, error } = useFetch('/actividades?tipo=evento')
+  const { data: categorias } = useFetch('/categorias?tipo=evento')
 
   const eventosFiltrados = useMemo(() => {
+    if (!eventos) return []
     if (!categoriaActiva) return eventos
     return eventos.filter((evento) => evento.categoriaId === categoriaActiva)
-  }, [categoriaActiva])
+  }, [eventos, categoriaActiva])
 
   return (
     <section className="tw:mx-auto tw:max-w-6xl tw:px-6 tw:py-20">
@@ -31,7 +35,7 @@ export default function AgendaEventos() {
         >
           Ver Todo
         </button>
-        {categoriasEventos.map((categoria) => (
+        {(categorias ?? []).map((categoria) => (
           <button
             key={categoria.id}
             type="button"
@@ -48,11 +52,13 @@ export default function AgendaEventos() {
       </div>
 
       <div className="tw:mt-8 tw:border-t tw:border-neutral-300">
+        <EstadoCarga cargando={cargando} error={error} />
+
         {eventosFiltrados.map((evento) => (
           <EventoRow key={evento.id} evento={evento} />
         ))}
 
-        {eventosFiltrados.length === 0 && (
+        {!cargando && !error && eventosFiltrados.length === 0 && (
           <p className="tw:border-b tw:border-neutral-300 tw:py-8 tw:text-center tw:text-neutral-500">
             No hay eventos disponibles en esta categoría por ahora.
           </p>

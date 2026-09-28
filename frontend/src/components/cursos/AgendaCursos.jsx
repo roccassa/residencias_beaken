@@ -1,15 +1,19 @@
 import { useMemo, useState } from 'react'
-import { categorias, cursos } from '../../data/cursos'
+import { useFetch } from '../../hooks/useFetch'
+import EstadoCarga from '../EstadoCarga'
 import SectionHeading from '../SectionHeading'
 import CourseCard from './CourseCard'
 
 export default function AgendaCursos() {
   const [categoriaActiva, setCategoriaActiva] = useState(null)
+  const { data: cursos, cargando, error } = useFetch('/actividades?tipo=curso')
+  const { data: categorias } = useFetch('/categorias?tipo=curso')
 
   const cursosFiltrados = useMemo(() => {
+    if (!cursos) return []
     if (!categoriaActiva) return cursos
     return cursos.filter((curso) => curso.categoriaId === categoriaActiva)
-  }, [categoriaActiva])
+  }, [cursos, categoriaActiva])
 
   return (
     <section className="tw:mx-auto tw:max-w-6xl tw:px-6 tw:py-20">
@@ -31,7 +35,7 @@ export default function AgendaCursos() {
         >
           Ver Todo
         </button>
-        {categorias.map((categoria) => (
+        {(categorias ?? []).map((categoria) => (
           <button
             key={categoria.id}
             type="button"
@@ -48,11 +52,13 @@ export default function AgendaCursos() {
       </div>
 
       <div className="tw:mt-8 tw:space-y-4">
+        <EstadoCarga cargando={cargando} error={error} />
+
         {cursosFiltrados.map((curso) => (
           <CourseCard key={curso.id} curso={curso} />
         ))}
 
-        {cursosFiltrados.length === 0 && (
+        {!cargando && !error && cursosFiltrados.length === 0 && (
           <p className="tw:border tw:border-dashed tw:border-neutral-300 tw:p-8 tw:text-center tw:text-neutral-500">
             No hay cursos disponibles en esta categoría por ahora.
           </p>
