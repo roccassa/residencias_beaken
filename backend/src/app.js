@@ -1,15 +1,23 @@
 import express from 'express'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
 import { pool } from './db.js'
 import { HttpError } from './utils/errors.js'
 import actividades from './routes/actividades.js'
 import inscripciones from './routes/inscripciones.js'
 import empresas from './routes/empresas.js'
+import auth from './routes/auth.js'
 
 const app = express()
 
-app.use(cors({ origin: process.env.CORS_ORIGIN ?? 'http://localhost:5173' }))
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN ?? 'http://localhost:5173',
+    credentials: true,
+  }),
+)
 app.use(express.json({ limit: '50kb' }))
+app.use(cookieParser())
 
 app.get('/api/health', async (req, res) => {
   try {
@@ -23,6 +31,7 @@ app.get('/api/health', async (req, res) => {
 app.use('/api', actividades)
 app.use('/api', inscripciones)
 app.use('/api', empresas)
+app.use('/api', auth)
 
 app.use('/api', (req, res) => {
   res.status(404).json({ error: 'Ruta no encontrada' })

@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { apiPost } from '../../api/client'
+import { useAuth } from '../../auth/AuthContext'
 import { useFetch } from '../../hooks/useFetch'
+import Field, { inputClass } from '../CampoFormulario'
 import SectionHeading from '../SectionHeading'
 
 const grupos = [
@@ -10,23 +12,8 @@ const grupos = [
   { label: 'Eventos', tipo: 'evento' },
 ]
 
-const inputClass =
-  'tw:w-full tw:rounded-md tw:border tw:border-neutral-300 tw:bg-white tw:px-3 tw:py-2.5 tw:text-sm tw:text-neutral-900 tw:placeholder:text-neutral-400 tw:focus:border-blue-600 tw:focus:outline-none tw:focus:ring-1 tw:focus:ring-blue-600'
-
-function Field({ label, htmlFor, required, error, children }) {
-  return (
-    <div>
-      <label htmlFor={htmlFor} className="tw:mb-1.5 tw:block tw:text-sm tw:font-medium tw:text-neutral-800">
-        {label}
-        {required && <span className="tw:text-rose-500"> *</span>}
-      </label>
-      {children}
-      {error && <p className="tw:mt-1 tw:text-xs tw:text-rose-600">{error}</p>}
-    </div>
-  )
-}
-
 export default function FormularioInscripcion() {
+  const { usuario } = useAuth()
   const [searchParams] = useSearchParams()
   const [actividadId, setActividadId] = useState(searchParams.get('actividad') || '')
   const [resultado, setResultado] = useState(null)
@@ -86,16 +73,20 @@ export default function FormularioInscripcion() {
           </button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="tw:mt-10 tw:max-w-2xl tw:space-y-5">
+        <form
+          key={usuario?.id ?? 'invitado'}
+          onSubmit={handleSubmit}
+          className="tw:mt-10 tw:max-w-2xl tw:space-y-5"
+        >
           <div className="tw:grid tw:gap-5 tw:sm:grid-cols-2">
             <Field label="Nombre" htmlFor="nombre" required error={campos.nombre}>
-              <input id="nombre" name="nombre" type="text" required autoComplete="given-name" className={inputClass} />
+              <input id="nombre" name="nombre" type="text" required defaultValue={usuario?.nombre ?? ''} autoComplete="given-name" className={inputClass} />
             </Field>
             <Field label="Apellido" htmlFor="apellido" error={campos.apellido}>
-              <input id="apellido" name="apellido" type="text" autoComplete="family-name" className={inputClass} />
+              <input id="apellido" name="apellido" type="text" defaultValue={usuario?.apellido ?? ''} autoComplete="family-name" className={inputClass} />
             </Field>
             <Field label="Correo" htmlFor="correo" required error={campos.correo}>
-              <input id="correo" name="correo" type="email" required autoComplete="email" className={inputClass} />
+              <input id="correo" name="correo" type="email" required defaultValue={usuario?.correo ?? ''} autoComplete="email" className={inputClass} />
             </Field>
             <Field label="Teléfono" htmlFor="telefono" error={campos.telefono}>
               <input id="telefono" name="telefono" type="tel" autoComplete="tel" className={inputClass} />

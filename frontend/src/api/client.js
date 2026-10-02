@@ -11,7 +11,7 @@ export class ApiError extends Error {
 async function request(path, options) {
   let respuesta
   try {
-    respuesta = await fetch(`${BASE}${path}`, options)
+    respuesta = await fetch(`${BASE}${path}`, { credentials: 'include', ...options })
   } catch {
     throw new ApiError(
       'No pudimos conectar con el servidor. Intenta de nuevo en unos minutos.',

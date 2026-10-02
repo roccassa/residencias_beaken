@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Documento de seguimiento del desarrollo (no se sube a GitHub)
+Orden-de-creacion-frontend.docx

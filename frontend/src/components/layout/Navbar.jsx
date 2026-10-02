@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../../auth/AuthContext'
 import logotipo from '../../assets/images/logotipo.png'
 
 const links = [
@@ -16,6 +17,7 @@ const networkingLinks = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  const { usuario, cargando, logout } = useAuth()
 
   return (
     <header className="tw:border-b tw:border-neutral-200">
@@ -69,6 +71,26 @@ export default function Navbar() {
         </ul>
 
         <div className="tw:flex tw:items-center tw:gap-3">
+          {!cargando &&
+            (usuario ? (
+              <div className="tw:hidden tw:items-center tw:gap-3 tw:text-sm tw:sm:flex">
+                <span className="tw:text-neutral-600">Hola, {usuario.nombre.split(' ')[0]}</span>
+                <button
+                  type="button"
+                  onClick={() => logout().catch(() => {})}
+                  className="tw:cursor-pointer tw:font-medium tw:text-neutral-900 tw:underline tw:underline-offset-4 tw:hover:text-neutral-500"
+                >
+                  Cerrar sesión
+                </button>
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="tw:hidden tw:text-sm tw:font-medium tw:text-neutral-900 tw:hover:text-neutral-500 tw:sm:inline"
+              >
+                Iniciar sesión
+              </Link>
+            ))}
           <Link
             to="/registro"
             className="tw:rounded-md tw:border tw:border-neutral-300 tw:px-4 tw:py-2 tw:text-sm tw:font-medium tw:text-neutral-900 tw:hover:bg-neutral-50"
