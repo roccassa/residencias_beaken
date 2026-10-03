@@ -14,7 +14,7 @@ const TEXTOS = {
     destino: '/login?modo=registro',
   },
   registro: {
-    titulo: 'Empieza con tu nombre y correo',
+    titulo: 'Crea tu cuenta',
     descripcion: 'Necesitamos tus datos para enviarte la confirmación de tu inscripción.',
     boton: 'Registrarse',
     pregunta: '¿Ya tienes cuenta?',
@@ -22,6 +22,10 @@ const TEXTOS = {
     destino: '/login',
   },
 }
+
+// Ruta interna a la que volver tras entrar (por ejemplo la inscripción a una actividad).
+// Solo se aceptan rutas del propio sitio, nunca direcciones externas.
+const rutaSegura = (valor) => (valor && valor.startsWith('/') && !valor.startsWith('//') ? valor : null)
 
 export default function AuthCard() {
   const { usuario, cargando, login, registrar } = useAuth()
@@ -32,8 +36,12 @@ export default function AuthCard() {
   const modo = searchParams.get('modo') === 'registro' ? 'registro' : 'login'
   const textos = TEXTOS[modo]
   const campos = error?.campos ?? {}
+  const volver = rutaSegura(searchParams.get('volver'))
+  const destinoCambio = volver
+    ? `${textos.destino}${textos.destino.includes('?') ? '&' : '?'}volver=${encodeURIComponent(volver)}`
+    : textos.destino
 
-  if (usuario) return <Navigate to="/" replace />
+  if (usuario) return <Navigate to={volver ?? '/mis-cursos'} replace />
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -45,7 +53,10 @@ export default function AuthCard() {
       if (modo === 'registro') {
         await registrar({
           nombre: form.get('nombre'),
+          apellido: form.get('apellido'),
           correo: form.get('correo'),
+          telefono: form.get('telefono'),
+          telefonoConfirmacion: form.get('telefonoConfirmacion'),
           password: form.get('password'),
         })
       } else {
@@ -87,9 +98,14 @@ export default function AuthCard() {
 
             <form key={modo} onSubmit={handleSubmit} className="tw:mt-8 tw:space-y-5">
               {modo === 'registro' && (
-                <Field label="Nombre" htmlFor="nombre" required error={campos.nombre}>
-                  <input id="nombre" name="nombre" type="text" required autoComplete="name" className={inputClass} />
-                </Field>
+                <>
+                  <Field label="Nombre" htmlFor="nombre" required error={campos.nombre}>
+                    <input id="nombre" name="nombre" type="text" required autoComplete="given-name" className={inputClass} />
+                  </Field>
+                  <Field label="Apellido" htmlFor="apellido" required error={campos.apellido}>
+                    <input id="apellido" name="apellido" type="text" required autoComplete="family-name" className={inputClass} />
+                  </Field>
+                </>
               )}
 
               <Field label="Correo" htmlFor="correo" required error={campos.correo}>
@@ -103,6 +119,37 @@ export default function AuthCard() {
                   className={inputClass}
                 />
               </Field>
+
+              {modo === 'registro' && (
+                <>
+                  <Field
+                    label="Teléfono"
+                    htmlFor="telefono"
+                    required
+                    error={campos.telefono}
+                    hint="10 dígitos, o con lada internacional (+57…)"
+                  >
+                    <input id="telefono" name="telefono" type="tel" inputMode="tel" required autoComplete="tel" className={inputClass} />
+                  </Field>
+                  <Field
+                    label="Confirma tu teléfono"
+                    htmlFor="telefonoConfirmacion"
+                    required
+                    error={campos.telefonoConfirmacion}
+                  >
+                    <input
+                      id="telefonoConfirmacion"
+                      name="telefonoConfirmacion"
+                      type="tel"
+                      inputMode="tel"
+                      required
+                      autoComplete="off"
+                      onPaste={(e) => e.preventDefault()}
+                      className={inputClass}
+                    />
+                  </Field>
+                </>
+              )}
 
               <Field label="Contraseña" htmlFor="password" required error={campos.password}>
                 <input
@@ -140,7 +187,7 @@ export default function AuthCard() {
             <p className="tw:mt-6 tw:text-center tw:text-sm tw:text-neutral-600">
               {textos.pregunta}{' '}
               <Link
-                to={textos.destino}
+                to={destinoCambio}
                 onClick={() => setError(null)}
                 className="tw:font-medium tw:text-neutral-900 tw:underline tw:underline-offset-4"
               >

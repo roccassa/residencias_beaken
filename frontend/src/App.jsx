@@ -5,6 +5,8 @@ import TalleresPage from './pages/TalleresPage'
 import EventosPage from './pages/EventosPage'
 import InscripcionPage from './pages/InscripcionPage'
 import LoginPage from './pages/LoginPage'
+import MisCursosPage from './pages/MisCursosPage'
+import RutaProtegida from './components/auth/RutaProtegida'
 
 function App() {
   return (
@@ -17,6 +19,14 @@ function App() {
           <Route path="/eventos" element={<EventosPage />} />
           <Route path="/registro" element={<InscripcionPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/mis-cursos"
+            element={
+              <RutaProtegida>
+                <MisCursosPage />
+              </RutaProtegida>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

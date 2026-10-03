@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { pool } from '../db.js'
 import { HttpError } from '../utils/errors.js'
-import { esCorreo, textoOpcional } from '../utils/validar.js'
+import { esCorreo, normalizarTelefono } from '../utils/validar.js'
 import { HASH_RELLENO, hashPassword, verifyPassword } from '../utils/password.js'
 import {
   asegurarSesionConfigurada,
@@ -27,7 +27,13 @@ const limiteRegistro = limitador({
   clave: (req) => req.ip,
 })
 
-const publico = (u) => ({ id: u.id, nombre: u.nombre, apellido: u.apellido, correo: u.correo })
+const publico = (u) => ({
+  id: u.id,
+  nombre: u.nombre,
+  apellido: u.apellido,
+  correo: u.correo,
+  telefono: u.telefono,
+})
 
 function validarPassword(valor, errores) {
   if (typeof valor !== 'string' || valor.length < 8) {
@@ -48,8 +54,17 @@ router.post('/auth/registro', limiteRegistro, async (req, res) => {
   const correo = correoDe(req)
   if (!esCorreo(correo)) errores.correo = 'Escribe un correo válido'
 
-  const apellido = textoOpcional(req.body?.apellido, 100)
-  if (apellido.error) errores.apellido = apellido.error
+  const apellido = typeof req.body?.apellido === 'string' ? req.body.apellido.trim() : ''
+  if (!apellido) errores.apellido = 'El apellido es obligatorio'
+  else if (apellido.length > 100) errores.apellido = 'Máximo 100 caracteres'
+
+  const telefono = normalizarTelefono(req.body?.telefono)
+  if (!telefono) {
+    errores.telefono =
+      'Escribe un teléfono válido: 10 dígitos o con lada internacional (por ejemplo +57 300 123 4567)'
+  } else if (normalizarTelefono(req.body?.telefonoConfirmacion) !== telefono) {
+    errores.telefonoConfirmacion = 'Los teléfonos no coinciden'
+  }
 
   validarPassword(req.body?.password, errores)
 
@@ -59,19 +74,14 @@ router.post('/auth/registro', limiteRegistro, async (req, res) => {
 
   const passwordHash = await hashPassword(req.body.password)
 
-  // Si el correo ya existe como inscripción sin cuenta (sin contraseña ni Google),
-  // se completa esa misma fila para conservar sus inscripciones. Si ya tiene
-  // cuenta, no se toca y se responde 409.
+  // Un correo con fila previa nunca se reclama al registrarse: una cuenta solo
+  // nace aquí, así que nadie hereda inscripciones ni datos de otra persona.
   const { rows } = await pool.query(
-    `insert into usuarios (nombre, apellido, correo, password_hash)
-     values ($1, $2, $3, $4)
-     on conflict (correo) do update
-        set password_hash = excluded.password_hash,
-            nombre = excluded.nombre,
-            apellido = coalesce(usuarios.apellido, excluded.apellido)
-      where usuarios.password_hash is null and usuarios.google_id is null
-     returning id, nombre, apellido, correo`,
-    [nombre, apellido.valor, correo, passwordHash],
+    `insert into usuarios (nombre, apellido, correo, telefono, password_hash)
+     values ($1, $2, $3, $4, $5)
+     on conflict (correo) do nothing
+     returning id, nombre, apellido, correo, telefono`,
+    [nombre, apellido, correo, telefono, passwordHash],
   )
 
   if (rows.length === 0) {
@@ -95,7 +105,7 @@ router.post('/auth/login', limiteLogin, async (req, res) => {
   }
 
   const { rows } = await pool.query(
-    `select id, nombre, apellido, correo, password_hash, activo
+    `select id, nombre, apellido, correo, telefono, password_hash, activo
        from usuarios where correo = $1`,
     [correo],
   )
@@ -123,7 +133,7 @@ router.get('/auth/me', async (req, res) => {
   if (!usuarioId) return res.json({ usuario: null })
 
   const { rows } = await pool.query(
-    `select id, nombre, apellido, correo from usuarios where id = $1 and activo`,
+    `select id, nombre, apellido, correo, telefono from usuarios where id = $1 and activo`,
     [usuarioId],
   )
   res.json({ usuario: rows[0] ? publico(rows[0]) : null })

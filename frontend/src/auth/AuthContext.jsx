@@ -24,14 +24,19 @@ export function AuthProvider({ children }) {
     setUsuario(respuesta.usuario)
   }, [])
 
+  const recargarUsuario = useCallback(async () => {
+    const respuesta = await apiGet('/auth/me')
+    setUsuario(respuesta.usuario)
+  }, [])
+
   const logout = useCallback(async () => {
     await apiPost('/auth/logout', {})
     setUsuario(null)
   }, [])
 
   const valor = useMemo(
-    () => ({ usuario, cargando, login, registrar, logout }),
-    [usuario, cargando, login, registrar, logout],
+    () => ({ usuario, cargando, login, registrar, recargarUsuario, logout }),
+    [usuario, cargando, login, registrar, recargarUsuario, logout],
   )
 
   return <AuthContext.Provider value={valor}>{children}</AuthContext.Provider>

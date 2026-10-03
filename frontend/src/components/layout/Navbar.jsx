@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { User } from 'lucide-react'
 import { useAuth } from '../../auth/AuthContext'
 import logotipo from '../../assets/images/logotipo.png'
 
@@ -17,6 +18,7 @@ const networkingLinks = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  const [menuUsuario, setMenuUsuario] = useState(false)
   const { usuario, cargando, logout } = useAuth()
 
   return (
@@ -26,7 +28,7 @@ export default function Navbar() {
           <img src={logotipo} alt="Beaken" className="tw:h-8 tw:w-auto" />
         </Link>
 
-        <ul className="tw:hidden tw:items-center tw:gap-8 tw:text-sm tw:font-medium tw:text-neutral-800 tw:md:flex">
+        <ul className="tw:hidden tw:items-center tw:gap-5 tw:text-sm tw:font-medium tw:text-neutral-800 tw:md:flex tw:lg:gap-8">
           {links.map((link) => (
             <li key={link.label}>
               <a href={link.href} className="tw:hover:text-neutral-500">
@@ -73,22 +75,61 @@ export default function Navbar() {
         <div className="tw:flex tw:items-center tw:gap-3">
           {!cargando &&
             (usuario ? (
-              <div className="tw:hidden tw:items-center tw:gap-3 tw:text-sm tw:sm:flex">
-                <span className="tw:text-neutral-600">Hola, {usuario.nombre.split(' ')[0]}</span>
+              <div className="tw:relative tw:hidden tw:text-sm tw:sm:block">
                 <button
                   type="button"
-                  onClick={() => logout().catch(() => {})}
-                  className="tw:cursor-pointer tw:font-medium tw:text-neutral-900 tw:underline tw:underline-offset-4 tw:hover:text-neutral-500"
+                  aria-expanded={menuUsuario}
+                  aria-label={`Menú de ${usuario.nombre}`}
+                  onClick={() => setMenuUsuario((v) => !v)}
+                  className="tw:flex tw:cursor-pointer tw:items-center tw:gap-1 tw:whitespace-nowrap tw:font-medium tw:text-neutral-900 tw:hover:text-neutral-500"
                 >
-                  Cerrar sesión
+                  <User className="tw:hidden tw:size-5 tw:md:max-lg:block" aria-hidden="true" />
+                  <span className="tw:md:max-lg:hidden">Hola, {usuario.nombre.split(' ')[0]}</span>
+                  <svg
+                    className="tw:size-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </button>
+
+                {menuUsuario && (
+                  <ul className="tw:absolute tw:right-0 tw:top-full tw:z-10 tw:mt-2 tw:w-44 tw:rounded-md tw:border tw:border-neutral-200 tw:bg-white tw:py-1 tw:shadow-md">
+                    <li>
+                      <Link
+                        to="/mis-cursos"
+                        onClick={() => setMenuUsuario(false)}
+                        className="tw:block tw:px-4 tw:py-2 tw:text-neutral-800 tw:hover:bg-neutral-50"
+                      >
+                        Mis cursos
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setMenuUsuario(false)
+                          logout().catch(() => {})
+                        }}
+                        className="tw:block tw:w-full tw:cursor-pointer tw:px-4 tw:py-2 tw:text-left tw:text-neutral-800 tw:hover:bg-neutral-50"
+                      >
+                        Cerrar sesión
+                      </button>
+                    </li>
+                  </ul>
+                )}
               </div>
             ) : (
               <Link
                 to="/login"
-                className="tw:hidden tw:text-sm tw:font-medium tw:text-neutral-900 tw:hover:text-neutral-500 tw:sm:inline"
+                aria-label="Iniciar sesión"
+                className="tw:hidden tw:items-center tw:whitespace-nowrap tw:text-sm tw:font-medium tw:text-neutral-900 tw:hover:text-neutral-500 tw:sm:inline-flex"
               >
-                Iniciar sesión
+                <User className="tw:hidden tw:size-5 tw:md:max-lg:block" aria-hidden="true" />
+                <span className="tw:md:max-lg:hidden">Iniciar sesión</span>
               </Link>
             ))}
           <Link

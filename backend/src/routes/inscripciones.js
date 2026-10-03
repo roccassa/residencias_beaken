@@ -1,28 +1,17 @@
 import { Router } from 'express'
 import { pool } from '../db.js'
 import { HttpError } from '../utils/errors.js'
-import { esCorreo, esUuid, textoOpcional } from '../utils/validar.js'
+import { requiereSesion } from '../utils/requiereSesion.js'
+import { esUuid, normalizarTelefono, textoOpcional } from '../utils/validar.js'
 
 const router = Router()
 
 function validarBody(body = {}) {
   const errores = {}
 
-  const nombre = typeof body.nombre === 'string' ? body.nombre.trim() : ''
-  if (!nombre) errores.nombre = 'El nombre es obligatorio'
-  else if (nombre.length > 100) errores.nombre = 'Máximo 100 caracteres'
-
-  const correo = typeof body.correo === 'string' ? body.correo.trim().toLowerCase() : ''
-  if (!esCorreo(correo)) errores.correo = 'Escribe un correo válido'
-
   if (!esUuid(body.actividadId)) errores.actividadId = 'Elige un curso, taller o evento'
-
   if (body.terminos !== true) errores.terminos = 'Debes aceptar los términos'
 
-  const apellido = textoOpcional(body.apellido, 100)
-  if (apellido.error) errores.apellido = apellido.error
-  const telefono = textoOpcional(body.telefono, 30)
-  if (telefono.error) errores.telefono = telefono.error
   const mensaje = textoOpcional(body.mensaje, 2000)
   if (mensaje.error) errores.mensaje = mensaje.error
 
@@ -30,17 +19,43 @@ function validarBody(body = {}) {
     throw new HttpError(400, 'Revisa los datos del formulario', errores)
   }
 
-  return {
-    nombre,
-    correo,
-    actividadId: body.actividadId,
-    apellido: apellido.valor,
-    telefono: telefono.valor,
-    mensaje: mensaje.valor,
-  }
+  return { actividadId: body.actividadId, mensaje: mensaje.valor }
 }
 
-router.post('/inscripciones', async (req, res) => {
+// Solo para cuentas anteriores a que apellido y teléfono fueran obligatorios:
+// se piden una vez y quedan guardados en la cuenta. Si la cuenta ya los tiene,
+// lo que llegue en el cuerpo se ignora (los datos de la persona son los de su cuenta).
+function datosFaltantes(usuario, body = {}) {
+  const errores = {}
+  let apellido = usuario.apellido
+  let telefono = usuario.telefono
+
+  if (!apellido) {
+    const valor = typeof body.apellido === 'string' ? body.apellido.trim() : ''
+    if (!valor) errores.apellido = 'El apellido es obligatorio'
+    else if (valor.length > 100) errores.apellido = 'Máximo 100 caracteres'
+    else apellido = valor
+  }
+
+  if (!telefono) {
+    const valor = normalizarTelefono(body.telefono)
+    if (!valor) {
+      errores.telefono =
+        'Escribe un teléfono válido: 10 dígitos o con lada internacional (por ejemplo +57 300 123 4567)'
+    } else if (normalizarTelefono(body.telefonoConfirmacion) !== valor) {
+      errores.telefonoConfirmacion = 'Los teléfonos no coinciden'
+    } else {
+      telefono = valor
+    }
+  }
+
+  if (Object.keys(errores).length > 0) {
+    throw new HttpError(400, 'Revisa los datos del formulario', errores)
+  }
+  return { apellido, telefono }
+}
+
+router.post('/inscripciones', requiereSesion, async (req, res) => {
   const datos = validarBody(req.body)
   const client = await pool.connect()
 
@@ -58,23 +73,27 @@ router.post('/inscripciones', async (req, res) => {
     if (!actividad) throw new HttpError(404, 'La actividad ya no está disponible')
 
     const { rows: usuarios } = await client.query(
-      `insert into usuarios (nombre, apellido, correo, telefono)
-       values ($1, $2, $3, $4)
-       on conflict (correo) do update
-          set apellido = coalesce(usuarios.apellido, excluded.apellido),
-              telefono = coalesce(usuarios.telefono, excluded.telefono)
-       returning id`,
-      [datos.nombre, datos.apellido, datos.correo, datos.telefono],
+      `select id, apellido, telefono from usuarios where id = $1`,
+      [req.usuarioId],
     )
-    const usuarioId = usuarios[0].id
+    const usuario = usuarios[0]
+
+    if (!usuario.apellido || !usuario.telefono) {
+      const completos = datosFaltantes(usuario, req.body)
+      await client.query(`update usuarios set apellido = $2, telefono = $3 where id = $1`, [
+        usuario.id,
+        completos.apellido,
+        completos.telefono,
+      ])
+    }
 
     const { rows: previas } = await client.query(
       `select id, estado from inscripciones where usuario_id = $1 and actividad_id = $2`,
-      [usuarioId, actividad.id],
+      [usuario.id, actividad.id],
     )
     const previa = previas[0]
     if (previa && !['cancelada', 'reembolsada'].includes(previa.estado)) {
-      throw new HttpError(409, 'Ya tienes una inscripción a esta actividad con ese correo')
+      throw new HttpError(409, 'Ya tienes una inscripción a esta actividad')
     }
 
     if (actividad.capacidad_maxima !== null) {
@@ -103,7 +122,7 @@ router.post('/inscripciones', async (req, res) => {
         `insert into inscripciones (usuario_id, actividad_id, estado, mensaje)
          values ($1, $2, $3, $4)
          returning id`,
-        [usuarioId, actividad.id, estado, datos.mensaje],
+        [usuario.id, actividad.id, estado, datos.mensaje],
       )
       inscripcionId = rows[0].id
     }
