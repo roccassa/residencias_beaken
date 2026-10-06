@@ -5,6 +5,7 @@ import { useAuth } from '../../auth/AuthContext'
 import { useFetch } from '../../hooks/useFetch'
 import Field, { inputClass } from '../CampoFormulario'
 import SectionHeading from '../SectionHeading'
+import BotonPagar from '../pagos/BotonPagar'
 
 const grupos = [
   { label: 'Cursos', tipo: 'curso' },
@@ -102,6 +103,14 @@ export default function FormularioInscripcion() {
           <p className="tw:mt-1 tw:text-sm tw:text-emerald-800">
             También puedes consultar los detalles en Mis cursos.
           </p>
+          {resultado.estado === 'pendiente_pago' && (
+            <div className="tw:mt-4 tw:border-t tw:border-emerald-200 tw:pt-4">
+              <p className="tw:mb-3 tw:text-sm tw:text-emerald-800">
+                Tu lugar queda reservado 30 minutos. Paga ahora para confirmarlo.
+              </p>
+              <BotonPagar inscripcionId={resultado.id} />
+            </div>
+          )}
           <div className="tw:mt-4 tw:flex tw:flex-wrap tw:gap-x-6 tw:gap-y-2 tw:text-sm tw:font-medium tw:text-emerald-900">
             <Link to="/mis-cursos" className="tw:underline tw:underline-offset-4">
               Ver mis cursos

@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { pool } from '../db.js'
 import { HttpError } from '../utils/errors.js'
 import { formatDuracion } from '../utils/duracion.js'
+import { ES_RESERVA } from '../utils/cupos.js'
 
 const TIPOS = ['curso', 'taller', 'evento']
 
@@ -30,7 +31,7 @@ function mapActividad(r) {
     inscritosConfirmados: r.inscritos_confirmados,
     cuposDisponibles: r.cupos_disponibles,
     agotada:
-      r.capacidad_maxima !== null && r.inscritos_confirmados >= r.capacidad_maxima,
+      r.capacidad_maxima !== null && r.inscritos_confirmados + r.reservados >= r.capacidad_maxima,
     fechaInicio: r.fecha_inicio,
     fechaFin: r.fecha_fin,
     duracion: formatDuracion(r.fecha_inicio, r.fecha_fin),
@@ -46,8 +47,14 @@ router.get('/actividades', async (req, res) => {
             v.capacidad_maxima, v.fecha_inicio, v.fecha_fin, v.imagen_url,
             v.categoria_id, c.nombre as categoria, u.nombre as ubicacion,
             v.inscritos_confirmados::int as inscritos_confirmados,
-            v.cupos_disponibles::int as cupos_disponibles
+            (v.cupos_disponibles - r.reservados)::int as cupos_disponibles,
+            r.reservados
        from vw_actividades_disponibilidad v
+       cross join lateral (
+         select count(*)::int as reservados
+           from inscripciones
+          where actividad_id = v.id and ${ES_RESERVA}
+       ) r
        left join categorias c on c.id = v.categoria_id
        left join ubicaciones u on u.id = v.ubicacion_id
       where v.estado = 'publicada'

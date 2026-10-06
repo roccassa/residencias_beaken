@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom'
 import { CalendarDays, Clock, Image as ImageIcon, MapPin } from 'lucide-react'
+import BotonPagar from '../pagos/BotonPagar'
 
 const fecha = new Intl.DateTimeFormat('es', {
   weekday: 'short',
@@ -24,6 +26,8 @@ export default function TarjetaInscripcion({ inscripcion }) {
   const fin = new Date(actividad.fechaFin)
   const estado = estadoVisible(inscripcion)
   const apagada = actividad.finalizada || actividad.cancelada
+  const porPagar = inscripcion.estado === 'pendiente_pago' && !apagada && actividad.costo > 0
+  const precio = new Intl.NumberFormat('es-MX', { style: 'currency', currency: actividad.moneda }).format(actividad.costo)
 
   return (
     <article className="tw:flex tw:flex-col tw:gap-5 tw:sm:flex-row">
@@ -76,6 +80,23 @@ export default function TarjetaInscripcion({ inscripcion }) {
         >
           {estado.texto}
         </span>
+
+        {porPagar && (
+          <div className="tw:mt-4">
+            <p className="tw:mb-3 tw:text-sm tw:text-neutral-700">
+              Costo: <span className="tw:font-medium">{precio}</span>. Págalo para confirmar tu lugar.
+            </p>
+            <div className="tw:flex tw:flex-wrap tw:items-start tw:gap-x-5 tw:gap-y-3">
+              <BotonPagar inscripcionId={inscripcion.id} />
+              <Link
+                to={`/pago/resultado?external_reference=${inscripcion.id}`}
+                className="tw:self-center tw:text-sm tw:text-neutral-700 tw:underline tw:underline-offset-4"
+              >
+                Ya pagué, verificar
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     </article>
   )

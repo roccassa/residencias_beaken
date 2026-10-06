@@ -8,6 +8,7 @@ import inscripciones from './routes/inscripciones.js'
 import empresas from './routes/empresas.js'
 import auth from './routes/auth.js'
 import misInscripciones from './routes/misInscripciones.js'
+import pagos from './routes/pagos.js'
 
 const app = express()
 
@@ -34,6 +35,7 @@ app.use('/api', inscripciones)
 app.use('/api', empresas)
 app.use('/api', auth)
 app.use('/api', misInscripciones)
+app.use('/api', pagos)
 
 app.use('/api', (req, res) => {
   res.status(404).json({ error: 'Ruta no encontrada' })

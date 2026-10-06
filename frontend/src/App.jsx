@@ -6,6 +6,7 @@ import EventosPage from './pages/EventosPage'
 import InscripcionPage from './pages/InscripcionPage'
 import LoginPage from './pages/LoginPage'
 import MisCursosPage from './pages/MisCursosPage'
+import PagoResultadoPage from './pages/PagoResultadoPage'
 import RutaProtegida from './components/auth/RutaProtegida'
 
 function App() {
@@ -24,6 +25,14 @@ function App() {
             element={
               <RutaProtegida>
                 <MisCursosPage />
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="/pago/resultado"
+            element={
+              <RutaProtegida>
+                <PagoResultadoPage />
               </RutaProtegida>
             }
           />

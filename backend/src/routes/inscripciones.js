@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { pool } from '../db.js'
 import { HttpError } from '../utils/errors.js'
 import { requiereSesion } from '../utils/requiereSesion.js'
+import { OCUPA_CUPO } from '../utils/cupos.js'
 import { esUuid, normalizarTelefono, textoOpcional } from '../utils/validar.js'
 
 const router = Router()
@@ -100,7 +101,7 @@ router.post('/inscripciones', requiereSesion, async (req, res) => {
       const { rows } = await client.query(
         `select count(*)::int as total
            from inscripciones
-          where actividad_id = $1 and estado = 'confirmada'`,
+          where actividad_id = $1 and ${OCUPA_CUPO}`,
         [actividad.id],
       )
       if (rows[0].total >= actividad.capacidad_maxima) {

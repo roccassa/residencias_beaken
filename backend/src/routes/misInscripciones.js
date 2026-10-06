@@ -11,7 +11,8 @@ router.get('/mis-inscripciones', requiereSesion, async (req, res) => {
             a.id as actividad_id, a.tipo, a.titulo, a.descripcion, a.modalidad,
             a.costo, a.moneda, a.fecha_inicio, a.fecha_fin, a.imagen_url,
             a.estado as estado_actividad, u.nombre as ubicacion,
-            (a.fecha_fin < now()) as finalizada
+            (a.fecha_fin < now()) as finalizada,
+            exists (select 1 from pagos p where p.inscripcion_id = i.id and p.preferencia_id is not null) as pago_iniciado
        from inscripciones i
        join actividades a on a.id = i.actividad_id
        left join ubicaciones u on u.id = a.ubicacion_id
@@ -27,6 +28,7 @@ router.get('/mis-inscripciones', requiereSesion, async (req, res) => {
       id: r.inscripcion_id,
       estado: r.estado_inscripcion,
       fechaInscripcion: r.fecha_inscripcion,
+      pagoIniciado: r.pago_iniciado,
       actividad: {
         id: r.actividad_id,
         tipo: r.tipo,
