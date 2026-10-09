@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom'
 import Navbar from '../components/layout/Navbar'
 import Footer from '../components/layout/Footer'
 import Hero from '../components/cursos/Hero'
@@ -6,8 +7,12 @@ import Ventajas from '../components/cursos/Ventajas'
 import Proceso from '../components/Proceso'
 import CtaBanner from '../components/CtaBanner'
 import Contacto from '../components/Contacto'
+import { useTitulo } from '../hooks/useTitulo'
 
 export default function CursosPage() {
+  const { pathname } = useLocation()
+  useTitulo(pathname === '/' ? null : 'Cursos')
+
   return (
     <div className="tw:flex tw:min-h-screen tw:flex-col">
       <Navbar />

@@ -58,6 +58,7 @@ router.get('/actividades', async (req, res) => {
        left join categorias c on c.id = v.categoria_id
        left join ubicaciones u on u.id = v.ubicacion_id
       where v.estado = 'publicada'
+        and v.fecha_fin > now()
         and ($1::text is null or v.tipo::text = $1)
       order by v.fecha_inicio`,
     [tipo],

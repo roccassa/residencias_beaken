@@ -5,8 +5,11 @@ import FormularioInscripcion from '../components/inscripcion/FormularioInscripci
 import FormularioEmpresa from '../components/inscripcion/FormularioEmpresa'
 import PreguntasFrecuentes from '../components/inscripcion/PreguntasFrecuentes'
 import Contacto from '../components/Contacto'
+import { useTitulo } from '../hooks/useTitulo'
 
 export default function InscripcionPage() {
+  useTitulo('Inscripción')
+
   return (
     <div className="tw:flex tw:min-h-screen tw:flex-col">
       <Navbar />

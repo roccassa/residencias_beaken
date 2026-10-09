@@ -5,8 +5,11 @@ import AgendaEventos from '../components/eventos/AgendaEventos'
 import Ventajas from '../components/eventos/Ventajas'
 import CtaBanner from '../components/CtaBanner'
 import Contacto from '../components/Contacto'
+import { useTitulo } from '../hooks/useTitulo'
 
 export default function EventosPage() {
+  useTitulo('Eventos')
+
   return (
     <div className="tw:flex tw:min-h-screen tw:flex-col">
       <Navbar />

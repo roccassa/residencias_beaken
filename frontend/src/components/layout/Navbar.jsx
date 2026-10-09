@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { User } from 'lucide-react'
+import { Menu, User, X } from 'lucide-react'
 import { useAuth } from '../../auth/AuthContext'
 import logotipo from '../../assets/images/logotipo.png'
 
@@ -19,7 +19,15 @@ const networkingLinks = [
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [menuUsuario, setMenuUsuario] = useState(false)
+  const [menuMovil, setMenuMovil] = useState(false)
   const { usuario, cargando, logout } = useAuth()
+
+  useEffect(() => {
+    if (!menuMovil) return
+    const cerrarConEscape = (e) => e.key === 'Escape' && setMenuMovil(false)
+    document.addEventListener('keydown', cerrarConEscape)
+    return () => document.removeEventListener('keydown', cerrarConEscape)
+  }, [menuMovil])
 
   return (
     <header className="tw:border-b tw:border-neutral-200">
@@ -72,7 +80,18 @@ export default function Navbar() {
           </li>
         </ul>
 
-        <div className="tw:flex tw:items-center tw:gap-3">
+        <button
+          type="button"
+          aria-label={menuMovil ? 'Cerrar menú' : 'Abrir menú'}
+          aria-expanded={menuMovil}
+          aria-controls="menu-movil"
+          onClick={() => setMenuMovil((v) => !v)}
+          className="tw:-mr-2 tw:cursor-pointer tw:p-2 tw:text-neutral-900 tw:md:hidden"
+        >
+          {menuMovil ? <X className="tw:size-6" aria-hidden="true" /> : <Menu className="tw:size-6" aria-hidden="true" />}
+        </button>
+
+        <div className="tw:hidden tw:items-center tw:gap-3 tw:md:flex">
           {!cargando &&
             (usuario ? (
               <div className="tw:relative tw:hidden tw:text-sm tw:sm:block">
@@ -146,6 +165,81 @@ export default function Navbar() {
           </a>
         </div>
       </nav>
+
+      {menuMovil && (
+        <div
+          id="menu-movil"
+          onClick={(e) => e.target.closest('a') && setMenuMovil(false)}
+          className="tw:border-t tw:border-neutral-200 tw:px-6 tw:pb-6 tw:pt-2 tw:md:hidden"
+        >
+          <ul className="tw:divide-y tw:divide-neutral-100 tw:text-neutral-800">
+            {links.map((link) => (
+              <li key={link.label}>
+                <a href={link.href} className="tw:block tw:py-3 tw:font-medium">
+                  {link.label}
+                </a>
+              </li>
+            ))}
+            <li className="tw:py-3">
+              <p className="tw:text-xs tw:font-semibold tw:uppercase tw:tracking-widest tw:text-slate-500">
+                Comunidad
+              </p>
+              <ul className="tw:mt-1">
+                {networkingLinks.map((item) => (
+                  <li key={item.label}>
+                    <Link to={item.to} className="tw:block tw:py-2 tw:pl-3">
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </li>
+            {!cargando && (
+              <li className="tw:py-3">
+                {usuario ? (
+                  <>
+                    <p className="tw:text-xs tw:font-semibold tw:uppercase tw:tracking-widest tw:text-slate-500">
+                      Hola, {usuario.nombre.split(' ')[0]}
+                    </p>
+                    <Link to="/mis-cursos" className="tw:block tw:py-2 tw:pl-3">
+                      Mis cursos
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMenuMovil(false)
+                        logout().catch(() => {})
+                      }}
+                      className="tw:block tw:w-full tw:cursor-pointer tw:py-2 tw:pl-3 tw:text-left"
+                    >
+                      Cerrar sesión
+                    </button>
+                  </>
+                ) : (
+                  <Link to="/login" className="tw:block tw:py-2 tw:font-medium">
+                    Iniciar sesión
+                  </Link>
+                )}
+              </li>
+            )}
+          </ul>
+
+          <div className="tw:mt-3 tw:flex tw:gap-3">
+            <Link
+              to="/registro"
+              className="tw:flex-1 tw:rounded-md tw:border tw:border-neutral-300 tw:px-4 tw:py-2.5 tw:text-center tw:text-sm tw:font-medium tw:text-neutral-900"
+            >
+              Registro
+            </Link>
+            <a
+              href="/contacto"
+              className="tw:flex-1 tw:rounded-md tw:bg-neutral-900 tw:px-4 tw:py-2.5 tw:text-center tw:text-sm tw:font-medium tw:text-white"
+            >
+              Contacto
+            </a>
+          </div>
+        </div>
+      )}
     </header>
   )
 }

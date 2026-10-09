@@ -6,8 +6,11 @@ import Ventajas from '../components/talleres/Ventajas'
 import Proceso from '../components/Proceso'
 import CtaBanner from '../components/CtaBanner'
 import Contacto from '../components/Contacto'
+import { useTitulo } from '../hooks/useTitulo'
 
 export default function TalleresPage() {
+  useTitulo('Talleres')
+
   return (
     <div className="tw:flex tw:min-h-screen tw:flex-col">
       <Navbar />

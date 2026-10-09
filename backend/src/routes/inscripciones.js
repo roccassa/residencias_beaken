@@ -66,7 +66,7 @@ router.post('/inscripciones', requiereSesion, async (req, res) => {
     const { rows: actividades } = await client.query(
       `select id, costo, capacidad_maxima
          from actividades
-        where id = $1 and estado = 'publicada'
+        where id = $1 and estado = 'publicada' and fecha_fin > now()
         for update`,
       [datos.actividadId],
     )
