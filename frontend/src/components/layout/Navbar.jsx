@@ -10,14 +10,7 @@ const links = [
   { label: 'Academy', href: '#' },
 ]
 
-const networkingLinks = [
-  { label: 'Cursos', to: '/cursos' },
-  { label: 'Talleres', to: '/talleres' },
-  { label: 'Eventos', to: '/eventos' },
-]
-
 export default function Navbar() {
-  const [open, setOpen] = useState(false)
   const [menuUsuario, setMenuUsuario] = useState(false)
   const [menuMovil, setMenuMovil] = useState(false)
   const { usuario, cargando, logout } = useAuth()
@@ -44,39 +37,10 @@ export default function Navbar() {
               </a>
             </li>
           ))}
-          <li className="tw:relative">
-            <button
-              type="button"
-              onClick={() => setOpen((v) => !v)}
-              className="tw:flex tw:items-center tw:gap-1 tw:hover:text-neutral-500"
-            >
-              Comunidad
-              <svg
-                className="tw:size-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-
-            {open && (
-              <ul className="tw:absolute tw:left-0 tw:top-full tw:z-10 tw:mt-2 tw:w-40 tw:rounded-md tw:border tw:border-neutral-200 tw:bg-white tw:py-1 tw:shadow-md">
-                {networkingLinks.map((item) => (
-                  <li key={item.label}>
-                    <Link
-                      to={item.to}
-                      onClick={() => setOpen(false)}
-                      className="tw:block tw:px-4 tw:py-2 tw:text-neutral-800 tw:hover:bg-neutral-50"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
+          <li>
+            <Link to="/" className="tw:hover:text-neutral-500">
+              Networking
+            </Link>
           </li>
         </ul>
 
@@ -180,19 +144,10 @@ export default function Navbar() {
                 </a>
               </li>
             ))}
-            <li className="tw:py-3">
-              <p className="tw:text-xs tw:font-semibold tw:uppercase tw:tracking-widest tw:text-slate-500">
-                Comunidad
-              </p>
-              <ul className="tw:mt-1">
-                {networkingLinks.map((item) => (
-                  <li key={item.label}>
-                    <Link to={item.to} className="tw:block tw:py-2 tw:pl-3">
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+            <li>
+              <Link to="/" className="tw:block tw:py-3 tw:font-medium">
+                Networking
+              </Link>
             </li>
             {!cargando && (
               <li className="tw:py-3">

@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom'
 const dayNumber = new Intl.DateTimeFormat('es', { day: '2-digit' })
 const month = new Intl.DateTimeFormat('es', { month: 'short' })
 
-export default function TallerCard({ taller }) {
+export default function TallerCard({
+  taller,
+  className = 'tw:w-72 tw:shrink-0 tw:snap-start tw:sm:w-80',
+}) {
   const fecha = new Date(taller.fechaInicio)
 
   return (
-    <article className="tw:w-72 tw:shrink-0 tw:snap-start tw:sm:w-80">
+    <article className={className}>
       <div className="tw:relative tw:flex tw:aspect-video tw:items-center tw:justify-center tw:bg-neutral-200">
        {taller.imagen && (
           <img
