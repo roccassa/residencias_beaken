@@ -3,6 +3,7 @@ import { pool } from '../db.js'
 import { HttpError } from '../utils/errors.js'
 import { requiereSesion } from '../utils/requiereSesion.js'
 import { OCUPA_CUPO } from '../utils/cupos.js'
+import { enviarCorreoInscripcion } from '../utils/correo.js'
 import { esUuid, normalizarTelefono, textoOpcional } from '../utils/validar.js'
 
 const router = Router()
@@ -129,6 +130,7 @@ router.post('/inscripciones', requiereSesion, async (req, res) => {
     }
 
     await client.query('commit')
+    enviarCorreoInscripcion(inscripcionId) // sin esperar: el envío no retrasa la respuesta
 
     res.status(201).json({
       id: inscripcionId,

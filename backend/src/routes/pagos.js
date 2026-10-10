@@ -5,6 +5,7 @@ import { requiereSesion } from '../utils/requiereSesion.js'
 import { esUuid } from '../utils/validar.js'
 import { limitador } from '../utils/limitador.js'
 import { OCUPA_CUPO } from '../utils/cupos.js'
+import { enviarCorreoInscripcion } from '../utils/correo.js'
 import { buscarPagosPorReferencia, crearPreferencia, obtenerPago } from '../utils/mercadopago.js'
 
 const router = Router()
@@ -140,6 +141,7 @@ router.post('/pagos/verificar', requiereSesion, limite, async (req, res) => {
 
   if (!esUuid(pago.external_reference)) throw new HttpError(404, 'Pago no encontrado')
 
+  let confirmadaAhora = false
   const client = await pool.connect()
   try {
     await client.query('begin')
@@ -187,6 +189,7 @@ router.post('/pagos/verificar', requiereSesion, limite, async (req, res) => {
       await client.query(`update inscripciones set estado = 'confirmada' where id = $1`, [
         inscripcion.id,
       ])
+      confirmadaAhora = true
     } else if (nuevo === 'reembolsado' && inscripcion.estado === 'confirmada') {
       await client.query(`update inscripciones set estado = 'reembolsada' where id = $1`, [
         inscripcion.id,
@@ -194,6 +197,8 @@ router.post('/pagos/verificar', requiereSesion, limite, async (req, res) => {
     }
 
     await client.query('commit')
+    // Solo en el paso a confirmada: verificar el mismo pago otra vez no repite el correo.
+    if (confirmadaAhora) enviarCorreoInscripcion(inscripcion.id)
     res.json({ estado: nuevo, inscripcionId: inscripcion.id, titulo: inscripcion.titulo })
   } catch (error) {
     await client.query('rollback')
