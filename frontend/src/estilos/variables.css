@@ -15,7 +15,7 @@
   --color-fondo: #ffffff;
 }
 
-/* Paleta (los mismos valores que usaba Tailwind, con nombres en español) */
+/* Paleta de colores neutros y de estado, con nombres en español */
 :root {
   --color-blanco: #fff;
 

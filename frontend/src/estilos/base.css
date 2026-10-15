@@ -1,7 +1,8 @@
 /* Estilos base del sitio (reset).
    Los navegadores traen estilos propios (márgenes en los títulos, viñetas en las listas,
    botones con fuente distinta...). Este archivo los deja "en blanco" para que cada
-   componente defina lo que necesite. Equivale al reset que antes ponía Tailwind. */
+   componente defina lo que necesite. Está dentro de una capa (@layer base) para que
+   los estilos de cada componente, que van fuera de ella, siempre tengan prioridad. */
 
 @layer base {
   /* Que el padding y el borde no agranden la caja, y sin márgenes ni bordes por defecto */

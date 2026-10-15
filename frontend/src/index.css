@@ -1,19 +1,8 @@
-/* Orden de las capas: los estilos de Tailwind (mientras siga instalado) van antes que
-   los de los componentes, que se escriben fuera de capas y por eso ganan en un empate. */
-@layer theme, base, components, utilities;
+/* Estilos globales del sitio. El orden importa: primero las variables, después el reset
+   y la estructura común, y al final los botones. Los estilos de cada componente se
+   importan desde el propio componente (por ejemplo, Navbar.jsx importa Navbar.css). */
 
 @import "./estilos/variables.css";
 @import "./estilos/base.css";
 @import "./estilos/pagina.css";
 @import "./estilos/boton.css";
-
-/* Tailwind SIN su reset (ahora lo hace estilos/base.css) */
-@import "tailwindcss/theme.css" layer(theme) prefix(tw);
-@import "tailwindcss/utilities.css" layer(utilities) prefix(tw);
-
-@theme {
-  --font-sans: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
-  --font-display: "Onest", "Inter", system-ui, sans-serif;
-  --color-fondo-claro-secciones: rgb(245, 246, 248);
-  --color-fondo-oscuro-secciones: rgb(16, 41, 64);
-}
