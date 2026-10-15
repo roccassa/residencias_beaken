@@ -11,12 +11,12 @@ export default function EventosPage() {
   useTitulo('Eventos')
 
   return (
-    <div className="tw:flex tw:min-h-screen tw:flex-col">
+    <div className="pagina">
       <Navbar />
-      <main className="tw:flex-1">
+      <main className="pagina__principal">
         <Hero />
         <AgendaEventos />
-        <div className="tw:bg-fondo-claro-secciones">
+        <div className="pagina__franja-clara">
           <Ventajas />
         </div>
         <CtaBanner

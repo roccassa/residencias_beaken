@@ -1,0 +1,20 @@
+/* Mensaje que se muestra mientras carga una lista o cuando falla la carga. */
+
+.estado-carga {
+  text-align: center;
+}
+
+.estado-carga--cargando {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  color: var(--color-neutro-500);
+}
+
+.estado-carga--error {
+  padding: 1.5rem;
+  border: 1px solid var(--color-rosa-200);
+  background-color: var(--color-rosa-50);
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  color: var(--color-rosa-800);
+}

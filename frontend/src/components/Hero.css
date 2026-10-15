@@ -1,0 +1,100 @@
+/* Portada con imagen de fondo a todo el ancho, capa oscura encima y texto en blanco.
+   La usan las páginas de Cursos, Talleres, Eventos e Inscripción.
+   Modificador --centrado (Inscripción): texto centrado con una etiqueta pequeña arriba. */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.hero__imagen {
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Capa oscura al 50 % para que el texto se lea sobre la imagen */
+.hero__velo {
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  background-color: color-mix(in oklab, var(--color-neutro-900) 50%, transparent);
+}
+
+.hero__contenido {
+  position: relative;
+  max-width: 72rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 6rem 1.5rem;
+  color: var(--color-blanco);
+}
+
+.hero__titulo {
+  max-width: 32rem;
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+.hero__texto {
+  max-width: 28rem;
+  margin-top: 2rem;
+  font-size: 1.25rem;
+  line-height: calc(1.75 / 1.25);
+  font-weight: 700;
+  color: var(--color-neutro-200);
+}
+
+/* ---------- Variante centrada (Inscripción) ---------- */
+
+.hero__contenido--centrado {
+  position: static;
+  color: inherit;
+  text-align: center;
+}
+
+.hero__etiqueta {
+  font-family: var(--fuente-mono);
+  font-size: 0.75rem;
+  line-height: calc(1 / 0.75);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-neutro-200);
+}
+
+.hero__titulo--centrado {
+  max-width: none;
+  margin-top: 0.75rem;
+  color: var(--color-blanco);
+}
+
+.hero__texto--centrado {
+  max-width: 36rem;
+  margin-top: 1.5rem;
+  margin-right: auto;
+  margin-left: auto;
+  font-size: 1.125rem;
+  line-height: calc(1.75 / 1.125);
+  font-weight: 400;
+}
+
+@media (min-width: 768px) {
+  .hero__contenido {
+    padding-top: 15rem;
+    padding-bottom: 15rem;
+  }
+
+  .hero__titulo {
+    font-size: 4.5rem;
+  }
+
+  .hero__titulo--centrado {
+    font-size: 3.75rem;
+  }
+}

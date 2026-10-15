@@ -4,6 +4,7 @@ import { useFetch } from '../../hooks/useFetch'
 import EstadoCarga from '../EstadoCarga'
 import SectionHeading from '../SectionHeading'
 import TallerCard from './TallerCard'
+import './AgendaTalleres.css'
 
 export default function AgendaTalleres() {
   const trackRef = useRef(null)
@@ -29,8 +30,8 @@ export default function AgendaTalleres() {
   }
 
   return (
-    <section className="tw:mx-auto tw:max-w-6xl tw:px-6 tw:py-20">
-      <div className="tw:flex tw:flex-col tw:justify-between tw:gap-4 tw:sm:flex-row tw:sm:items-end">
+    <section className="agenda-talleres">
+      <div className="agenda-talleres__cabecera">
         <SectionHeading
           variant="dot"
           label="Talleres"
@@ -39,14 +40,14 @@ export default function AgendaTalleres() {
         />
         <Link
           to="/registro"
-          className="tw:inline-flex tw:w-fit tw:h-fit tw:shrink-0 tw:items-center tw:rounded-md tw:bg-neutral-900 tw:px-4 tw:py-2 tw:text-sm tw:font-medium tw:text-white tw:hover:bg-neutral-700"
+          className="boton boton--compacto boton--cabecera"
         >
           Inscribirme
         </Link>
       </div>
 
       {(cargando || error) && (
-        <div className="tw:mt-8">
+        <div className="agenda-talleres__estado">
           <EstadoCarga cargando={cargando} error={error} />
         </div>
       )}
@@ -54,31 +55,29 @@ export default function AgendaTalleres() {
       <div
         ref={trackRef}
         onScroll={handleScroll}
-        className="tw:mt-8 tw:flex tw:snap-x tw:gap-4 tw:overflow-x-auto tw:scroll-smooth tw:pb-2"
+        className="agenda-talleres__carrusel"
       >
         {talleres.map((taller) => (
           <TallerCard key={taller.id} taller={taller} />
         ))}
       </div>
 
-      <div className="tw:mt-6 tw:flex tw:items-center tw:justify-between">
-        <div className="tw:flex tw:gap-1.5">
+      <div className="agenda-talleres__pie">
+        <div className="agenda-talleres__puntos">
           {talleres.map((taller, i) => (
             <span
               key={taller.id}
-              className={`tw:size-1.5 tw:rounded-full ${
-                i === active ? 'tw:bg-neutral-900' : 'tw:bg-neutral-300'
-              }`}
+              className={`agenda-talleres__punto${i === active ? ' agenda-talleres__punto--activo' : ''}`}
             />
           ))}
         </div>
 
-        <div className="tw:flex tw:gap-2">
+        <div className="agenda-talleres__flechas">
           <button
             type="button"
             onClick={() => scrollByCard(-1)}
             aria-label="Anterior"
-            className="tw:flex tw:size-9 tw:items-center tw:justify-center tw:rounded-full tw:border tw:border-neutral-300 tw:text-neutral-600 tw:hover:bg-neutral-50"
+            className="agenda-talleres__flecha"
           >
             ←
           </button>
@@ -86,7 +85,7 @@ export default function AgendaTalleres() {
             type="button"
             onClick={() => scrollByCard(1)}
             aria-label="Siguiente"
-            className="tw:flex tw:size-9 tw:items-center tw:justify-center tw:rounded-full tw:border tw:border-neutral-300 tw:text-neutral-600 tw:hover:bg-neutral-50"
+            className="agenda-talleres__flecha"
           >
             →
           </button>

@@ -7,9 +7,9 @@ export default function MisCursosPage() {
   useTitulo('Mis cursos')
 
   return (
-    <div className="tw:flex tw:min-h-screen tw:flex-col">
+    <div className="pagina">
       <Navbar />
-      <main className="tw:flex-1">
+      <main className="pagina__principal">
         <ListaInscripciones />
       </main>
       <Footer />

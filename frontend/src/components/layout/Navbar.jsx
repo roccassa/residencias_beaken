@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { ArrowUpRight, ChevronDown, Menu, User, X } from 'lucide-react'
 import { useAuth } from '../../auth/AuthContext'
 import logotipo from '../../assets/images/logotipo.png'
+import './Navbar.css'
 
 const links = [
   { label: 'Agency', href: '#' },
@@ -15,11 +16,6 @@ const enlacesMas = [{ label: 'Catálogo de actividades', to: '/' }]
 
 // Páginas que pertenecen al catálogo: "Más" se marca como activo en ellas.
 const RUTAS_CATALOGO = ['/', '/cursos', '/talleres', '/eventos']
-
-const textoNav =
-  'tw:text-[13px] tw:font-bold tw:uppercase tw:tracking-wider tw:text-fondo-oscuro-secciones'
-const botonContacto =
-  'tw:inline-flex tw:items-center tw:justify-center tw:gap-2 tw:rounded-sm tw:bg-[#ff0054] tw:px-5 tw:py-3 tw:text-[13px] tw:font-bold tw:uppercase tw:tracking-wider tw:text-white tw:hover:bg-[#d9004a]'
 
 export default function Navbar() {
   const [menuUsuario, setMenuUsuario] = useState(false)
@@ -48,53 +44,52 @@ export default function Navbar() {
     }
   }, [menuMovil, menuMas])
 
+  const clasesBotonMas = ['navbar__enlace', 'navbar__enlace--mas']
+  if (catalogoActivo) clasesBotonMas.push('navbar__enlace--activo')
+  if (menuMas) clasesBotonMas.push('navbar__enlace--abierto')
+
   return (
-    <header className="tw:border-b tw:border-neutral-200">
-      <nav className="tw:mx-auto tw:flex tw:max-w-6xl tw:items-center tw:justify-between tw:px-6 tw:py-5">
+    <header className="navbar">
+      <nav className="navbar__barra">
         <Link to="/">
-          <img src={logotipo} alt="Beaken" className="tw:h-8 tw:w-auto" />
+          <img src={logotipo} alt="Beaken" className="navbar__logotipo" />
         </Link>
 
-        <ul className="tw:hidden tw:items-center tw:gap-5 tw:md:flex tw:lg:gap-8">
+        <ul className="navbar__enlaces">
           {links.map((link) => (
             <li key={link.label}>
-              <a href={link.href} className={`${textoNav} tw:hover:text-blue-600`}>
+              <a href={link.href} className="navbar__enlace">
                 {link.label}
               </a>
             </li>
           ))}
-          <li ref={refMas} className="tw:relative">
+          <li ref={refMas} className="navbar__mas">
             <button
               type="button"
               aria-expanded={menuMas}
               aria-haspopup="menu"
               onClick={() => setMenuMas((v) => !v)}
-              className={`${textoNav} tw:flex tw:cursor-pointer tw:items-center tw:gap-1 tw:border-b-2 tw:py-1 ${
-                catalogoActivo ? 'tw:border-blue-600 tw:text-blue-600' : 'tw:border-transparent'
-              } ${menuMas ? 'tw:text-neutral-500' : catalogoActivo ? '' : 'tw:hover:text-blue-600'}`}
+              className={clasesBotonMas.join(' ')}
             >
               Más
               <ChevronDown
-                className={`tw:size-4 tw:transition-transform ${menuMas ? 'tw:rotate-180' : ''}`}
+                className={`navbar__flecha navbar__flecha--mas${menuMas ? ' navbar__flecha--girada' : ''}`}
                 aria-hidden="true"
               />
             </button>
 
             {menuMas && (
-              <ul
-                role="menu"
-                className="tw:absolute tw:right-0 tw:top-full tw:z-20 tw:mt-4 tw:w-72 tw:rounded-md tw:border tw:border-neutral-200 tw:bg-white tw:p-2 tw:shadow-lg"
-              >
+              <ul role="menu" className="navbar__desplegable">
                 {enlacesMas.map((item) => (
                   <li key={item.label} role="none">
                     <Link
                       to={item.to}
                       role="menuitem"
                       onClick={() => setMenuMas(false)}
-                      className="tw:flex tw:items-center tw:justify-between tw:gap-4 tw:rounded-sm tw:px-4 tw:py-3.5 tw:text-[15px] tw:font-medium tw:text-fondo-oscuro-secciones tw:hover:bg-neutral-50"
+                      className="navbar__desplegable-enlace"
                     >
                       {item.label}
-                      <ArrowUpRight className="tw:size-4 tw:shrink-0 tw:text-blue-600" aria-hidden="true" />
+                      <ArrowUpRight className="navbar__flecha-enlace" aria-hidden="true" />
                     </Link>
                   </li>
                 ))}
@@ -109,34 +104,38 @@ export default function Navbar() {
           aria-expanded={menuMovil}
           aria-controls="menu-movil"
           onClick={() => setMenuMovil((v) => !v)}
-          className="tw:-mr-2 tw:cursor-pointer tw:p-2 tw:text-neutral-900 tw:md:hidden"
+          className="navbar__hamburguesa"
         >
-          {menuMovil ? <X className="tw:size-6" aria-hidden="true" /> : <Menu className="tw:size-6" aria-hidden="true" />}
+          {menuMovil ? (
+            <X className="navbar__icono-menu" aria-hidden="true" />
+          ) : (
+            <Menu className="navbar__icono-menu" aria-hidden="true" />
+          )}
         </button>
 
-        <div className="tw:hidden tw:items-center tw:gap-3 tw:md:flex">
+        <div className="navbar__acciones">
           {!cargando &&
             (usuario ? (
-              <div className="tw:relative tw:hidden tw:sm:block">
+              <div className="navbar__usuario">
                 <button
                   type="button"
                   aria-expanded={menuUsuario}
                   aria-label={`Menú de ${usuario.nombre}`}
                   onClick={() => setMenuUsuario((v) => !v)}
-                  className={`${textoNav} tw:flex tw:cursor-pointer tw:items-center tw:gap-1 tw:whitespace-nowrap tw:hover:text-blue-600`}
+                  className="navbar__enlace navbar__enlace--usuario"
                 >
-                  <User className="tw:hidden tw:size-5 tw:md:max-lg:block" aria-hidden="true" />
-                  <span className="tw:md:max-lg:hidden">Hola, {usuario.nombre.split(' ')[0]}</span>
-                  <ChevronDown className="tw:size-4" aria-hidden="true" />
+                  <User className="navbar__icono-cuenta" aria-hidden="true" />
+                  <span className="navbar__saludo">Hola, {usuario.nombre.split(' ')[0]}</span>
+                  <ChevronDown className="navbar__flecha" aria-hidden="true" />
                 </button>
 
                 {menuUsuario && (
-                  <ul className="tw:absolute tw:right-0 tw:top-full tw:z-10 tw:mt-3 tw:w-44 tw:rounded-md tw:border tw:border-neutral-200 tw:bg-white tw:py-1 tw:text-sm tw:shadow-md">
+                  <ul className="navbar__menu-usuario">
                     <li>
                       <Link
                         to="/mis-cursos"
                         onClick={() => setMenuUsuario(false)}
-                        className="tw:block tw:px-4 tw:py-2 tw:text-neutral-800 tw:hover:bg-neutral-50"
+                        className="navbar__menu-usuario-opcion"
                       >
                         Mis cursos
                       </Link>
@@ -148,7 +147,7 @@ export default function Navbar() {
                           setMenuUsuario(false)
                           logout().catch(() => {})
                         }}
-                        className="tw:block tw:w-full tw:cursor-pointer tw:px-4 tw:py-2 tw:text-left tw:text-neutral-800 tw:hover:bg-neutral-50"
+                        className="navbar__menu-usuario-opcion"
                       >
                         Cerrar sesión
                       </button>
@@ -160,20 +159,17 @@ export default function Navbar() {
               <Link
                 to="/login"
                 aria-label="Iniciar sesión"
-                className={`${textoNav} tw:hidden tw:items-center tw:whitespace-nowrap tw:hover:text-blue-600 tw:sm:inline-flex`}
+                className="navbar__enlace navbar__enlace--cuenta"
               >
-                <User className="tw:hidden tw:size-5 tw:md:max-lg:block" aria-hidden="true" />
-                <span className="tw:md:max-lg:hidden">Iniciar sesión</span>
+                <User className="navbar__icono-cuenta" aria-hidden="true" />
+                <span className="navbar__saludo">Iniciar sesión</span>
               </Link>
             ))}
-          <Link
-            to="/registro"
-            className="tw:rounded-sm tw:border tw:border-neutral-300 tw:px-4 tw:py-3 tw:text-[13px] tw:font-bold tw:uppercase tw:tracking-wider tw:text-fondo-oscuro-secciones tw:hover:bg-neutral-50"
-          >
+          <Link to="/registro" className="navbar__boton navbar__boton--contorno">
             Inscribirme
           </Link>
-          <a href="/contacto" className={botonContacto}>
-            <span className="tw:size-1.5 tw:rounded-full tw:bg-white" aria-hidden="true" />
+          <a href="/contacto" className="navbar__boton navbar__boton--contacto">
+            <span className="navbar__punto" aria-hidden="true" />
             Contacto
           </a>
         </div>
@@ -183,32 +179,33 @@ export default function Navbar() {
         <div
           id="menu-movil"
           onClick={(e) => e.target.closest('a') && setMenuMovil(false)}
-          className="tw:border-t tw:border-neutral-200 tw:px-6 tw:pb-6 tw:pt-2 tw:md:hidden"
+          className="navbar__movil"
         >
-          <ul className="tw:divide-y tw:divide-neutral-100 tw:text-neutral-800">
+          <ul className="navbar__movil-lista">
             {links.map((link) => (
               <li key={link.label}>
-                <a href={link.href} className={`${textoNav} tw:block tw:py-3`}>
+                <a href={link.href} className="navbar__enlace navbar__enlace--movil">
                   {link.label}
                 </a>
               </li>
             ))}
             {enlacesMas.map((item) => (
               <li key={item.label}>
-                <Link to={item.to} className={`${textoNav} tw:flex tw:items-center tw:justify-between tw:py-3`}>
+                <Link
+                  to={item.to}
+                  className="navbar__enlace navbar__enlace--movil navbar__enlace--con-flecha"
+                >
                   {item.label}
-                  <ArrowUpRight className="tw:size-4 tw:text-blue-600" aria-hidden="true" />
+                  <ArrowUpRight className="navbar__flecha-enlace" aria-hidden="true" />
                 </Link>
               </li>
             ))}
             {!cargando && (
-              <li className="tw:py-3">
+              <li className="navbar__movil-cuenta">
                 {usuario ? (
                   <>
-                    <p className="tw:text-xs tw:font-semibold tw:uppercase tw:tracking-widest tw:text-slate-500">
-                      Hola, {usuario.nombre.split(' ')[0]}
-                    </p>
-                    <Link to="/mis-cursos" className="tw:block tw:py-2 tw:pl-3">
+                    <p className="navbar__movil-saludo">Hola, {usuario.nombre.split(' ')[0]}</p>
+                    <Link to="/mis-cursos" className="navbar__movil-opcion">
                       Mis cursos
                     </Link>
                     <button
@@ -217,13 +214,13 @@ export default function Navbar() {
                         setMenuMovil(false)
                         logout().catch(() => {})
                       }}
-                      className="tw:block tw:w-full tw:cursor-pointer tw:py-2 tw:pl-3 tw:text-left"
+                      className="navbar__movil-opcion"
                     >
                       Cerrar sesión
                     </button>
                   </>
                 ) : (
-                  <Link to="/login" className={`${textoNav} tw:block tw:py-2`}>
+                  <Link to="/login" className="navbar__enlace navbar__enlace--movil-cuenta">
                     Iniciar sesión
                   </Link>
                 )}
@@ -231,15 +228,12 @@ export default function Navbar() {
             )}
           </ul>
 
-          <div className="tw:mt-3 tw:flex tw:gap-3">
-            <Link
-              to="/registro"
-              className="tw:flex-1 tw:rounded-sm tw:border tw:border-neutral-300 tw:px-4 tw:py-3 tw:text-center tw:text-[13px] tw:font-bold tw:uppercase tw:tracking-wider tw:text-fondo-oscuro-secciones"
-            >
+          <div className="navbar__movil-botones">
+            <Link to="/registro" className="navbar__boton navbar__boton--contorno">
               Inscribirme
             </Link>
-            <a href="/contacto" className={`${botonContacto} tw:flex-1`}>
-              <span className="tw:size-1.5 tw:rounded-full tw:bg-white" aria-hidden="true" />
+            <a href="/contacto" className="navbar__boton navbar__boton--contacto">
+              <span className="navbar__punto" aria-hidden="true" />
               Contacto
             </a>
           </div>

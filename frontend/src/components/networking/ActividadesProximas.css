@@ -1,0 +1,49 @@
+/* Sección de la página principal con las próximas actividades de un tipo
+   (cursos, talleres o eventos) y un botón para ver el catálogo completo. */
+
+.actividades-proximas {
+  max-width: 72rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 5rem 1.5rem;
+  scroll-margin-top: 1.5rem;
+}
+
+.actividades-proximas__cabecera {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.actividades-proximas__contenido {
+  margin-top: 2rem;
+}
+
+.actividades-proximas__vacio {
+  padding: 2rem;
+  border: 1px dashed var(--color-neutro-300);
+  text-align: center;
+  color: var(--color-neutro-500);
+}
+
+/* Cursos y eventos: una tarjeta debajo de otra */
+.actividades-proximas__lista > :not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+/* Talleres: en fila, con desplazamiento lateral en pantallas pequeñas */
+.actividades-proximas__carrusel {
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+}
+
+@media (min-width: 640px) {
+  .actividades-proximas__cabecera {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}

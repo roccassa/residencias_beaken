@@ -3,6 +3,7 @@ import { Link, Navigate, useSearchParams } from 'react-router-dom'
 import { X } from 'lucide-react'
 import { useAuth } from '../../auth/AuthContext'
 import Field, { inputClass } from '../CampoFormulario'
+import './AuthCard.css'
 
 const TEXTOS = {
   login: {
@@ -69,34 +70,34 @@ export default function AuthCard() {
   }
 
   return (
-    <section className="tw:relative tw:bg-fondo-claro-secciones tw:px-6 tw:py-16 tw:md:py-24">
+    <section className="acceso">
       <Link
         to="/"
         aria-label="Cerrar"
-        className="tw:absolute tw:right-6 tw:top-6 tw:text-neutral-700 tw:hover:text-neutral-950"
+        className="acceso__cerrar"
       >
-        <X className="tw:size-6" />
+        <X className="acceso__cerrar-icono" />
       </Link>
 
-      <div className="tw:mx-auto tw:max-w-md tw:border tw:border-neutral-200 tw:bg-white tw:p-8 tw:md:p-10">
+      <div className="acceso__tarjeta">
         {cargando ? (
-          <p role="status" className="tw:py-10 tw:text-center tw:text-neutral-500">
+          <p role="status" className="acceso__cargando">
             Cargando…
           </p>
         ) : (
           <>
-            <div className="tw:inline-flex tw:items-center tw:gap-2">
-              <span className="tw:size-1.5 tw:shrink-0 tw:rounded-full tw:bg-rose-500" />
-              <p className="tw:text-xs tw:font-semibold tw:uppercase tw:tracking-widest tw:text-slate-500">
+            <div className="acceso__marca">
+              <span className="acceso__punto" />
+              <p className="acceso__etiqueta">
                 Cuenta
               </p>
             </div>
-            <h1 className="tw:mt-3 tw:font-display tw:text-3xl tw:font-semibold tw:leading-tight tw:tracking-tight tw:text-fondo-oscuro-secciones">
+            <h1 className="acceso__titulo">
               {textos.titulo}
             </h1>
-            <p className="tw:mt-3 tw:text-neutral-600">{textos.descripcion}</p>
+            <p className="acceso__descripcion">{textos.descripcion}</p>
 
-            <form key={modo} onSubmit={handleSubmit} className="tw:mt-8 tw:space-y-5">
+            <form key={modo} onSubmit={handleSubmit} className="acceso__formulario">
               {modo === 'registro' && (
                 <>
                   <Field label="Nombre" htmlFor="nombre" required error={campos.nombre}>
@@ -162,14 +163,14 @@ export default function AuthCard() {
                   className={inputClass}
                 />
                 {modo === 'registro' && (
-                  <p className="tw:mt-1 tw:text-xs tw:text-neutral-500">Mínimo 8 caracteres.</p>
+                  <p className="campo__ayuda">Mínimo 8 caracteres.</p>
                 )}
               </Field>
 
               {error && Object.keys(campos).length === 0 && (
                 <p
                   role="alert"
-                  className="tw:border tw:border-rose-200 tw:bg-rose-50 tw:p-3 tw:text-sm tw:text-rose-800"
+                  className="acceso__error"
                 >
                   {error.message}
                 </p>
@@ -178,18 +179,18 @@ export default function AuthCard() {
               <button
                 type="submit"
                 disabled={enviando}
-                className="tw:w-full tw:rounded-md tw:bg-neutral-900 tw:px-5 tw:py-3 tw:text-sm tw:font-medium tw:text-white tw:hover:bg-neutral-700 tw:disabled:cursor-not-allowed tw:disabled:opacity-60"
+                className="boton boton--ancho"
               >
                 {enviando ? 'Un momento…' : textos.boton}
               </button>
             </form>
 
-            <p className="tw:mt-6 tw:text-center tw:text-sm tw:text-neutral-600">
+            <p className="acceso__cambio">
               {textos.pregunta}{' '}
               <Link
                 to={destinoCambio}
                 onClick={() => setError(null)}
-                className="tw:font-medium tw:text-neutral-900 tw:underline tw:underline-offset-4"
+                className="acceso__cambio-enlace"
               >
                 {textos.cambio}
               </Link>

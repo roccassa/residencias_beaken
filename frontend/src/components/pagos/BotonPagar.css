@@ -1,0 +1,8 @@
+/* Mensaje de error debajo del botón "Pagar con Mercado Pago". */
+
+.boton-pagar__error {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  color: var(--color-rosa-700);
+}

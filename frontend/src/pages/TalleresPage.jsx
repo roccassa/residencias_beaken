@@ -12,16 +12,16 @@ export default function TalleresPage() {
   useTitulo('Talleres')
 
   return (
-    <div className="tw:flex tw:min-h-screen tw:flex-col">
+    <div className="pagina">
       <Navbar />
-      <main className="tw:flex-1">
+      <main className="pagina__principal">
         <Hero />
         <AgendaTalleres />
-        <div className="tw:bg-fondo-claro-secciones">
+        <div className="pagina__franja-clara">
           <Ventajas />
         </div>
         <Proceso variant="dot" />
-        <div className="tw:bg-fondo-claro-secciones">
+        <div className="pagina__franja-clara">
           <CtaBanner />
         </div>
         <Contacto variant="dot" />

@@ -1,4 +1,5 @@
 import SectionHeading from '../SectionHeading'
+import '../Ventajas.css'
 import { Infinity as InfinityIcon, RefreshCw, Headset } from 'lucide-react'
 
 const ventajas = [
@@ -21,8 +22,8 @@ const ventajas = [
 
 export default function Ventajas() {
   return (
-    <section className="tw:mx-auto tw:max-w-6xl tw:px-6 tw:py-20">
-      <div className="tw:border-t tw:border-neutral-200 tw:pt-10">
+    <section className="ventajas">
+      <div className="ventajas__encabezado">
         <SectionHeading
           variant="dot"
           align="center"
@@ -32,15 +33,15 @@ export default function Ventajas() {
         />
       </div>
 
-      <div className="tw:mt-12 tw:grid tw:gap-px tw:overflow-hidden tw:border tw:border-neutral-200 tw:bg-neutral-200 tw:sm:grid-cols-2 tw:lg:grid-cols-3">
+      <div className="ventajas__rejilla">
         {ventajas.map(({ icon: Icon, titulo, descripcion }) => (
-          <div key={titulo} className="tw:flex tw:flex-col tw:justify-between tw:bg-white tw:p-8">
+          <div key={titulo} className="ventajas__item">
             <div>
               <Icon />
-              <h3 className="tw:mt-4 tw:text-xl tw:font-semibold tw:text-neutral-900">
+              <h3 className="ventajas__titulo">
                 {titulo}
               </h3>
-              <p className="tw:mt-3 tw:text-sm tw:text-neutral-600">{descripcion}</p>
+              <p className="ventajas__texto">{descripcion}</p>
             </div>
 
           </div>

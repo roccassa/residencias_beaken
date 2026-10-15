@@ -7,9 +7,9 @@ export default function PagoResultadoPage() {
   useTitulo('Resultado del pago')
 
   return (
-    <div className="tw:flex tw:min-h-screen tw:flex-col">
+    <div className="pagina">
       <Navbar />
-      <main className="tw:flex-1">
+      <main className="pagina__principal">
         <ResultadoPago />
       </main>
       <Footer />

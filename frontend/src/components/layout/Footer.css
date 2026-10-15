@@ -1,0 +1,240 @@
+/* Pie de página: fondo azul oscuro, rejilla de columnas y la palabra BEAKEN de fondo. */
+
+.pie {
+  /* Colores propios del pie */
+  --pie-fondo: #102a43;
+  --pie-titulo-columna: #7fa6c7;
+  --pie-texto-claro: #e8eff7;
+  --pie-resalte: #8fc3ea;
+  --pie-eslogan: #c5d5e4;
+  --pie-borde-boton: #3a5673;
+  --pie-correo: #d5e2ee;
+  --pie-ubicacion: #a8bdd0;
+  --pie-copyright: #7f9bb5;
+
+  position: relative;
+  overflow: hidden;
+  border-style: solid;
+  border-width: 4px 0 0;
+  border-color: var(--color-rosa-500);
+  background-color: var(--pie-fondo);
+  color: var(--color-blanco);
+}
+
+/* La palabra gigante de fondo, casi transparente */
+.pie__marca-agua {
+  position: absolute;
+  right: 5%;
+  bottom: 3.4rem;
+  font-size: 7rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+  color: rgb(255 255 255 / 6%);
+  pointer-events: none;
+  user-select: none;
+}
+
+.pie__contenedor {
+  position: relative;
+  max-width: 72rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 4rem 1.5rem 0;
+}
+
+.pie__rejilla {
+  display: grid;
+  gap: 3rem;
+}
+
+/* ---------- Primera columna: logotipo, lema y botón ---------- */
+
+.pie__logo-enlace {
+  display: inline-block;
+}
+
+.pie__logotipo {
+  width: auto;
+  height: 2.5rem;
+  margin-left: -7px;
+  filter: brightness(0) invert(1);
+}
+
+.pie__eslogan {
+  margin-top: 2rem;
+  line-height: 1.625;
+  color: var(--pie-eslogan);
+}
+
+.pie__boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+  padding: 0.875rem 1.25rem;
+  border: 1px solid var(--pie-borde-boton);
+  font-family: var(--fuente-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pie-texto-claro);
+}
+
+.pie__boton-punto {
+  width: 0.25rem;
+  height: 0.25rem;
+  border-radius: calc(infinity * 1px);
+  background-color: var(--color-rosa-500);
+}
+
+.pie__boton-flecha {
+  margin-left: 0.5rem;
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  color: var(--color-fucsia-500);
+}
+
+/* ---------- Columnas de enlaces ---------- */
+
+.pie__columna-titulo {
+  font-family: var(--fuente-mono);
+  font-size: 0.75rem;
+  line-height: calc(1 / 0.75);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pie-titulo-columna);
+}
+
+.pie__lista {
+  margin-top: 1.25rem;
+}
+
+.pie__lista > :not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
+.pie__lista--amplia > :not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.pie__enlace {
+  color: var(--pie-texto-claro);
+}
+
+.pie__enlace-externo {
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
+  line-height: calc(1 / 0.75);
+}
+
+/* Columna "Hablemos" */
+.pie__correo {
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  color: var(--pie-correo);
+}
+
+.pie__telefono {
+  font-size: 1.25rem;
+  line-height: calc(1.75 / 1.25);
+  font-weight: 600;
+  color: var(--color-blanco);
+}
+
+.pie__ubicacion {
+  font-size: 13px;
+  color: var(--pie-ubicacion);
+}
+
+.pie__legal {
+  padding-top: 0.5rem;
+}
+
+.pie__enlace--legal {
+  font-size: 15px;
+}
+
+/* ---------- Franja inferior ---------- */
+
+.pie__base {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 6.75rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-style: solid;
+  border-width: 1px 0 0;
+  border-color: rgb(255 255 255 / 20%);
+  font-family: var(--fuente-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pie__copyright {
+  color: var(--pie-copyright);
+}
+
+.pie__lema {
+  color: var(--pie-resalte);
+}
+
+/* ---------- Pantallas medianas (640 px) ---------- */
+
+@media (min-width: 640px) {
+  .pie__marca-agua {
+    bottom: 3.2rem;
+    font-size: 10rem;
+  }
+
+  .pie__rejilla {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .pie__bloque-marca {
+    grid-column: span 3 / span 3;
+  }
+
+  .pie__base {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+/* ---------- Pantallas grandes (1024 px) ---------- */
+
+@media (min-width: 1024px) {
+  .pie__marca-agua {
+    bottom: 2.9rem;
+    font-size: 14rem;
+  }
+
+  .pie__rejilla {
+    grid-template-columns: 1.5fr 1fr 1.2fr 1fr;
+  }
+
+  .pie__bloque-marca {
+    grid-column: span 1 / span 1;
+  }
+}
+
+/* ---------- Al pasar el cursor (solo en dispositivos con ratón) ---------- */
+
+@media (hover: hover) {
+  .pie__enlace:hover,
+  .pie__correo:hover,
+  .pie__telefono:hover {
+    color: var(--pie-resalte);
+  }
+
+  .pie__boton:hover {
+    border-color: var(--pie-resalte);
+  }
+
+  .pie__lema:hover {
+    color: var(--color-blanco);
+  }
+}

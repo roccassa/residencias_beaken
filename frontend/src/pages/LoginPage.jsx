@@ -9,9 +9,9 @@ export default function LoginPage() {
   useTitulo(searchParams.get('modo') === 'registro' ? 'Crear cuenta' : 'Iniciar sesión')
 
   return (
-    <div className="tw:flex tw:min-h-screen tw:flex-col">
+    <div className="pagina">
       <Navbar />
-      <main className="tw:flex-1">
+      <main className="pagina__principal">
         <AuthCard />
       </main>
       <Footer />

@@ -1,0 +1,17 @@
+/* Estructura común de todas las páginas: encabezado, contenido y pie.
+   El contenido crece para que el pie quede siempre al final de la ventana. */
+
+.pagina {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.pagina__principal {
+  flex: 1;
+}
+
+/* Franja con el fondo gris claro que alterna entre secciones */
+.pagina__franja-clara {
+  background-color: var(--color-fondo-claro);
+}

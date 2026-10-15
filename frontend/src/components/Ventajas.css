@@ -1,0 +1,118 @@
+/* Secciones de ventajas.
+   .ventajas          cuadrícula de recuadros con borde (Cursos y Talleres)
+   .ventajas-evento   imagen a un lado y lista de ventajas al otro (Eventos) */
+
+.ventajas,
+.ventajas-evento {
+  max-width: 72rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 5rem 1.5rem;
+}
+
+/* ---------- Cursos y Talleres ---------- */
+
+.ventajas__encabezado {
+  padding-top: 2.5rem;
+  border-style: solid;
+  border-width: 1px 0 0;
+  border-color: var(--color-neutro-200);
+}
+
+.ventajas__rejilla {
+  display: grid;
+  gap: 1px;
+  margin-top: 3rem;
+  overflow: hidden;
+  border: 1px solid var(--color-neutro-200);
+  background-color: var(--color-neutro-200);
+}
+
+.ventajas__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem;
+  background-color: var(--color-blanco);
+}
+
+.ventajas__titulo {
+  margin-top: 1rem;
+  font-size: 1.25rem;
+  line-height: calc(1.75 / 1.25);
+  font-weight: 600;
+  color: var(--color-neutro-900);
+}
+
+.ventajas__texto {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  color: var(--color-neutro-600);
+}
+
+/* ---------- Eventos ---------- */
+
+.ventajas-evento__rejilla {
+  display: grid;
+  align-items: center;
+  gap: 3rem;
+}
+
+.ventajas-evento__imagen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  background-color: var(--color-neutro-200);
+}
+
+.ventajas-evento__foto {
+  width: 100%;
+  height: 100%;
+  min-height: 12rem;
+  object-fit: cover;
+}
+
+.ventajas-evento__lista {
+  display: grid;
+  column-gap: 2rem;
+  row-gap: 2.5rem;
+}
+
+.ventajas-evento__titulo {
+  margin-top: 1rem;
+  font-size: 1.125rem;
+  line-height: calc(1.75 / 1.125);
+  font-weight: 600;
+  color: var(--color-neutro-900);
+}
+
+.ventajas-evento__texto {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  color: var(--color-neutro-600);
+}
+
+@media (min-width: 640px) {
+  .ventajas__rejilla {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ventajas-evento__lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .ventajas-evento__rejilla {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .ventajas__rejilla {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

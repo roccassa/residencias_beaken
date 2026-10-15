@@ -1,0 +1,90 @@
+/* Página de resultado de un pago: mensaje según el estado (aprobado, pendiente, rechazado...). */
+
+.resultado-pago {
+  max-width: 72rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 5rem 1.5rem;
+}
+
+.resultado-pago__contenido {
+  max-width: 42rem;
+  margin-top: 2.5rem;
+}
+
+.resultado-pago__verificando {
+  color: var(--color-neutro-500);
+}
+
+.resultado-pago__error {
+  padding: 1rem;
+  border: 1px solid var(--color-rosa-200);
+  background-color: var(--color-rosa-50);
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  color: var(--color-rosa-800);
+}
+
+/* Caja del mensaje: los colores cambian con el estado */
+.resultado-pago__caja {
+  padding: 1.5rem;
+  border: 1px solid;
+}
+
+.resultado-pago__caja--aprobado {
+  border-color: var(--color-esmeralda-300);
+  background-color: var(--color-esmeralda-50);
+  color: var(--color-esmeralda-900);
+}
+
+.resultado-pago__caja--pendiente {
+  border-color: var(--color-ambar-300);
+  background-color: var(--color-ambar-50);
+  color: var(--color-ambar-900);
+}
+
+.resultado-pago__caja--rechazado {
+  border-color: var(--color-rosa-300);
+  background-color: var(--color-rosa-50);
+  color: var(--color-rosa-900);
+}
+
+.resultado-pago__caja--neutra {
+  border-color: var(--color-neutro-300);
+  background-color: var(--color-neutro-50);
+  color: var(--color-neutro-900);
+}
+
+.resultado-pago__caja-titulo {
+  font-weight: 600;
+}
+
+.resultado-pago__caja-actividad,
+.resultado-pago__caja-texto {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+}
+
+.resultado-pago__caja-actividad {
+  font-weight: 500;
+}
+
+.resultado-pago__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  column-gap: 1.5rem;
+  row-gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.resultado-pago__enlace {
+  align-self: center;
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  font-weight: 500;
+  color: var(--color-neutro-900);
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
+}

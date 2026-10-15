@@ -1,0 +1,71 @@
+/* Listado de actividades de Cursos y Eventos: encabezado, filtros por categoría y lista. */
+
+.agenda {
+  max-width: 72rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 5rem 1.5rem;
+}
+
+.agenda__filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+/* Filtro de texto (una categoría). La seleccionada se subraya. */
+.agenda__categoria {
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  font-weight: 500;
+  color: var(--color-neutro-500);
+}
+
+.agenda__categoria--activa {
+  color: var(--color-neutro-900);
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
+}
+
+/* Cursos: tarjetas separadas */
+.agenda__lista {
+  margin-top: 2rem;
+}
+
+.agenda__lista > :not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.agenda__vacio {
+  padding: 2rem;
+  border: 1px dashed var(--color-neutro-300);
+  text-align: center;
+  color: var(--color-neutro-500);
+}
+
+/* Eventos: filas unidas por líneas */
+.agenda__filas {
+  margin-top: 2rem;
+  border-style: solid;
+  border-width: 1px 0 0;
+  border-color: var(--color-neutro-300);
+}
+
+.agenda__vacio-fila {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-style: solid;
+  border-width: 0 0 1px;
+  border-color: var(--color-neutro-300);
+  text-align: center;
+  color: var(--color-neutro-500);
+}
+
+@media (hover: hover) {
+  .agenda__categoria:not(.agenda__categoria--activa):hover {
+    color: var(--color-neutro-900);
+  }
+}

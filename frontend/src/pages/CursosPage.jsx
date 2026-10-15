@@ -12,16 +12,16 @@ export default function CursosPage() {
   useTitulo('Cursos')
 
   return (
-    <div className="tw:flex tw:min-h-screen tw:flex-col">
+    <div className="pagina">
       <Navbar />
-      <main className="tw:flex-1">
+      <main className="pagina__principal">
         <Hero />
         <AgendaCursos />
-        <div className="tw:bg-fondo-claro-secciones"> 
+        <div className="pagina__franja-clara"> 
           <Ventajas />
         </div>
         <Proceso />
-        <div className="tw:bg-fondo-claro-secciones">
+        <div className="pagina__franja-clara">
           <CtaBanner />
         </div>
         <Contacto />

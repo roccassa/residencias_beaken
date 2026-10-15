@@ -11,12 +11,12 @@ export default function InscripcionPage() {
   useTitulo('Inscripción')
 
   return (
-    <div className="tw:flex tw:min-h-screen tw:flex-col">
+    <div className="pagina">
       <Navbar />
-      <main className="tw:flex-1">
+      <main className="pagina__principal">
         <Hero />
         <FormularioInscripcion />
-        <div className="tw:bg-fondo-claro-secciones">
+        <div className="pagina__franja-clara">
           <FormularioEmpresa />
         </div>
         <div >

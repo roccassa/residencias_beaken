@@ -2,7 +2,9 @@ import imagenSumarEmpresa from '../../assets/images/imagen2.jpg';
 
 import { useState } from 'react'
 import { apiPost } from '../../api/client'
+import { inputClass } from '../CampoFormulario'
 import SectionHeading from '../SectionHeading'
+import './FormularioEmpresa.css'
 
 export default function FormularioEmpresa() {
   const [resultado, setResultado] = useState(null)
@@ -25,8 +27,8 @@ export default function FormularioEmpresa() {
   }
 
   return (
-    <section className="tw:mx-auto tw:max-w-6xl tw:px-6 tw:py-20">
-      <div className="tw:grid tw:items-center tw:gap-12 tw:md:grid-cols-2">
+    <section className="formulario-empresa">
+      <div className="formulario-empresa__rejilla">
         <div>
           <SectionHeading
             label="Empresas"
@@ -35,45 +37,45 @@ export default function FormularioEmpresa() {
           />
 
           {resultado ? (
-            <p role="status" className="tw:mt-8 tw:text-sm tw:font-medium tw:text-emerald-800">
+            <p role="status" className="formulario-empresa__exito">
               {resultado.mensaje}
             </p>
           ) : (
-            <form onSubmit={handleSubmit} className="tw:mt-8">
-              <div className="tw:flex tw:max-w-md tw:gap-2">
+            <form onSubmit={handleSubmit} className="formulario-empresa__formulario">
+              <div className="formulario-empresa__fila">
                 <input
                   type="email"
                   name="correo-empresa"
                   required
                   aria-label="Correo electrónico"
                   placeholder="Tu correo electrónico"
-                  className="tw:w-full tw:rounded-md tw:border tw:border-neutral-300 tw:bg-white tw:px-3 tw:py-2.5 tw:text-sm tw:text-neutral-900 tw:placeholder:text-neutral-400 tw:focus:border-blue-600 tw:focus:outline-none tw:focus:ring-1 tw:focus:ring-blue-600"
+                  className={inputClass}
                 />
                 <button
                   type="submit"
                   disabled={enviando}
-                  className="tw:shrink-0 tw:rounded-md tw:bg-neutral-900 tw:px-5 tw:py-2.5 tw:text-sm tw:font-medium tw:text-white tw:hover:bg-neutral-700 tw:disabled:cursor-not-allowed tw:disabled:opacity-60"
+                  className="boton formulario-empresa__boton"
                 >
                   {enviando ? 'Enviando…' : 'Enviar'}
                 </button>
               </div>
               {error && (
-                <p role="alert" className="tw:mt-3 tw:text-sm tw:text-rose-700">
+                <p role="alert" className="formulario-empresa__error">
                   {error.campos?.correo ?? error.message}
                 </p>
               )}
-              <p className="tw:mt-3 tw:text-xs tw:text-neutral-500">
+              <p className="formulario-empresa__nota">
                 Al enviar aceptas nuestros términos y condiciones.
               </p>
             </form>
           )}
         </div>
 
-        <div className="tw:flex tw:aspect-4/3 tw:items-center tw:justify-center tw:bg-neutral-200">
+        <div className="formulario-empresa__imagen">
           <img
             src={imagenSumarEmpresa}  
             alt=""
-            className="tw:size-full tw:min-h-48 tw:object-cover"
+            className="formulario-empresa__foto"
           />
         </div>
       </div>

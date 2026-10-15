@@ -1,4 +1,5 @@
 import SectionHeading from './SectionHeading'
+import './Contacto.css'
 import iconEmail from '../assets/images/icons/mail.png'
 import iconWhatsapp from '../assets/images/icons/wap.webp'
 import iconTelegram from '../assets/images/icons/telegram.svg'
@@ -45,7 +46,7 @@ const redes = [
 
 export default function Contacto({ variant }) {
   return (
-    <section id="contacto" className="tw:mx-auto tw:max-w-6xl tw:px-6 tw:py-20 tw:text-center">
+    <section id="contacto" className="contacto">
       <SectionHeading
         variant={variant}
         align="center"
@@ -54,31 +55,31 @@ export default function Contacto({ variant }) {
         description="Escríbenos por WhatsApp, Instagram, Facebook o Telegram. Respondemos rápido y sin rodeos."
       />
 
-      <div className="tw:mt-12 tw:grid tw:gap-10 tw:sm:grid-cols-4">
+      <div className="contacto__canales">
         {canales.map((canal) => (
-          <div key={canal.titulo} className="tw:flex tw:flex-col tw:items-center">
-            <img src={canal.icon} alt="" className="tw:size-9 tw:object-contain" />
-            <h3 className="tw:mt-4 tw:text-lg tw:font-semibold tw:text-neutral-900">
+          <div key={canal.titulo} className="contacto__canal">
+            <img src={canal.icon} alt="" className="contacto__icono" />
+            <h3 className="contacto__titulo contacto__titulo--con-icono">
               {canal.titulo}
             </h3>
-            <p className="tw:mt-2 tw:max-w-xs tw:text-sm tw:text-neutral-600">
+            <p className="contacto__texto">
               {canal.descripcion}
             </p>
-            <a href={canal.href} className="tw:mt-2 tw:text-sm tw:font-medium tw:text-neutral-900 tw:underline tw:underline-offset-4">
+            <a href={canal.href} className="contacto__enlace">
               {canal.valor}
             </a>
           </div>
         ))}
 
-        <div className="tw:flex tw:flex-col tw:items-center">
-          <img src={iconFollow} alt="" className="tw:w-25 tw:h-auto tw:mb-2 tw:mt-3 tw:object-contain" />
-          <h3 className="tw:text-lg tw:font-semibold tw:text-neutral-900">
+        <div className="contacto__canal">
+          <img src={iconFollow} alt="" className="contacto__icono-redes" />
+          <h3 className="contacto__titulo">
             Redes sociales
           </h3>
-          <p className="tw:mt-2 tw:max-w-xs tw:text-sm tw:text-neutral-600">
+          <p className="contacto__texto">
             Siguenos en tu red social favorita
           </p>
-          <div className="tw:mt-3 tw:flex tw:gap-3">
+          <div className="contacto__redes">
             {redes.map((red) => {
               const externo = red.href.startsWith('http')
               return (
@@ -87,9 +88,9 @@ export default function Contacto({ variant }) {
                   href={red.href}
                   aria-label={red.nombre}
                   {...(externo ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                  className="tw:flex tw:size-9 tw:items-center tw:justify-center tw:rounded-full tw:border tw:border-neutral-300 tw:hover:bg-neutral-100"
+                  className="contacto__red"
                 >
-                  <img src={red.icon} alt="" className="tw:size-5 tw:object-contain" />
+                  <img src={red.icon} alt="" className="contacto__red-icono" />
                 </a>
               )
             })}

@@ -1,0 +1,72 @@
+/* Valores que se repiten en todo el sitio: colores, fuentes, etc.
+   Los componentes los usan con var(--nombre). Si algo cambia (un color de la marca),
+   se cambia aquí y se actualiza en todas partes. */
+
+:root {
+  /* Fuentes (se cargan desde Google Fonts en index.html) */
+  --fuente-base: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+  --fuente-titulos: "Onest", "Inter", system-ui, sans-serif;
+  --fuente-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* Colores de la marca */
+  --color-fondo-claro: rgb(245, 246, 248);
+  --color-fondo-oscuro: rgb(16, 41, 64);
+  --color-texto: #1a1a1a;
+  --color-fondo: #ffffff;
+}
+
+/* Paleta (los mismos valores que usaba Tailwind, con nombres en español) */
+:root {
+  --color-blanco: #fff;
+
+  --color-neutro-50: oklch(98.5% 0 none);
+  --color-neutro-100: oklch(97% 0 none);
+  --color-neutro-200: oklch(92.2% 0 none);
+  --color-neutro-300: oklch(87% 0 none);
+  --color-neutro-400: oklch(70.8% 0 none);
+  --color-neutro-500: oklch(55.6% 0 none);
+  --color-neutro-600: oklch(43.9% 0 none);
+  --color-neutro-700: oklch(37.1% 0 none);
+  --color-neutro-800: oklch(26.9% 0 none);
+  --color-neutro-900: oklch(20.5% 0 none);
+  --color-neutro-950: oklch(14.5% 0 none);
+
+  --color-pizarra-500: oklch(55.4% 0.046 257.417);
+  --color-azul-600: oklch(54.6% 0.245 262.881);
+
+  --color-rosa-50: oklch(96.9% 0.015 12.422);
+  --color-rosa-200: oklch(89.2% 0.058 10.001);
+  --color-rosa-500: oklch(64.5% 0.246 16.439);
+  --color-rosa-600: oklch(58.6% 0.253 17.585);
+  --color-rosa-800: oklch(45.5% 0.188 13.697);
+
+  --color-fucsia-500: oklch(65.6% 0.241 354.308);
+
+  --color-rosa-300: oklch(81% 0.117 11.638);
+  --color-rosa-700: oklch(51.4% 0.222 16.935);
+  --color-rosa-900: oklch(41% 0.159 10.272);
+
+  --color-esmeralda-50: oklch(97.9% 0.021 166.113);
+  --color-rosa-100: oklch(94.1% 0.03 12.58);
+
+  --color-esmeralda-100: oklch(95% 0.052 163.051);
+  --color-esmeralda-200: oklch(90.5% 0.093 164.15);
+  --color-esmeralda-300: oklch(84.5% 0.143 164.978);
+  --color-esmeralda-800: oklch(43.2% 0.095 166.913);
+  --color-esmeralda-900: oklch(37.8% 0.077 168.94);
+
+  --color-cielo-100: oklch(95.1% 0.026 236.824);
+  --color-cielo-800: oklch(44.3% 0.11 240.79);
+
+  --color-ambar-50: oklch(98.7% 0.022 95.277);
+  --color-ambar-100: oklch(96.2% 0.059 95.617);
+  --color-ambar-800: oklch(47.3% 0.137 46.201);
+  --color-ambar-300: oklch(87.9% 0.169 91.605);
+  --color-ambar-900: oklch(41.4% 0.112 45.904);
+}
+
+/* Color de acento (botón de contacto) */
+:root {
+  --color-acento: #ff0054;
+  --color-acento-oscuro: #d9004a;
+}

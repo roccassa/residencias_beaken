@@ -1,4 +1,5 @@
 import agenda from '../../assets/images/agenda.jpg'
+import '../Ventajas.css'
 import { Laptop, Tag, User, FileText, Users, MessageCircle } from 'lucide-react'
 
 const ventajas = [
@@ -35,25 +36,25 @@ const ventajas = [
 
 export default function Ventajas() {
   return (
-    <section className="tw:mx-auto tw:max-w-6xl tw:px-6 tw:py-20">
-      <div className="tw:grid tw:items-center tw:gap-12 tw:md:grid-cols-2">
-        <div className="tw:flex tw:aspect-square tw:items-center tw:justify-center tw:bg-neutral-200">
+    <section className="ventajas-evento">
+      <div className="ventajas-evento__rejilla">
+        <div className="ventajas-evento__imagen">
           <img
               src={agenda}  
               alt=""
-              className="tw:size-full tw:min-h-48 tw:object-cover"
+              className="ventajas-evento__foto"
             />
         </div>
 
         <div>
-          <div className="tw:grid tw:gap-x-8 tw:gap-y-10 tw:sm:grid-cols-2">
+          <div className="ventajas-evento__lista">
             {ventajas.map(({ icon: Icon, titulo, descripcion }) => (
               <div key={titulo}>
                 <Icon />
-                <h3 className="tw:mt-4 tw:text-lg tw:font-semibold tw:text-neutral-900">
+                <h3 className="ventajas-evento__titulo">
                   {titulo}
                 </h3>
-                <p className="tw:mt-2 tw:text-sm tw:text-neutral-600">{descripcion}</p>
+                <p className="ventajas-evento__texto">{descripcion}</p>
               </div>
             ))}
           </div>

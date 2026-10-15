@@ -1,0 +1,38 @@
+/* Página "Mis cursos": título a la izquierda y la lista de inscripciones a la derecha. */
+
+.mis-cursos {
+  max-width: 72rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 5rem 1.5rem;
+}
+
+.mis-cursos__rejilla {
+  display: grid;
+  gap: 3rem;
+}
+
+.mis-cursos__vacio {
+  padding: 2rem;
+  border: 1px dashed var(--color-neutro-300);
+  text-align: center;
+}
+
+.mis-cursos__vacio-texto {
+  color: var(--color-neutro-600);
+}
+
+.mis-cursos__boton {
+  display: inline-block;
+  margin-top: 1.25rem;
+}
+
+.mis-cursos__lista > :not(:last-child) {
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 1024px) {
+  .mis-cursos__rejilla {
+    grid-template-columns: 1fr 1.4fr;
+  }
+}

@@ -6,6 +6,7 @@ import { useFetch } from '../../hooks/useFetch'
 import Field, { inputClass } from '../CampoFormulario'
 import SectionHeading from '../SectionHeading'
 import BotonPagar from '../pagos/BotonPagar'
+import './FormularioInscripcion.css'
 
 const grupos = [
   { label: 'Cursos', tipo: 'curso' },
@@ -13,8 +14,7 @@ const grupos = [
   { label: 'Eventos', tipo: 'evento' },
 ]
 
-const botonClass =
-  'tw:rounded-md tw:bg-neutral-900 tw:px-5 tw:py-2.5 tw:text-sm tw:font-medium tw:text-white tw:hover:bg-neutral-700'
+const botonClass = 'boton'
 
 export default function FormularioInscripcion() {
   const { usuario, cargando, recargarUsuario } = useAuth()
@@ -60,7 +60,7 @@ export default function FormularioInscripcion() {
   const volver = encodeURIComponent(location.pathname + location.search)
 
   return (
-    <section className="tw:mx-auto tw:max-w-6xl tw:px-6 tw:py-20">
+    <section className="formulario-inscripcion">
       <SectionHeading
         label="Registro"
         title="Aparta tu lugar hoy"
@@ -68,24 +68,24 @@ export default function FormularioInscripcion() {
       />
 
       {cargando ? (
-        <p role="status" className="tw:mt-10 tw:text-neutral-500">
+        <p role="status" className="formulario-inscripcion__cargando">
           Cargando…
         </p>
       ) : !usuario ? (
-        <div className="tw:mt-10 tw:max-w-2xl tw:border tw:border-neutral-200 tw:bg-white tw:p-6">
-          <h3 className="tw:font-semibold tw:text-neutral-900">
+        <div className="formulario-inscripcion__acceso">
+          <h3 className="formulario-inscripcion__acceso-titulo">
             Inicia sesión o crea tu cuenta para inscribirte
           </h3>
-          <p className="tw:mt-1 tw:text-sm tw:text-neutral-600">
+          <p className="formulario-inscripcion__acceso-texto">
             Así tus inscripciones quedan ligadas a ti y puedes consultarlas en Mis cursos.
           </p>
-          <div className="tw:mt-5 tw:flex tw:flex-wrap tw:gap-3">
+          <div className="formulario-inscripcion__acciones">
             <Link to={`/login?volver=${volver}`} className={botonClass}>
               Iniciar sesión
             </Link>
             <Link
               to={`/login?modo=registro&volver=${volver}`}
-              className="tw:rounded-md tw:border tw:border-neutral-300 tw:px-5 tw:py-2.5 tw:text-sm tw:font-medium tw:text-neutral-900 tw:hover:bg-neutral-100"
+              className="boton boton--contorno formulario-inscripcion__boton-cuenta"
             >
               Crear cuenta
             </Link>
@@ -94,43 +94,43 @@ export default function FormularioInscripcion() {
       ) : resultado ? (
         <div
           role="status"
-          className="tw:mt-10 tw:max-w-2xl tw:border tw:border-emerald-300 tw:bg-emerald-50 tw:p-6"
+          className="formulario-inscripcion__exito"
         >
-          <h3 className="tw:font-semibold tw:text-emerald-900">
+          <h3 className="formulario-inscripcion__exito-titulo">
             ¡Gracias! Recibimos tu solicitud
           </h3>
-          <p className="tw:mt-1 tw:text-sm tw:text-emerald-800">{resultado.mensaje}</p>
-          <p className="tw:mt-1 tw:text-sm tw:text-emerald-800">
+          <p className="formulario-inscripcion__exito-texto">{resultado.mensaje}</p>
+          <p className="formulario-inscripcion__exito-texto">
             También puedes consultar los detalles en Mis cursos.
           </p>
           {resultado.estado === 'pendiente_pago' && (
-            <div className="tw:mt-4 tw:border-t tw:border-emerald-200 tw:pt-4">
-              <p className="tw:mb-3 tw:text-sm tw:text-emerald-800">
+            <div className="formulario-inscripcion__pago">
+              <p className="formulario-inscripcion__pago-texto">
                 Tu lugar queda reservado 30 minutos. Paga ahora para confirmarlo.
               </p>
               <BotonPagar inscripcionId={resultado.id} />
             </div>
           )}
-          <div className="tw:mt-4 tw:flex tw:flex-wrap tw:gap-x-6 tw:gap-y-2 tw:text-sm tw:font-medium tw:text-emerald-900">
-            <Link to="/mis-cursos" className="tw:underline tw:underline-offset-4">
+          <div className="formulario-inscripcion__exito-enlaces">
+            <Link to="/mis-cursos" className="formulario-inscripcion__enlace">
               Ver mis cursos
             </Link>
             <button
               type="button"
               onClick={() => setResultado(null)}
-              className="tw:cursor-pointer tw:underline tw:underline-offset-4"
+              className="formulario-inscripcion__enlace"
             >
               Enviar otra inscripción
             </button>
           </div>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="tw:mt-10 tw:max-w-2xl tw:space-y-5">
-          <div className="tw:border tw:border-neutral-200 tw:bg-fondo-claro-secciones tw:p-4 tw:text-sm tw:text-neutral-700">
-            <p className="tw:text-xs tw:font-semibold tw:uppercase tw:tracking-widest tw:text-slate-500">
+        <form onSubmit={handleSubmit} className="formulario-inscripcion__formulario">
+          <div className="formulario-inscripcion__resumen">
+            <p className="formulario-inscripcion__resumen-etiqueta">
               Te inscribes como
             </p>
-            <p className="tw:mt-1 tw:font-medium tw:text-neutral-900">
+            <p className="formulario-inscripcion__resumen-nombre">
               {usuario.nombre} {usuario.apellido}
             </p>
             <p>
@@ -140,7 +140,7 @@ export default function FormularioInscripcion() {
           </div>
 
           {(faltaApellido || faltaTelefono) && (
-            <div className="tw:grid tw:gap-5 tw:sm:grid-cols-2">
+            <div className="formulario-inscripcion__datos-faltantes">
               {faltaApellido && (
                 <Field label="Apellido" htmlFor="apellido" required error={campos.apellido}>
                   <input id="apellido" name="apellido" type="text" required autoComplete="family-name" className={inputClass} />
@@ -217,20 +217,20 @@ export default function FormularioInscripcion() {
           </Field>
 
           <div>
-            <label className="tw:flex tw:items-center tw:gap-2 tw:text-sm tw:text-neutral-700">
-              <input type="checkbox" name="terminos" required className="tw:size-4 tw:accent-neutral-900" />
+            <label className="formulario-inscripcion__terminos">
+              <input type="checkbox" name="terminos" required className="formulario-inscripcion__casilla" />
               Acepto los{' '}
-              <a href="#" className="tw:underline tw:underline-offset-4">
+              <a href="#" className="formulario-inscripcion__enlace">
                 términos
               </a>
             </label>
-            {campos.terminos && <p className="tw:mt-1 tw:text-xs tw:text-rose-600">{campos.terminos}</p>}
+            {campos.terminos && <p className="formulario-inscripcion__error-campo">{campos.terminos}</p>}
           </div>
 
           {error && (
             <p
               role="alert"
-              className="tw:border tw:border-rose-200 tw:bg-rose-50 tw:p-4 tw:text-sm tw:text-rose-800"
+              className="formulario-inscripcion__error"
             >
               {error.message}
             </p>
@@ -239,7 +239,7 @@ export default function FormularioInscripcion() {
           <button
             type="submit"
             disabled={enviando}
-            className={`${botonClass} tw:disabled:cursor-not-allowed tw:disabled:opacity-60`}
+            className="boton"
           >
             {enviando ? 'Enviando…' : 'Enviar'}
           </button>

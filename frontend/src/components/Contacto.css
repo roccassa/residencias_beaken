@@ -1,0 +1,98 @@
+/* Sección de contacto: canales de contacto (correo, teléfono, Telegram) y redes sociales. */
+
+.contacto {
+  max-width: 72rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 5rem 1.5rem;
+  text-align: center;
+}
+
+.contacto__canales {
+  display: grid;
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+
+.contacto__canal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contacto__icono {
+  width: 2.25rem;
+  height: 2.25rem;
+  object-fit: contain;
+}
+
+.contacto__icono-redes {
+  width: 6.25rem;
+  height: auto;
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+  object-fit: contain;
+}
+
+.contacto__titulo {
+  font-size: 1.125rem;
+  line-height: calc(1.75 / 1.125);
+  font-weight: 600;
+  color: var(--color-neutro-900);
+}
+
+.contacto__titulo--con-icono {
+  margin-top: 1rem;
+}
+
+.contacto__texto {
+  max-width: 20rem;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  color: var(--color-neutro-600);
+}
+
+.contacto__enlace {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  font-weight: 500;
+  color: var(--color-neutro-900);
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
+}
+
+.contacto__redes {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.contacto__red {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--color-neutro-300);
+  border-radius: calc(infinity * 1px);
+}
+
+.contacto__red-icono {
+  width: 1.25rem;
+  height: 1.25rem;
+  object-fit: contain;
+}
+
+@media (min-width: 640px) {
+  .contacto__canales {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (hover: hover) {
+  .contacto__red:hover {
+    background-color: var(--color-neutro-100);
+  }
+}

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { apiPost } from '../../api/client'
+import './BotonPagar.css'
 
 // Pide al servidor la preferencia de pago y envía a la persona a Mercado Pago.
 export default function BotonPagar({ inscripcionId, className = '' }) {
@@ -24,12 +25,12 @@ export default function BotonPagar({ inscripcionId, className = '' }) {
         type="button"
         onClick={pagar}
         disabled={enviando}
-        className="tw:cursor-pointer tw:rounded-md tw:bg-neutral-900 tw:px-5 tw:py-2.5 tw:text-sm tw:font-medium tw:text-white tw:hover:bg-neutral-700 tw:disabled:cursor-not-allowed tw:disabled:opacity-60"
+        className="boton"
       >
         {enviando ? 'Abriendo Mercado Pago…' : 'Pagar con Mercado Pago'}
       </button>
       {error && (
-        <p role="alert" className="tw:mt-2 tw:text-sm tw:text-rose-700">
+        <p role="alert" className="boton-pagar__error">
           {error}
         </p>
       )}

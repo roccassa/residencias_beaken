@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useFetch } from '../../hooks/useFetch'
 import EstadoCarga from '../EstadoCarga'
 import SectionHeading from '../SectionHeading'
+import './ActividadesProximas.css'
 
 const MAXIMO = 3
 
@@ -27,22 +28,22 @@ export default function ActividadesProximas({
   const proximas = (data ?? []).slice(0, MAXIMO)
 
   return (
-    <section id={id} className="tw:mx-auto tw:max-w-6xl tw:scroll-mt-6 tw:px-6 tw:py-20">
-      <div className="tw:flex tw:flex-col tw:justify-between tw:gap-4 tw:sm:flex-row tw:sm:items-end">
+    <section id={id} className="actividades-proximas">
+      <div className="actividades-proximas__cabecera">
         <SectionHeading label={label} title={title} description={description} />
         <Link
           to={destino}
-          className="tw:inline-flex tw:h-fit tw:w-fit tw:shrink-0 tw:items-center tw:rounded-md tw:bg-neutral-900 tw:px-4 tw:py-2 tw:text-sm tw:font-medium tw:text-white tw:hover:bg-neutral-700"
+          className="boton boton--compacto boton--cabecera"
         >
           {textoVerTodos}
         </Link>
       </div>
 
-      <div className="tw:mt-8">
+      <div className="actividades-proximas__contenido">
         <EstadoCarga cargando={cargando} error={error} />
 
         {!cargando && !error && proximas.length === 0 && (
-          <p className="tw:border tw:border-dashed tw:border-neutral-300 tw:p-8 tw:text-center tw:text-neutral-500">
+          <p className="actividades-proximas__vacio">
             {vacio}
           </p>
         )}
@@ -51,8 +52,8 @@ export default function ActividadesProximas({
           <div
             className={
               diseno === 'carrusel'
-                ? 'tw:flex tw:snap-x tw:gap-4 tw:overflow-x-auto tw:pb-2'
-                : 'tw:space-y-4'
+                ? 'actividades-proximas__carrusel'
+                : 'actividades-proximas__lista'
             }
           >
             {proximas.map((actividad) => (

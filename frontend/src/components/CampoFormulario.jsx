@@ -1,18 +1,20 @@
-export const inputClass =
-  'tw:w-full tw:rounded-md tw:border tw:border-neutral-300 tw:bg-white tw:px-3 tw:py-2.5 tw:text-sm tw:text-neutral-900 tw:placeholder:text-neutral-400 tw:focus:border-blue-600 tw:focus:outline-none tw:focus:ring-1 tw:focus:ring-blue-600'
+import './CampoFormulario.css'
+
+// Clase para el input, select o textarea que va dentro del campo
+export const inputClass = 'campo__control'
 
 export default function CampoFormulario({ label, htmlFor, required, error, hint, children }) {
   return (
-    <div>
-      <label htmlFor={htmlFor} className="tw:mb-1.5 tw:block tw:text-sm tw:font-medium tw:text-neutral-800">
+    <div className="campo">
+      <label htmlFor={htmlFor} className="campo__etiqueta">
         {label}
-        {required && <span className="tw:text-rose-500"> *</span>}
+        {required && <span className="campo__requerido"> *</span>}
       </label>
       {children}
       {error ? (
-        <p className="tw:mt-1 tw:text-xs tw:text-rose-600">{error}</p>
+        <p className="campo__error">{error}</p>
       ) : (
-        hint && <p className="tw:mt-1 tw:text-xs tw:text-neutral-500">{hint}</p>
+        hint && <p className="campo__ayuda">{hint}</p>
       )}
     </div>
   )

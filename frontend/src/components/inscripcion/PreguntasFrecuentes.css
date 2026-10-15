@@ -1,0 +1,76 @@
+/* Preguntas frecuentes: lista de preguntas que se abren y cierran, y aviso de contacto. */
+
+.preguntas {
+  max-width: 72rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 5rem 1.5rem;
+}
+
+.preguntas__lista {
+  margin-top: 2.5rem;
+}
+
+.preguntas__lista > :not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
+.preguntas__item {
+  border: 1px solid var(--color-neutro-300);
+  background-color: var(--color-blanco);
+}
+
+.preguntas__pregunta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  text-align: left;
+}
+
+.preguntas__texto-pregunta {
+  font-weight: 600;
+  color: var(--color-neutro-900);
+}
+
+/* El signo + gira a × cuando la pregunta está abierta */
+.preguntas__signo {
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--color-neutro-500);
+  transition: rotate 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.preguntas__signo--girado {
+  rotate: 45deg;
+}
+
+.preguntas__respuesta {
+  padding: 0 1.25rem 1rem;
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  color: var(--color-neutro-600);
+}
+
+.preguntas__dudas {
+  margin-top: 4rem;
+}
+
+.preguntas__dudas-titulo {
+  font-size: 1.25rem;
+  line-height: calc(1.75 / 1.25);
+  font-weight: 600;
+  color: var(--color-neutro-900);
+}
+
+.preguntas__dudas-texto {
+  margin-top: 0.5rem;
+  color: var(--color-neutro-600);
+}
+
+.preguntas__boton {
+  display: inline-block;
+  margin-top: 1.25rem;
+}

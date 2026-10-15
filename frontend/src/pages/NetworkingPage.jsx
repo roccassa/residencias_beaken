@@ -12,9 +12,9 @@ export default function NetworkingPage() {
   useTitulo(null)
 
   return (
-    <div className="tw:flex tw:min-h-screen tw:flex-col">
+    <div className="pagina">
       <Navbar />
-      <main className="tw:flex-1">
+      <main className="pagina__principal">
         <Hero />
 
         <ActividadesProximas
@@ -30,7 +30,7 @@ export default function NetworkingPage() {
           vacio="Pronto habrá nuevos cursos."
         />
 
-        <div className="tw:bg-fondo-claro-secciones">
+        <div className="pagina__franja-clara">
           <ActividadesProximas
             id="talleres"
             tipo="taller"
@@ -43,7 +43,7 @@ export default function NetworkingPage() {
             propTarjeta="taller"
             vacio="Pronto habrá nuevos talleres."
             diseno="carrusel"
-            claseTarjeta="tw:w-72 tw:shrink-0 tw:snap-start tw:sm:w-80 tw:md:w-auto tw:md:min-w-0 tw:md:shrink tw:md:flex-1"
+            claseTarjeta="tarjeta-taller--flexible"
           />
         </div>
 
@@ -60,7 +60,7 @@ export default function NetworkingPage() {
           vacio="Pronto habrá nuevos eventos."
         />
 
-        <div className="tw:bg-fondo-claro-secciones">
+        <div className="pagina__franja-clara">
           <Contacto />
         </div>
       </main>
