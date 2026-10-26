@@ -33,6 +33,7 @@ const publico = (u) => ({
   apellido: u.apellido,
   correo: u.correo,
   telefono: u.telefono,
+  rol: u.rol,
 })
 
 function validarPassword(valor, errores) {
@@ -80,7 +81,7 @@ router.post('/auth/registro', limiteRegistro, async (req, res) => {
     `insert into usuarios (nombre, apellido, correo, telefono, password_hash)
      values ($1, $2, $3, $4, $5)
      on conflict (correo) do nothing
-     returning id, nombre, apellido, correo, telefono`,
+     returning id, nombre, apellido, correo, telefono, rol`,
     [nombre, apellido, correo, telefono, passwordHash],
   )
 
@@ -105,7 +106,7 @@ router.post('/auth/login', limiteLogin, async (req, res) => {
   }
 
   const { rows } = await pool.query(
-    `select id, nombre, apellido, correo, telefono, password_hash, activo
+    `select id, nombre, apellido, correo, telefono, rol, password_hash, activo
        from usuarios where correo = $1`,
     [correo],
   )
@@ -133,7 +134,7 @@ router.get('/auth/me', async (req, res) => {
   if (!usuarioId) return res.json({ usuario: null })
 
   const { rows } = await pool.query(
-    `select id, nombre, apellido, correo, telefono from usuarios where id = $1 and activo`,
+    `select id, nombre, apellido, correo, telefono, rol from usuarios where id = $1 and activo`,
     [usuarioId],
   )
   res.json({ usuario: rows[0] ? publico(rows[0]) : null })

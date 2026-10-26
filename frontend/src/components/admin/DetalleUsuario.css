@@ -1,0 +1,94 @@
+/* Ficha de una persona en el panel de usuarios */
+
+.detalle-usuario {
+  position: relative;
+  padding: 1.25rem;
+  border: 1px solid var(--color-neutro-200);
+  border-radius: 0.5rem;
+  background-color: var(--color-blanco);
+}
+
+.detalle-usuario__cerrar {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  color: var(--color-neutro-500);
+}
+
+.detalle-usuario__cerrar-icono {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.detalle-usuario__formulario {
+  display: grid;
+  gap: 1rem;
+}
+
+.detalle-usuario__nombre {
+  padding-right: 2rem;
+  font-family: var(--fuente-titulos);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-neutro-900);
+}
+
+.detalle-usuario__correo {
+  font-size: 0.875rem;
+  color: var(--color-neutro-600);
+  overflow-wrap: anywhere;
+}
+
+.detalle-usuario__registro,
+.detalle-usuario__nota {
+  font-size: 0.75rem;
+  color: var(--color-neutro-500);
+}
+
+.detalle-usuario__dos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.detalle-usuario__subtitulo {
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-neutro-800);
+}
+
+.detalle-usuario__inscripciones {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.detalle-usuario__inscripcion {
+  display: grid;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  background-color: var(--color-neutro-50);
+  font-size: 0.8125rem;
+}
+
+.detalle-usuario__actividad {
+  font-weight: 500;
+  color: var(--color-neutro-900);
+}
+
+.detalle-usuario__inscripcion-dato {
+  color: var(--color-neutro-600);
+}
+
+.detalle-usuario__guardar {
+  justify-self: start;
+}
+
+@media (hover: hover) {
+  .detalle-usuario__cerrar:hover {
+    background-color: var(--color-neutro-100);
+    color: var(--color-neutro-900);
+  }
+}

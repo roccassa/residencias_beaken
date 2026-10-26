@@ -9,6 +9,10 @@ import empresas from './routes/empresas.js'
 import auth from './routes/auth.js'
 import misInscripciones from './routes/misInscripciones.js'
 import pagos from './routes/pagos.js'
+import adminActividades from './routes/adminActividades.js'
+import adminCatalogos from './routes/adminCatalogos.js'
+import adminUsuarios from './routes/adminUsuarios.js'
+import { requiereAdmin } from './utils/requiereAdmin.js'
 
 const app = express()
 
@@ -36,6 +40,9 @@ app.use('/api', empresas)
 app.use('/api', auth)
 app.use('/api', misInscripciones)
 app.use('/api', pagos)
+
+// Panel de administración: todo lo que va bajo /api/admin exige una cuenta de administrador activa.
+app.use('/api/admin', requiereAdmin, adminActividades, adminCatalogos, adminUsuarios)
 
 app.use('/api', (req, res) => {
   res.status(404).json({ error: 'Ruta no encontrada' })

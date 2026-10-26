@@ -1,0 +1,39 @@
+/* Panel de usuarios: lista a la izquierda y, si hay una persona elegida, su ficha a la derecha */
+
+.tabla-usuarios {
+  display: grid;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.tabla-usuarios__lista {
+  min-width: 0;
+}
+
+.tabla-usuarios__busqueda {
+  max-width: 20rem;
+}
+
+/* El nombre es un botón para poder elegir a la persona también con el teclado */
+.tabla-usuarios__nombre {
+  font-weight: 500;
+  text-align: left;
+  color: var(--color-neutro-900);
+}
+
+@media (hover: hover) {
+  .tabla-usuarios__nombre:hover {
+    text-decoration: underline;
+  }
+}
+
+@media (min-width: 1100px) {
+  .tabla-usuarios--con-detalle {
+    grid-template-columns: minmax(0, 1fr) 22rem;
+  }
+
+  .tabla-usuarios--con-detalle .detalle-usuario {
+    position: sticky;
+    top: 1.5rem;
+  }
+}

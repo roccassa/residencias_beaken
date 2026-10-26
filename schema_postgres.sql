@@ -43,6 +43,7 @@ create type estado_actividad_enum    as enum ('borrador', 'publicada', 'cancelad
 create type estado_inscripcion_enum  as enum ('pendiente_pago', 'confirmada', 'cancelada', 'reembolsada', 'lista_espera');
 create type metodo_pago_enum         as enum ('tarjeta', 'transferencia', 'efectivo');
 create type estado_pago_enum         as enum ('pendiente', 'aprobado', 'rechazado', 'reembolsado');
+create type rol_usuario_enum         as enum ('usuario', 'admin');
 
 -- ----------------------------------------------------------------------------
 -- Función auxiliar para mantener updated_at
@@ -59,6 +60,7 @@ $$ language plpgsql;
 -- usuarios: personas que se inscriben a actividades. password_hash y google_id
 -- son opcionales: quien se inscribe desde el sitio aún no tiene cuenta con login
 -- (login por correo/contraseña o "Continuar con Google", según el boceto).
+-- rol: "admin" entra además al panel de administración (ver migracion_admin.sql).
 -- ----------------------------------------------------------------------------
 create table usuarios (
     id              uuid primary key default gen_random_uuid(),
@@ -70,6 +72,7 @@ create table usuarios (
     google_id       varchar(255) unique,
     fecha_registro  timestamptz not null default now(),
     activo          boolean not null default true,
+    rol             rol_usuario_enum not null default 'usuario',
     created_at      timestamptz not null default now(),
     updated_at      timestamptz not null default now()
 );

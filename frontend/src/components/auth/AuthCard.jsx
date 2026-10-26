@@ -42,7 +42,11 @@ export default function AuthCard() {
     ? `${textos.destino}${textos.destino.includes('?') ? '&' : '?'}volver=${encodeURIComponent(volver)}`
     : textos.destino
 
-  if (usuario) return <Navigate to={volver ?? '/mis-cursos'} replace />
+  // Sin ruta a la que volver: el administrador va a su panel y los demás a Mis cursos.
+  if (usuario) {
+    const inicio = usuario.rol === 'admin' ? '/admin' : '/mis-cursos'
+    return <Navigate to={volver ?? inicio} replace />
+  }
 
   async function handleSubmit(e) {
     e.preventDefault()

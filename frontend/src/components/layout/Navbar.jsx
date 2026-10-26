@@ -140,6 +140,17 @@ export default function Navbar() {
                         Mis cursos
                       </Link>
                     </li>
+                    {usuario.rol === 'admin' && (
+                      <li>
+                        <Link
+                          to="/admin"
+                          onClick={() => setMenuUsuario(false)}
+                          className="navbar__menu-usuario-opcion"
+                        >
+                          Panel de administración
+                        </Link>
+                      </li>
+                    )}
                     <li>
                       <button
                         type="button"
@@ -208,6 +219,11 @@ export default function Navbar() {
                     <Link to="/mis-cursos" className="navbar__movil-opcion">
                       Mis cursos
                     </Link>
+                    {usuario.rol === 'admin' && (
+                      <Link to="/admin" className="navbar__movil-opcion">
+                        Panel de administración
+                      </Link>
+                    )}
                     <button
                       type="button"
                       onClick={() => {

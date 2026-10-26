@@ -1,0 +1,181 @@
+/* Estructura del panel de administración: barra superior oscura, menú lateral y contenido.
+   En pantallas pequeñas el menú lateral pasa a ser una fila de pestañas bajo la barra. */
+
+.admin {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: var(--color-fondo-claro);
+}
+
+/* Barra superior */
+.admin__barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.875rem 1rem;
+  background-color: var(--color-fondo-oscuro);
+  color: var(--color-blanco);
+}
+
+.admin__marca {
+  font-family: var(--fuente-titulos);
+  font-size: 1rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.admin__marca-separador {
+  color: var(--color-acento);
+}
+
+.admin__cuenta {
+  position: relative;
+  min-width: 0;
+}
+
+.admin__cuenta-boton {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  max-width: 100%;
+  font-size: 0.875rem;
+}
+
+.admin__cuenta-correo {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin__cuenta-flecha {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+.admin__cuenta-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 20;
+  width: 11rem;
+  margin-top: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  border: 1px solid var(--color-neutro-200);
+  border-radius: 0.375rem;
+  background-color: var(--color-blanco);
+  font-size: 0.875rem;
+  color: var(--color-neutro-800);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+.admin__cuenta-opcion {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  text-align: left;
+}
+
+/* Cuerpo: menú lateral + contenido */
+.admin__cuerpo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.admin__lateral {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--color-neutro-200);
+  background-color: var(--color-blanco);
+}
+
+.admin__secciones {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.admin__seccion {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-neutro-700);
+  white-space: nowrap;
+}
+
+.admin__seccion--activa {
+  border-color: var(--color-neutro-200);
+  background-color: var(--color-neutro-100);
+  color: var(--color-neutro-900);
+}
+
+.admin__seccion-icono {
+  width: 1rem;
+  height: 1rem;
+}
+
+.admin__contenido {
+  flex: 1;
+  min-width: 0;
+  padding: 1.5rem 1rem 3rem;
+}
+
+@media (hover: hover) {
+  .admin__cuenta-opcion:hover,
+  .admin__seccion:hover {
+    background-color: var(--color-neutro-50);
+  }
+
+  .admin__seccion--activa:hover {
+    background-color: var(--color-neutro-100);
+  }
+}
+
+/* Desde tableta: menú lateral fijo a la izquierda */
+@media (min-width: 768px) {
+  .admin__barra {
+    padding: 1rem 1.5rem;
+  }
+
+  .admin__cuerpo {
+    flex-direction: row;
+  }
+
+  .admin__lateral {
+    position: sticky;
+    top: 0;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 13rem;
+    height: calc(100vh - 3.5rem);
+    padding: 1.25rem 0.75rem;
+    border-right: 1px solid var(--color-neutro-200);
+    border-bottom: 0;
+  }
+
+  .admin__secciones {
+    flex-direction: column;
+  }
+
+  .admin__contenido {
+    padding: 2rem 2rem 4rem;
+  }
+}
+
+/* En móvil la fila de pestañas es corta: "Ver el sitio" y "Cerrar sesión" van en el menú de la cuenta */
+@media (max-width: 767px) {
+  .admin__secciones--pie {
+    display: none;
+  }
+}

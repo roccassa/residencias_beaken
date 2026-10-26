@@ -1,0 +1,28 @@
+/* Mini formulario "+ Nueva" (categoría, ubicación, instructor) dentro del formulario de actividad */
+
+.nueva-opcion {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  border: 1px dashed var(--color-neutro-300);
+  border-radius: 0.375rem;
+  background-color: var(--color-neutro-50);
+}
+
+.nueva-opcion__titulo {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-neutro-900);
+}
+
+.nueva-opcion__error {
+  font-size: 0.75rem;
+  color: var(--color-rosa-600);
+}
+
+.nueva-opcion__acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

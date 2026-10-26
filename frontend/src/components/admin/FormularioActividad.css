@@ -1,0 +1,116 @@
+/* Formulario para crear o editar una actividad: tres grupos de campos y la barra de acciones */
+
+.formulario-actividad {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.formulario-actividad__grupo {
+  min-width: 0;
+  padding: 1.25rem;
+  border: 1px solid var(--color-neutro-200);
+  border-radius: 0.5rem;
+  background-color: var(--color-blanco);
+}
+
+.formulario-actividad__leyenda {
+  float: left;
+  width: 100%;
+  margin-bottom: 1rem;
+  font-family: var(--fuente-titulos);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-neutro-900);
+}
+
+.formulario-actividad__rejilla {
+  clear: both;
+  display: grid;
+  gap: 1rem;
+}
+
+/* Lista desplegable con el botón "+ Nueva" al lado */
+.formulario-actividad__con-nueva {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.formulario-actividad__boton-nueva {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.formulario-actividad__nota {
+  align-self: center;
+  font-size: 0.8125rem;
+  color: var(--color-neutro-500);
+}
+
+.formulario-actividad__vista-previa {
+  max-height: 10rem;
+  border: 1px solid var(--color-neutro-200);
+  border-radius: 0.375rem;
+}
+
+.formulario-actividad__acciones {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 1.25rem;
+}
+
+.formulario-actividad__peligro {
+  display: grid;
+  gap: 0.375rem;
+  justify-items: start;
+}
+
+.formulario-actividad__boton-peligro {
+  padding: 0.625rem 1.25rem;
+  border: 1px solid var(--color-rosa-300);
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-rosa-700);
+}
+
+.formulario-actividad__boton-peligro:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.formulario-actividad__guardar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+@media (hover: hover) {
+  .formulario-actividad__boton-peligro:hover {
+    background-color: var(--color-rosa-50);
+  }
+}
+
+@media (min-width: 640px) {
+  .formulario-actividad__rejilla {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .formulario-actividad__ancho {
+    grid-column: 1 / -1;
+  }
+
+  .formulario-actividad__acciones {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .formulario-actividad__peligro {
+    max-width: 22rem;
+  }
+
+  .formulario-actividad__guardar {
+    margin-left: auto;
+  }
+}
