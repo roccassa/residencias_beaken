@@ -1,0 +1,63 @@
+/* Cancelar una inscripción desde "Mis cursos": enlace discreto y, al pulsarlo, la confirmación. */
+
+.cancelar-inscripcion__abrir {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  color: var(--color-neutro-600);
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
+}
+
+.cancelar-inscripcion {
+  margin-top: 1rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--color-rosa-300);
+  border-radius: 0.375rem;
+  background-color: var(--color-rosa-50);
+}
+
+.cancelar-inscripcion__texto {
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  color: var(--color-neutro-800);
+}
+
+.cancelar-inscripcion__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.cancelar-inscripcion__confirmar {
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  background-color: var(--color-rosa-700);
+  font-size: 0.875rem;
+  line-height: calc(1.25 / 0.875);
+  font-weight: 500;
+  color: var(--color-blanco);
+}
+
+.cancelar-inscripcion__confirmar:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.cancelar-inscripcion__error {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-rosa-700);
+}
+
+@media (hover: hover) {
+  .cancelar-inscripcion__abrir:hover {
+    color: var(--color-neutro-900);
+  }
+
+  .cancelar-inscripcion__confirmar:hover:not(:disabled) {
+    background-color: var(--color-rosa-800);
+  }
+}

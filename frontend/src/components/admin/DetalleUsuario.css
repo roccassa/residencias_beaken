@@ -82,6 +82,24 @@
   color: var(--color-neutro-600);
 }
 
+/* Inscripción pagada y cancelada por la persona: falta devolverle el dinero */
+.detalle-usuario__reembolso {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+  color: var(--color-ambar-800);
+}
+
+.detalle-usuario__reembolsar {
+  font-size: 0.8125rem;
+  color: var(--color-neutro-900);
+  text-decoration-line: underline;
+  text-underline-offset: 3px;
+}
+
 .detalle-usuario__guardar {
   justify-self: start;
 }

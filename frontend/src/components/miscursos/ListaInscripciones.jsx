@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { apiGet, apiPost } from '../../api/client'
 import EstadoCarga from '../EstadoCarga'
@@ -9,6 +9,19 @@ import './ListaInscripciones.css'
 export default function ListaInscripciones() {
   const [inscripciones, setInscripciones] = useState(null)
   const [error, setError] = useState(null)
+  const [aviso, setAviso] = useState(null)
+  const refAviso = useRef(null)
+
+  // La inscripción cancelada sale de la lista y arriba queda el mensaje del servidor.
+  function alCancelar(cancelada, resultado) {
+    setInscripciones((lista) => lista.filter((i) => i.id !== cancelada.id))
+    setAviso(`${cancelada.actividad.titulo}: ${resultado.mensaje}`)
+  }
+
+  // La tarjeta pudo estar más abajo: se sube hasta el mensaje para que se lea.
+  useEffect(() => {
+    if (aviso) refAviso.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }, [aviso])
 
   useEffect(() => {
     let cancelado = false
@@ -54,6 +67,12 @@ export default function ListaInscripciones() {
         <div>
           <EstadoCarga cargando={!inscripciones && !error} error={error} />
 
+          {aviso && (
+            <p ref={refAviso} role="status" className="mis-cursos__aviso">
+              {aviso}
+            </p>
+          )}
+
           {inscripciones?.length === 0 && (
             <div className="mis-cursos__vacio">
               <p className="mis-cursos__vacio-texto">Aún no estás inscrito en ninguna actividad.</p>
@@ -68,7 +87,7 @@ export default function ListaInscripciones() {
 
           <div className="mis-cursos__lista">
             {inscripciones?.map((inscripcion) => (
-              <TarjetaInscripcion key={inscripcion.id} inscripcion={inscripcion} />
+              <TarjetaInscripcion key={inscripcion.id} inscripcion={inscripcion} onCancelada={alCancelar} />
             ))}
           </div>
         </div>

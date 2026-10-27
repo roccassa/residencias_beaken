@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { X } from 'lucide-react'
-import { apiGet, apiPut } from '../../api/client'
+import { apiGet, apiPost, apiPut } from '../../api/client'
 import { useAuth } from '../../auth/AuthContext'
 import { formatoFecha } from '../../utils/fechaMexico'
 import Field, { inputClass } from '../CampoFormulario'
@@ -61,6 +61,25 @@ export default function DetalleUsuario({ id, onGuardado, onCerrar }) {
   const alEscribir = (campo) => (e) => {
     setGuardado(false)
     setDatos((d) => ({ ...d, [campo]: e.target.value }))
+  }
+
+  // El reembolso se hace a mano en Mercado Pago; aquí solo se deja registrado que ya se hizo.
+  async function marcarReembolsada(inscripcion) {
+    const aviso = `¿Ya devolviste el pago de "${inscripcion.actividad.titulo}" en Mercado Pago? Quedará marcada como reembolsada.`
+    if (!window.confirm(aviso)) return
+    setError(null)
+    setGuardado(false)
+    try {
+      await apiPost(`/admin/inscripciones/${inscripcion.id}/reembolsada`, {})
+      setDetalle((d) => ({
+        ...d,
+        inscripciones: d.inscripciones.map((i) =>
+          i.id === inscripcion.id ? { ...i, estado: 'reembolsada', reembolsoPendiente: false } : i,
+        ),
+      }))
+    } catch (err) {
+      setError(err)
+    }
   }
 
   async function guardar(e) {
@@ -154,6 +173,14 @@ export default function DetalleUsuario({ id, onGuardado, onCerrar }) {
                     <span className="detalle-usuario__inscripcion-dato">
                       {formatoFecha(i.actividad.fechaInicio)} · {ESTADOS_INSCRIPCION[i.estado] ?? i.estado}
                     </span>
+                    {i.reembolsoPendiente && (
+                      <span className="detalle-usuario__reembolso">
+                        Pagó y canceló: reembolso pendiente
+                        <button type="button" onClick={() => marcarReembolsada(i)} className="detalle-usuario__reembolsar">
+                          Marcar reembolsada
+                        </button>
+                      </span>
+                    )}
                   </li>
                 ))}
               </ul>

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { CalendarDays, Clock, Image as ImageIcon, MapPin } from 'lucide-react'
 import BotonPagar from '../pagos/BotonPagar'
+import CancelarInscripcion from './CancelarInscripcion'
 import './TarjetaInscripcion.css'
 
 const fecha = new Intl.DateTimeFormat('es', {
@@ -21,13 +22,15 @@ function estadoVisible({ estado, actividad }) {
   return { texto: 'Inscripción confirmada', clase: 'tarjeta-inscripcion__estado--confirmada' }
 }
 
-export default function TarjetaInscripcion({ inscripcion }) {
+export default function TarjetaInscripcion({ inscripcion, onCancelada }) {
   const { actividad } = inscripcion
   const inicio = new Date(actividad.fechaInicio)
   const fin = new Date(actividad.fechaFin)
   const estado = estadoVisible(inscripcion)
   const apagada = actividad.finalizada || actividad.cancelada
   const porPagar = inscripcion.estado === 'pendiente_pago' && !apagada && actividad.costo > 0
+  // Se puede cancelar hasta que empieza la actividad (el servidor lo vuelve a revisar).
+  const cancelable = !apagada && inicio > new Date()
   const precio = new Intl.NumberFormat('es-MX', { style: 'currency', currency: actividad.moneda }).format(actividad.costo)
 
   return (
@@ -96,6 +99,8 @@ export default function TarjetaInscripcion({ inscripcion }) {
             </div>
           </div>
         )}
+
+        {cancelable && <CancelarInscripcion inscripcion={inscripcion} onCancelada={onCancelada} />}
       </div>
     </article>
   )
