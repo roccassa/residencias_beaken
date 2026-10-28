@@ -65,9 +65,11 @@ router.get('/usuarios/:id', async (req, res) => {
   if (!rows[0]) throw new HttpError(404, 'Usuario no encontrado')
 
   const { rows: inscripciones } = await pool.query(
-    `select i.id, i.estado, a.id as actividad_id, a.titulo, a.tipo, a.fecha_inicio
+    `select i.id, i.estado, a.id as actividad_id, a.titulo, a.tipo, a.fecha_inicio,
+            (i.estado = 'cancelada' and p.estado = 'aprobado') as reembolso_pendiente
        from inscripciones i
        join actividades a on a.id = i.actividad_id
+       left join pagos p on p.inscripcion_id = i.id
       where i.usuario_id = $1
       order by a.fecha_inicio desc`,
     [req.params.id],
@@ -79,6 +81,7 @@ router.get('/usuarios/:id', async (req, res) => {
     inscripciones: inscripciones.map((i) => ({
       id: i.id,
       estado: i.estado,
+      reembolsoPendiente: i.reembolso_pendiente === true,
       actividad: { id: i.actividad_id, titulo: i.titulo, tipo: i.tipo, fechaInicio: i.fecha_inicio },
     })),
   })
@@ -118,6 +121,40 @@ router.put('/usuarios/:id', async (req, res) => {
     )
     await client.query('commit')
     res.json(publico(actualizado[0]))
+  } catch (error) {
+    await client.query('rollback')
+    throw error
+  } finally {
+    client.release()
+  }
+})
+
+// El reembolso se hace a mano en Mercado Pago; aquí solo se registra que ya se devolvió
+// el pago de una inscripción que la persona canceló.
+router.post('/inscripciones/:id/reembolsada', async (req, res) => {
+  if (!esUuid(req.params.id)) throw new HttpError(404, 'Inscripción no encontrada')
+
+  const client = await pool.connect()
+  try {
+    await client.query('begin')
+    const { rows } = await client.query(
+      `select i.id, i.estado, p.estado as estado_pago
+         from inscripciones i
+         left join pagos p on p.inscripcion_id = i.id
+        where i.id = $1
+        for update of i`,
+      [req.params.id],
+    )
+    const inscripcion = rows[0]
+    if (!inscripcion) throw new HttpError(404, 'Inscripción no encontrada')
+    if (inscripcion.estado !== 'cancelada' || inscripcion.estado_pago !== 'aprobado') {
+      throw new HttpError(409, 'Esta inscripción no tiene un reembolso pendiente')
+    }
+
+    await client.query(`update pagos set estado = 'reembolsado' where inscripcion_id = $1`, [inscripcion.id])
+    await client.query(`update inscripciones set estado = 'reembolsada' where id = $1`, [inscripcion.id])
+    await client.query('commit')
+    res.json({ id: inscripcion.id, estado: 'reembolsada' })
   } catch (error) {
     await client.query('rollback')
     throw error

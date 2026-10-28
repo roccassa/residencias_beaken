@@ -58,12 +58,20 @@ function armarCorreo(d) {
     ...(costo > 0 ? [['Costo', precio]] : []),
   ]
 
-  const intro = confirmada
-    ? 'Tu lugar quedó confirmado. Estos son los detalles de tu inscripción:'
-    : `Recibimos tu inscripción, pero tu lugar todavía NO está confirmado: se confirma cuando se acredite el pago. Realízalo desde Mis cursos, en el sitio de Beaken; mientras tanto, tu cupo se guarda ${MINUTOS_RESERVA} minutos.`
-  const asunto = confirmada
-    ? `Inscripción confirmada: ${d.titulo}`
-    : `Pago pendiente, aún sin confirmar: ${d.titulo}`
+  let intro
+  let asunto
+  if (d.estado === 'cancelada') {
+    intro = d.reembolso
+      ? 'Cancelamos tu inscripción y tu lugar quedó libre. Como ya habías pagado, el equipo de Beaken te escribirá para hacer el reembolso. Esta era la actividad:'
+      : 'Cancelamos tu inscripción y tu lugar quedó libre. Si cambias de opinión, puedes volver a inscribirte desde el sitio mientras haya cupo. Esta era la actividad:'
+    asunto = `Inscripción cancelada: ${d.titulo}`
+  } else if (confirmada) {
+    intro = 'Tu lugar quedó confirmado. Estos son los detalles de tu inscripción:'
+    asunto = `Inscripción confirmada: ${d.titulo}`
+  } else {
+    intro = `Recibimos tu inscripción, pero tu lugar todavía NO está confirmado: se confirma cuando se acredite el pago. Realízalo desde Mis cursos, en el sitio de Beaken; mientras tanto, tu cupo se guarda ${MINUTOS_RESERVA} minutos.`
+    asunto = `Pago pendiente, aún sin confirmar: ${d.titulo}`
+  }
   const mapa = d.modalidad === 'presencial' && /^https?:\/\//.test(d.mapa_url ?? '') ? d.mapa_url : null
 
   const texto = [
@@ -106,7 +114,14 @@ function armarCorreo(d) {
 // Correo con los detalles de una inscripción (confirmada, o pendiente de pago con su
 // reserva). Nunca lanza: si el envío falla o no está configurado, solo queda en la
 // consola del servidor, para que un problema de correo no tire la inscripción.
-export async function enviarCorreoInscripcion(inscripcionId) {
+export const enviarCorreoInscripcion = (inscripcionId) =>
+  enviarCorreo(inscripcionId, ['confirmada', 'pendiente_pago'])
+
+// Aviso de que la persona canceló su inscripción; si había pagado, menciona el reembolso.
+export const enviarCorreoCancelacion = (inscripcionId, reembolso) =>
+  enviarCorreo(inscripcionId, ['cancelada'], { reembolso })
+
+async function enviarCorreo(inscripcionId, estados, extra = {}) {
   try {
     const transporte = obtenerTransporte()
     if (!transporte) {
@@ -122,12 +137,12 @@ export async function enviarCorreoInscripcion(inscripcionId) {
          join usuarios u on u.id = i.usuario_id
          join actividades a on a.id = i.actividad_id
          left join ubicaciones ub on ub.id = a.ubicacion_id
-        where i.id = $1 and i.estado in ('confirmada', 'pendiente_pago')`,
-      [inscripcionId],
+        where i.id = $1 and i.estado::text = any($2)`,
+      [inscripcionId, estados],
     )
     if (!rows[0]) return false
 
-    const { asunto, texto, html } = armarCorreo(rows[0])
+    const { asunto, texto, html } = armarCorreo({ ...rows[0], ...extra })
     await transporte.sendMail({
       from: process.env.MAIL_FROM || 'Beaken <no-reply@beaken.demo>',
       to: rows[0].correo,
