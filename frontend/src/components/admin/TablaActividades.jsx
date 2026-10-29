@@ -5,17 +5,21 @@ import { useFetch } from '../../hooks/useFetch'
 import { formatoFecha } from '../../utils/fechaMexico'
 import { inputClass } from '../CampoFormulario'
 import EstadoCarga from '../EstadoCarga'
-import { ESTADOS, TIPOS } from './etiquetas'
+import { COSTOS, ESTADOS, TIPOS } from './etiquetas'
 import './PanelAdmin.css'
 
+const formatoMoneda = (moneda, monto) => new Intl.NumberFormat('es-MX', { style: 'currency', currency: moneda }).format(monto)
+const formatoCosto = (a) => (a.costo === 0 ? 'Gratis' : formatoMoneda(a.moneda, a.costo))
+
 // Todas las actividades (también las pasadas, los borradores y las canceladas),
-// con búsqueda por título y filtros por tipo y estado.
+// con búsqueda por título y filtros por tipo, estado y costo (gratis o de pago).
 export default function TablaActividades() {
   const { state } = useLocation()
   const { data: actividades, cargando, error } = useFetch('/admin/actividades')
   const [busqueda, setBusqueda] = useState('')
   const [tipo, setTipo] = useState('')
   const [estado, setEstado] = useState('')
+  const [costo, setCosto] = useState('')
 
   const filtradas = useMemo(() => {
     const texto = busqueda.trim().toLowerCase()
@@ -23,9 +27,10 @@ export default function TablaActividades() {
       (a) =>
         (!texto || a.titulo.toLowerCase().includes(texto)) &&
         (!tipo || a.tipo === tipo) &&
-        (!estado || a.estado === estado),
+        (!estado || a.estado === estado) &&
+        (!costo || (costo === 'gratis') === (a.costo === 0)),
     )
-  }, [actividades, busqueda, tipo, estado])
+  }, [actividades, busqueda, tipo, estado, costo])
 
   return (
     <section>
@@ -68,6 +73,14 @@ export default function TablaActividades() {
             </option>
           ))}
         </select>
+        <select value={costo} onChange={(e) => setCosto(e.target.value)} aria-label="Costo" className={inputClass}>
+          <option value="">Gratis y de pago</option>
+          {Object.entries(COSTOS).map(([valor, texto]) => (
+            <option key={valor} value={valor}>
+              {texto}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="panel-admin__caja">
@@ -90,6 +103,7 @@ export default function TablaActividades() {
                   <th scope="col">Tipo</th>
                   <th scope="col">Inicio</th>
                   <th scope="col">Estado</th>
+                  <th scope="col">Costo</th>
                   <th scope="col">Cupos</th>
                   <th scope="col">
                     <span className="panel-admin__solo-lector">Acciones</span>
@@ -107,6 +121,7 @@ export default function TablaActividades() {
                         {ESTADOS[a.estado]}
                       </span>
                     </td>
+                    <td className="tabla-admin__nowrap">{formatoCosto(a)}</td>
                     <td className="tabla-admin__nowrap">
                       {a.capacidadMaxima === null ? `${a.inscritos} / sin límite` : `${a.inscritos}/${a.capacidadMaxima}`}
                     </td>

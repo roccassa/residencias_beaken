@@ -152,7 +152,8 @@ async function validarActividad(client, body = {}) {
 // Todas las actividades (también pasadas, borradores y canceladas), de la más reciente a la más antigua.
 router.get('/actividades', async (req, res) => {
   const { rows } = await pool.query(
-    `select a.id, a.titulo, a.tipo, a.fecha_inicio, a.estado, a.capacidad_maxima, ${INSCRITOS} as inscritos
+    `select a.id, a.titulo, a.tipo, a.fecha_inicio, a.estado, a.capacidad_maxima, a.costo, a.moneda,
+            ${INSCRITOS} as inscritos
        from actividades a
       order by a.fecha_inicio desc`,
   )
@@ -164,6 +165,8 @@ router.get('/actividades', async (req, res) => {
       fechaInicio: r.fecha_inicio,
       estado: r.estado,
       capacidadMaxima: r.capacidad_maxima,
+      costo: Number(r.costo),
+      moneda: r.moneda,
       inscritos: r.inscritos,
     })),
   )
