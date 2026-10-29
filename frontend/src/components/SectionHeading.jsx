@@ -15,7 +15,7 @@ export default function SectionHeading({
   if (centered) clases.push('encabezado-seccion--centrado')
 
   return (
-    <div className={clases.join(' ')}>
+    <div className={clases.join(' ')} data-aparece>
       <div className="encabezado-seccion__marca">
         <span className={dot ? 'encabezado-seccion__punto' : 'encabezado-seccion__linea'} />
         <p className="encabezado-seccion__etiqueta">{label}</p>

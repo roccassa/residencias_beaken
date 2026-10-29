@@ -57,7 +57,7 @@ export default function Contacto({ variant }) {
 
       <div className="contacto__canales">
         {canales.map((canal) => (
-          <div key={canal.titulo} className="contacto__canal">
+          <div key={canal.titulo} className="contacto__canal" data-aparece>
             <img src={canal.icon} alt="" className="contacto__icono" />
             <h3 className="contacto__titulo contacto__titulo--con-icono">
               {canal.titulo}
@@ -71,7 +71,7 @@ export default function Contacto({ variant }) {
           </div>
         ))}
 
-        <div className="contacto__canal">
+        <div className="contacto__canal" data-aparece>
           <img src={iconFollow} alt="" className="contacto__icono-redes" />
           <h3 className="contacto__titulo">
             Redes sociales

@@ -34,7 +34,7 @@ export default function TarjetaInscripcion({ inscripcion, onCancelada }) {
   const precio = new Intl.NumberFormat('es-MX', { style: 'currency', currency: actividad.moneda }).format(actividad.costo)
 
   return (
-    <article className="tarjeta-inscripcion">
+    <article className="tarjeta-inscripcion" data-aparece>
       <div
         className={`tarjeta-inscripcion__imagen${apagada ? ' tarjeta-inscripcion__imagen--apagada' : ''}`}
       >

@@ -56,9 +56,10 @@ export default function AgendaTalleres() {
         ref={trackRef}
         onScroll={handleScroll}
         className="agenda-talleres__carrusel"
+        data-aparece={talleres.length > 0 || undefined}
       >
         {talleres.map((taller) => (
-          <TallerCard key={taller.id} taller={taller} />
+          <TallerCard key={taller.id} taller={taller} aparece={false} />
         ))}
       </div>
 

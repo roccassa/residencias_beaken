@@ -18,3 +18,47 @@
   line-height: calc(1.25 / 0.875);
   color: var(--color-rosa-800);
 }
+
+/* Esqueleto: tres bloques grises con un brillo que los recorre. Se ve solo si la persona no
+   pidió reducir el movimiento; si no, queda el texto "Cargando…" de siempre. */
+.estado-carga__esqueleto {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .estado-carga--cargando {
+    position: relative;
+  }
+
+  /* El texto sigue ahí para lectores de pantalla, pero no se ve */
+  .estado-carga__texto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .estado-carga__esqueleto {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .estado-carga__bloque {
+    position: relative;
+    height: 5.5rem;
+    overflow: hidden;
+    border-radius: 0.375rem;
+    background-color: var(--color-neutro-100);
+  }
+
+  .estado-carga__bloque::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.75), transparent);
+    animation: destello 1.4s ease-in-out infinite;
+  }
+}

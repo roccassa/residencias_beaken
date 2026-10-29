@@ -7,7 +7,7 @@ export default function CtaBanner({
 }) {
   return (
     <section className="cta">
-      <div className="cta__caja">
+      <div className="cta__caja" data-aparece>
         <div className="cta__contenido">
           <div>
             <div className="cta__marca">

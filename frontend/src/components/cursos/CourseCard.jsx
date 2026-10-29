@@ -11,7 +11,7 @@ export default function CourseCard({ curso }) {
   const agotado = curso.agotada
 
   return (
-    <article className="tarjeta-curso">
+    <article className="tarjeta-curso" data-aparece>
       <div className="tarjeta-curso__principal">
         <div className="tarjeta-curso__fecha">
           <p className="tarjeta-curso__dia-semana">{dayName.format(fecha)}</p>

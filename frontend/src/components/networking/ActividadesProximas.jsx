@@ -55,12 +55,14 @@ export default function ActividadesProximas({
                 ? 'actividades-proximas__carrusel'
                 : 'actividades-proximas__lista'
             }
+            data-aparece={diseno === 'carrusel' || undefined}
           >
             {proximas.map((actividad) => (
               <Tarjeta
                 key={actividad.id}
                 {...{ [propTarjeta]: actividad }}
                 {...(claseTarjeta && { className: claseTarjeta })}
+                {...(diseno === 'carrusel' && { aparece: false })}
               />
             ))}
           </div>

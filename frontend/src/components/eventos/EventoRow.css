@@ -97,3 +97,14 @@
     align-items: center;
   }
 }
+
+/* Al pasar el cursor, el cuadro de la fecha resalta su borde */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) {
+  .fila-evento__fecha {
+    transition: border-color var(--anim-media) ease;
+  }
+
+  .fila-evento:hover .fila-evento__fecha {
+    border-color: var(--color-neutro-900);
+  }
+}

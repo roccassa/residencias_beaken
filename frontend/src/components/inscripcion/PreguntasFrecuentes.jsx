@@ -40,7 +40,7 @@ export default function PreguntasFrecuentes() {
         {preguntas.map((item, i) => {
           const open = abierta === i
           return (
-            <div key={item.pregunta} className="preguntas__item">
+            <div key={item.pregunta} className="preguntas__item" data-aparece>
               <button
                 type="button"
                 aria-expanded={open}
@@ -55,9 +55,14 @@ export default function PreguntasFrecuentes() {
                   +
                 </span>
               </button>
-              {open && (
-                <p className="preguntas__respuesta">{item.respuesta}</p>
-              )}
+              <div
+                className={`preguntas__panel${open ? ' preguntas__panel--abierto' : ''}`}
+                aria-hidden={!open}
+              >
+                <div className="preguntas__panel-interior">
+                  <p className="preguntas__respuesta">{item.respuesta}</p>
+                </div>
+              </div>
             </div>
           )
         })}

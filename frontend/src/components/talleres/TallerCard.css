@@ -111,3 +111,18 @@
     color: var(--color-neutro-500);
   }
 }
+
+/* Al pasar el cursor la foto se acerca un poco, sin salirse de su marco */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) {
+  .tarjeta-taller__imagen {
+    overflow: hidden;
+  }
+
+  .tarjeta-taller__foto {
+    transition: transform 600ms var(--anim-curva);
+  }
+
+  .tarjeta-taller:hover .tarjeta-taller__foto {
+    transform: scale(1.06);
+  }
+}

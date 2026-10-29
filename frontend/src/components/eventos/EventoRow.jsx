@@ -11,7 +11,7 @@ export default function EventoRow({ evento }) {
   const agotado = evento.agotada
 
   return (
-    <article className="fila-evento">
+    <article className="fila-evento" data-aparece>
       <div className="fila-evento__principal">
         <div className="fila-evento__fecha">
           <p className="fila-evento__dia-semana">{dayName.format(fecha)}</p>

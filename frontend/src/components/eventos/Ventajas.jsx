@@ -38,7 +38,7 @@ export default function Ventajas() {
   return (
     <section className="ventajas-evento">
       <div className="ventajas-evento__rejilla">
-        <div className="ventajas-evento__imagen">
+        <div className="ventajas-evento__imagen" data-aparece>
           <img
               src={agenda}  
               alt=""
@@ -49,7 +49,7 @@ export default function Ventajas() {
         <div>
           <div className="ventajas-evento__lista">
             {ventajas.map(({ icon: Icon, titulo, descripcion }) => (
-              <div key={titulo}>
+              <div key={titulo} data-aparece>
                 <Icon />
                 <h3 className="ventajas-evento__titulo">
                   {titulo}

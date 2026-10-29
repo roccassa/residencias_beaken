@@ -1,8 +1,9 @@
 /* Estilos globales del sitio. El orden importa: primero las variables, después el reset
-   y la estructura común, y al final los botones. Los estilos de cada componente se
+   y la estructura común, los botones y al final las animaciones. Los estilos de cada componente se
    importan desde el propio componente (por ejemplo, Navbar.jsx importa Navbar.css). */
 
 @import "./estilos/variables.css";
 @import "./estilos/base.css";
 @import "./estilos/pagina.css";
 @import "./estilos/boton.css";
+@import "./estilos/animaciones.css";

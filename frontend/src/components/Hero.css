@@ -98,3 +98,34 @@
     font-size: 3.75rem;
   }
 }
+
+/* Parallax: la imagen de fondo baja más despacio que la página al hacer scroll.
+   Solo desde 768 px, si no se pidió reducir el movimiento y si el navegador sabe enlazar
+   una animación al scroll (si no, la imagen se queda quieta como siempre).
+   La imagen se hace un 40 % más alta que el marco para que nunca se vea un hueco:
+   arranca centrada (sin desplazamiento) y baja como mucho el 20 % del alto del marco. */
+@keyframes hero-parallax {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 14.28%;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
+  @supports (animation-timeline: view()) {
+    .hero {
+      view-timeline: --hero block;
+    }
+
+    .hero__imagen {
+      top: -20%;
+      bottom: auto;
+      height: 140%;
+      animation: hero-parallax linear both;
+      animation-timeline: --hero;
+      animation-range: exit 0% exit 100%;
+    }
+  }
+}

@@ -105,3 +105,23 @@
     font-size: 3.75rem;
   }
 }
+
+/* Entrada de la portada al cargar la página: la imagen se desvanece y el título, el texto
+   y los botones suben uno tras otro. */
+@media (prefers-reduced-motion: no-preference) {
+  .portada__imagen {
+    animation: desvanecer 900ms ease both;
+  }
+
+  .portada__titulo {
+    animation: aparecer 700ms var(--anim-curva) 100ms both;
+  }
+
+  .portada__descripcion {
+    animation: aparecer 700ms var(--anim-curva) 240ms both;
+  }
+
+  .portada__botones {
+    animation: aparecer 700ms var(--anim-curva) 380ms both;
+  }
+}

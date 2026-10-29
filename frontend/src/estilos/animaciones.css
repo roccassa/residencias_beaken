@@ -1,0 +1,87 @@
+/* Animaciones compartidas del sitio.
+   Regla de oro: todo lo que se mueve va dentro de @media (prefers-reduced-motion: no-preference).
+   Quien tiene activado "reducir movimiento" en su sistema no ve nada de esto y el sitio queda
+   exactamente como en su versión estática. Solo se animan opacity, translate y transform
+   (el navegador las resuelve sin recalcular el diseño, por eso van fluidas). */
+
+:root {
+  --anim-curva: cubic-bezier(0.22, 1, 0.36, 1); /* arranca rápido y frena suave */
+  --anim-rapida: 150ms;
+  --anim-media: 300ms;
+  --anim-aparecer: 600ms;
+  --anim-escalon: 90ms; /* retraso entre bloques que aparecen juntos */
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    translate: 0 1.5rem;
+  }
+  to {
+    opacity: 1;
+    translate: none;
+  }
+}
+
+/* Para mensajes: baja un poco desde arriba */
+@keyframes aparecer-suave {
+  from {
+    opacity: 0;
+    translate: 0 -0.5rem;
+  }
+  to {
+    opacity: 1;
+    translate: none;
+  }
+}
+
+@keyframes desvanecer {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Brillo que recorre los esqueletos de carga */
+@keyframes destello {
+  from {
+    translate: -100% 0;
+  }
+  to {
+    translate: 100% 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Aparecer al hacer scroll. La clase "anim" la pone utils/animaciones.js al arrancar:
+     sin ella (o sin JavaScript) los bloques se ven siempre. */
+  .anim [data-aparece]:not([data-visible]) {
+    opacity: 0;
+  }
+
+  .anim [data-aparece][data-visible] {
+    animation: aparecer var(--anim-aparecer) var(--anim-curva) both;
+    animation-delay: calc(var(--escalon, 0) * var(--anim-escalon));
+  }
+
+  /* Mensajes que aparecen tras una acción (éxito, error, aviso) */
+  .formulario-inscripcion__exito,
+  .formulario-inscripcion__error,
+  .mis-cursos__aviso,
+  .resultado-pago__caja,
+  .resultado-pago__error,
+  .acceso__error,
+  .cancelar-inscripcion {
+    animation: aparecer-suave var(--anim-media) var(--anim-curva) both;
+  }
+}
+
+/* Al imprimir se ve todo */
+@media print {
+  .anim [data-aparece] {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}

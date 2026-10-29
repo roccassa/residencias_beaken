@@ -32,7 +32,7 @@ export default function Proceso({ variant }) {
 
       <div className="proceso__pasos">
         {pasos.map((paso, i) => (
-          <div key={paso.titulo}>
+          <div key={paso.titulo} data-aparece>
             <div className="proceso__numero">
               {i + 1}
             </div>

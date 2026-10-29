@@ -36,7 +36,7 @@ export default function Ventajas() {
       <div className="ventajas__rejilla">
         {ventajas.map(({ icon: Icon, titulo, descripcion }) => (
           <div key={titulo} className="ventajas__item">
-            <div>
+            <div data-aparece>
               <Icon />
               <h3 className="ventajas__titulo">
                 {titulo}

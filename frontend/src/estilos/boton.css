@@ -76,3 +76,18 @@
     background-color: transparent;
   }
 }
+
+/* Cambio de color suave y un pequeño "hundimiento" al pulsar */
+@media (prefers-reduced-motion: no-preference) {
+  .boton {
+    transition:
+      background-color var(--anim-rapida) ease,
+      border-color var(--anim-rapida) ease,
+      color var(--anim-rapida) ease,
+      transform 100ms ease;
+  }
+
+  .boton:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+}

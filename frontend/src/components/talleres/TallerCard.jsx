@@ -5,11 +5,12 @@ const dayNumber = new Intl.DateTimeFormat('es', { day: '2-digit' })
 const month = new Intl.DateTimeFormat('es', { month: 'short' })
 
 // `className` permite añadir variantes (por ejemplo "tarjeta-taller--flexible").
-export default function TallerCard({ taller, className = '' }) {
+// `aparece={false}` es para los carruseles: ahí aparece el carrusel entero, no cada tarjeta.
+export default function TallerCard({ taller, className = '', aparece = true }) {
   const fecha = new Date(taller.fechaInicio)
 
   return (
-    <article className={`tarjeta-taller ${className}`.trim()}>
+    <article className={`tarjeta-taller ${className}`.trim()} data-aparece={aparece || undefined}>
       <div className="tarjeta-taller__imagen">
         {taller.imagen && (
           <img src={taller.imagen} alt={taller.titulo} className="tarjeta-taller__foto" />

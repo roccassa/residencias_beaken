@@ -100,3 +100,19 @@
     width: 5rem;
   }
 }
+
+/* Al pasar el cursor la tarjeta se eleva un poco */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) {
+  .tarjeta-curso {
+    transition:
+      transform var(--anim-media) var(--anim-curva),
+      box-shadow var(--anim-media) var(--anim-curva),
+      border-color var(--anim-media) var(--anim-curva);
+  }
+
+  .tarjeta-curso:hover {
+    border-color: var(--color-neutro-300);
+    box-shadow: 0 12px 24px -12px rgb(16 41 64 / 0.25);
+    transform: translateY(-3px);
+  }
+}

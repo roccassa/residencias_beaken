@@ -74,3 +74,38 @@
   display: inline-block;
   margin-top: 1.25rem;
 }
+
+/* Panel de la respuesta. Sin animación se muestra u oculta de golpe. */
+.preguntas__panel {
+  display: none;
+}
+
+.preguntas__panel--abierto {
+  display: block;
+}
+
+/* Con animación el panel crece de 0 a su alto natural (la fila de la cuadrícula pasa de 0fr a 1fr);
+   mientras está cerrado su contenido queda oculto también para lectores de pantalla y teclado. */
+@media (prefers-reduced-motion: no-preference) {
+  .preguntas__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--anim-media) var(--anim-curva);
+  }
+
+  .preguntas__panel--abierto {
+    grid-template-rows: 1fr;
+  }
+
+  .preguntas__panel-interior {
+    min-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    transition: visibility 0s linear var(--anim-media);
+  }
+
+  .preguntas__panel--abierto .preguntas__panel-interior {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+}
