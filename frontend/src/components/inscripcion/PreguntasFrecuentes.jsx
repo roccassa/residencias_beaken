@@ -21,7 +21,7 @@ const preguntas = [
   {
     pregunta: '¿Puedo cancelar?',
     respuesta:
-      'Sí. Puedes cancelar hasta 48 horas antes del inicio y recibirás un reembolso completo.',
+      'Sí. Puedes cancelar hasta que empiece la actividad; si ya pagaste, recibirás el reembolso',
   },
 ]
 
